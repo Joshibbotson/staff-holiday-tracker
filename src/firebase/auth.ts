@@ -22,8 +22,6 @@ import {
 import { toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
-// Initialize Firebase Authentication and get a reference to the service
-
 export const db = getFirestore(app)
 export const auth: Auth = getAuth(app)
 const googleProvider = new GoogleAuthProvider()

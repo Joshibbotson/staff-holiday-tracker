@@ -7,9 +7,8 @@ import {
     logInWithEmailAndPassword,
     logout,
 } from "../firebase/auth"
-
 import { useAuthState } from "react-firebase-hooks/auth"
-import "./login.css"
+import loginSCSS from "./login.module.scss"
 import { deleteUser } from "firebase/auth"
 
 function Login() {
@@ -43,12 +42,13 @@ function Login() {
 
     return (
         <>
-            <div className="login">
-                <div className="login__container">
+            <div className={loginSCSS.login}>
+                <div className={loginSCSS.graphic}></div>
+                <div className={loginSCSS.login__container}>
                     <input
                         type="text"
                         name="email"
-                        className="login__textBox"
+                        className={loginSCSS.login__textBox}
                         defaultValue={email}
                         onChange={e => {
                             setEmail(e.target.value)
@@ -58,14 +58,14 @@ function Login() {
                     <input
                         type="password"
                         name="password"
-                        className="login__textBox"
+                        className={loginSCSS.login__textBox}
                         defaultValue={password}
                         onChange={e => {
                             setPassword(e.target.value)
                         }}
                     />
                     <button
-                        className="login__btn"
+                        className={loginSCSS.login__btn}
                         onClick={() => {
                             logInWithEmailAndPassword(email, password)
                         }}
@@ -73,14 +73,13 @@ function Login() {
                         Login
                     </button>
                     <button
-                        className="login__btn login__google"
+                        className={`${loginSCSS.login__btn} ${loginSCSS.login__google}`}
                         onClick={() => {
                             signInWithGoogle()
                         }}
                     >
                         Login with Google
                     </button>
-                    <button onClick={logout}> log out</button>
 
                     <Link to={"/reset"}>Forgot Password?</Link>
                 </div>
@@ -88,6 +87,9 @@ function Login() {
                     Don't have an account?{" "}
                     <Link to={"/register"}>Register here</Link>
                 </div>
+                <a href="http://www.freepik.com">
+                    Graphic Designed by slidesgo / Freepik
+                </a>
             </div>
         </>
     )
