@@ -1,0 +1,28 @@
+.homeContainer {
+    height: 100svh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 20rem 70%;
+}
+
+/* Small devices (tablets) */
+@media only screen and (min-width: 576px) and (max-width: 768px) {
+}
+
+/* Medium devices (desktops) */
+@media only screen and (min-width: 768px) and (max-width: 992px) {
+}
+
+/* Large devices (large desktops) */
+@media only screen and (min-width: 992px) and (max-width: 1200px) {
+}
+
+/* Extra large devices (extra large desktops) */
+@media only screen and (min-width: 1200px) {
+    .homeContainer {
+        height: 100svh;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 20rem 70%;
+    }
+}

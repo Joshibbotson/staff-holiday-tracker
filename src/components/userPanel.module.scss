@@ -1,0 +1,36 @@
+.userPanelContainer {
+    background-color: royalblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 5rem;
+    padding-bottom: 5rem;
+    margin-left: 0;
+
+    transition: all 1s;
+
+    .topContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+
+        .profileContainer {
+            padding-bottom: 3rem;
+            .profileImg {
+                width: 5rem;
+                height: 5rem;
+                border: 2px solid red;
+                background-color: white;
+                border-radius: 50%;
+            }
+        }
+    }
+}
+
+.userPanelContainer.hideUserPanel {
+    opacity: 0;
+    width: 0;
+    height: 0;
+    margin-left: -20rem;
+}

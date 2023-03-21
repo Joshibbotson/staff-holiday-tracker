@@ -56,6 +56,13 @@ export async function signInWithGoogle() {
                 name: user.displayName,
                 authProvider: "google",
                 email: user.email,
+                admin: false,
+                superAdmin: false,
+                nationalHolidays: 0,
+                remainingHolidays: 0,
+                takenHolidays: 0,
+                flexTime: 0,
+                birthday: undefined,
             })
         }
     } catch (error) {
@@ -98,6 +105,13 @@ export async function registerWithEmailAndPassword(
             name,
             authProvider: "local",
             email,
+            admin: false,
+            superAdmin: false,
+            nationalHolidays: 0,
+            remainingHolidays: 0,
+            takenHolidays: 0,
+            flexTime: 0,
+            birthday: undefined,
         })
     } catch (error) {
         console.log(error)
