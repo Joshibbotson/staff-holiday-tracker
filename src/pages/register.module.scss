@@ -1,4 +1,4 @@
-.login {
+.register {
     height: 100vh;
     width: 100%;
     display: flex;
@@ -8,8 +8,9 @@
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
         Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
         sans-serif;
+
     .graphic {
-        background-image: url(../assets/login.jpg);
+        background-image: url(../assets/Checklist.jpg);
         width: 100%;
         height: 100%;
         background-position: top;
@@ -18,7 +19,8 @@
         position: absolute;
         z-index: 1;
     }
-    .login__container {
+
+    .register__container {
         display: flex;
         flex-direction: column;
         text-align: center;
@@ -27,35 +29,25 @@
         border-radius: 1rem;
         border: 3px solid rgb(227, 227, 227);
         z-index: 2;
-    }
 
-    .login__textBox {
-        padding: 10px;
-        font-size: 18px;
-        margin-bottom: 10px;
-    }
-    .login__btn {
-        padding: 10px;
-        font-size: 18px;
-        margin-bottom: 10px;
-        border: none;
-        color: white;
-        background-color: black;
-        border-radius: 0.3rem;
-    }
-    .login__google {
-        background-color: #4285f4;
-    }
-    .login div {
-        margin-top: 7px;
-    }
-    a:link,
-    a:visited,
-    a {
-        padding: 0.3rem;
-        border-radius: 0.3rem;
-        color: black;
-        z-index: 3;
-        background-color: rgba(255, 255, 255, 0.732);
+        .register__textBox {
+            padding: 10px;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .register__btn {
+            padding: 10px;
+            font-size: 18px;
+            margin-bottom: 10px;
+            border: none;
+            color: white;
+            background-color: black;
+        }
+        .register__google {
+            background-color: #4285f4;
+        }
+        .register div {
+            margin-top: 7px;
+        }
     }
 }

@@ -6,7 +6,8 @@ import {
     signInWithGoogle,
     registerWithEmailAndPassword,
 } from "../firebase/auth"
-import "./Register.css"
+import registerSCSS from "./register.module.scss"
+
 function Register() {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
@@ -26,34 +27,38 @@ function Register() {
     //TODO add validation for email and password"
 
     return (
-        <div className="register">
-            <div className="register__container">
+        <div className={registerSCSS.register}>
+            <div className={registerSCSS.graphic}></div>
+            <div className={registerSCSS.register__container}>
                 <input
                     type="text"
-                    className="register__textBox"
+                    className={registerSCSS.register__textBox}
                     value={name}
                     onChange={e => setName(e.target.value)}
                     placeholder="Full Name"
                 />
                 <input
                     type="text"
-                    className="register__textBox"
+                    className={registerSCSS.register__textBox}
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="E-mail Address"
                 />
                 <input
                     type="password"
-                    className="register__textBox"
+                    className={registerSCSS.register__textBox}
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     placeholder="Password"
                 />
-                <button className="register__btn" onClick={register}>
+                <button
+                    className={registerSCSS.register__btn}
+                    onClick={register}
+                >
                     Register
                 </button>
                 <button
-                    className="register__btn register__google"
+                    className={`${registerSCSS.register__btn} ${registerSCSS.register__google}`}
                     onClick={signInWithGoogle}
                 >
                     Register with Google

@@ -82,10 +82,10 @@ function Login() {
                     </button>
 
                     <Link to={"/reset"}>Forgot Password?</Link>
-                </div>
-                <div>
-                    Don't have an account?{" "}
-                    <Link to={"/register"}>Register here</Link>
+                    <div>
+                        Don't have an account?{" "}
+                        <Link to={"/register"}>Register here</Link>
+                    </div>
                 </div>
                 <a href="http://www.freepik.com">
                     Graphic Designed by slidesgo / Freepik
