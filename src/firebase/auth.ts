@@ -1,4 +1,5 @@
 import { app } from "./firebase"
+import * as admin from "firebase-admin"
 import {
     query,
     getDocs,
@@ -24,7 +25,36 @@ import "react-toastify/dist/ReactToastify.css"
 
 export const db = getFirestore(app)
 export const auth: Auth = getAuth(app)
-const googleProvider = new GoogleAuthProvider()
+
+// const googleProvider = new GoogleAuthProvider()
+
+// export const listAllUsers = async () => {
+//     try {
+//         // Start with an empty array of users
+//         let allUsers: admin.auth.UserRecord[] = []
+
+//         // Get the first batch of users
+//         let listUsersResult = await admin.auth().listUsers(10)
+
+//         // Add the users from the first batch to the array
+//         allUsers = allUsers.concat(listUsersResult.users)
+
+//         // If there are more users, paginate through the results
+//         while (listUsersResult.pageToken) {
+//             listUsersResult = await admin
+//                 .auth()
+//                 .listUsers(1000, listUsersResult.pageToken)
+//             allUsers = allUsers.concat(listUsersResult.users)
+//         }
+
+//         console.log(`Fetched ${allUsers.length} users:`)
+//         allUsers.forEach(userRecord => {
+//             console.log(userRecord.toJSON())
+//         })
+//     } catch (error) {
+//         console.log("Error fetching user data:", error)
+//     }
+// }
 
 export function getErrorMessage(error: FirebaseError) {
     switch (error.code) {

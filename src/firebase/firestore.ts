@@ -8,7 +8,8 @@ import {
     deleteDoc,
     where,
 } from "firebase/firestore"
-import { db } from "./auth"
+import { auth, db } from "./auth"
+import { getAuth } from "firebase/auth"
 
 export const updateUserData = async (
     userUID: string,
@@ -64,3 +65,16 @@ export async function getUserData(userUID: string) {
         console.log(error)
     }
 }
+
+// export const editUserData = async (
+//     docID: string,
+//     name: string,
+//     dueDate: string
+// ) => {
+//     try {
+//         const taskRef = doc(db, "tasks", docID)
+//         await updateDoc(taskRef, { name, dueDate, tag })
+//     } catch (err) {
+//         console.error(err)
+//     }
+// }
