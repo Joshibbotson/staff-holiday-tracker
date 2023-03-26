@@ -26,7 +26,7 @@ import "react-toastify/dist/ReactToastify.css"
 export const db = getFirestore(app)
 export const auth: Auth = getAuth(app)
 
-// const googleProvider = new GoogleAuthProvider()
+const googleProvider = new GoogleAuthProvider()
 
 // export const listAllUsers = async () => {
 //     try {
