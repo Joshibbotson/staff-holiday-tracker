@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 import { useAuthState } from "react-firebase-hooks/auth"
-import { auth } from "../../firebase/auth"
+import { auth } from "../../firebase/auth/auth"
 import { useNavigate } from "react-router-dom"
 import Main from "../../components/Main"
 import UserPanel from "../../components/UserPanel"

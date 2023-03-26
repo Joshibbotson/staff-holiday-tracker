@@ -6,7 +6,7 @@ import {
     signInWithGoogle,
     logInWithEmailAndPassword,
     logout,
-} from "../firebase/auth"
+} from "../firebase/auth/auth"
 import { useAuthState } from "react-firebase-hooks/auth"
 import loginSCSS from "./login.module.scss"
 import { deleteUser } from "firebase/auth"

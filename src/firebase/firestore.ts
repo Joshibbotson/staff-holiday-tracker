@@ -8,8 +8,10 @@ import {
     deleteDoc,
     where,
 } from "firebase/firestore"
-import { auth, db } from "./auth"
+import { auth, db } from "./auth/auth"
 import { getAuth } from "firebase/auth"
+import * as admin from "firebase-admin"
+import { app } from "firebase-admin"
 
 export const updateUserData = async (
     userUID: string,
@@ -59,6 +61,26 @@ export async function getUserData(userUID: string) {
             takenHolidays: doc.data().takenHolidays,
             flexTime: doc.data().flexTime,
             birthday: doc.data().birthday,
+        }))
+        return userData
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export async function listUsers() {
+    try {
+        const queryDb = query(collection(db, "users"))
+        const querySnapShot = await getDocs(queryDb)
+        const userData = querySnapShot.docs.map(doc => ({
+            uid: doc.data().uid,
+            name: doc.data().name,
+            admin: doc.data().admin,
+            superAdmin: doc.data().superAdmin,
+            nationalHolidays: doc.data().nationalHolidays,
+            remainingHolidays: doc.data().remainingHolidays,
+            takenHolidays: doc.data().takenHolidays,
+            flexTime: doc.data().flexTime,
         }))
         return userData
     } catch (error) {

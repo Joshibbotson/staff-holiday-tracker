@@ -5,7 +5,7 @@ import {
     auth,
     signInWithGoogle,
     registerWithEmailAndPassword,
-} from "../firebase/auth"
+} from "../firebase/auth/auth"
 import registerSCSS from "./register.module.scss"
 
 function Register() {

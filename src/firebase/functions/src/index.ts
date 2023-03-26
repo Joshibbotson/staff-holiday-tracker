@@ -11,14 +11,14 @@ exports.addMessage = functions.https.onRequest(async (req, res) => {
     // Push the new message into Firestore using the Firebase Admin SDK.
     const writeResult = await admin
         .firestore()
-        .collection("messages")
+        .collection("requests")
         .add({ original: original })
     // Send back a message that we've successfully written the message
     res.json({ result: `Message with ID: ${writeResult.id} added.` })
 })
 
 exports.makeUppercase = functions.firestore
-    .document("/messages/{documentId}")
+    .document("/requests/{documentId}")
     .onCreate((snap, context) => {
         // Grab the current value of what was written to Firestore.
         const original = snap.data().original
@@ -34,13 +34,15 @@ exports.makeUppercase = functions.firestore
         return snap.ref.set({ uppercase }, { merge: true })
     })
 
+//will be used for sending emails//
 // exports.processNewRequest = functions.firestore
 //     .document("requests/{requestId}")
 //     .onCreate((snap, context) => {
 //         // Get the new request data
-//         const requestData = snap.data() //as MyRequestType//
+//         const requestData = snap.data().requestData //as MyRequestType//
 
 //         // Perform some action with the new request data, for example:
+
 //         console.log("New request added:", requestData)
 
 //         // Update the relevant user's remaining holiday time and taken holidays
