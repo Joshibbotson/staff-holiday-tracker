@@ -1,28 +1,30 @@
-import React, { useEffect, useState } from "react"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { Link, useNavigate } from "react-router-dom"
+import React, { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Link, useNavigate } from "react-router-dom";
 import {
     auth,
     signInWithGoogle,
     registerWithEmailAndPassword,
-} from "../firebase/auth/auth"
-import registerSCSS from "./register.module.scss"
+} from "../firebase/auth/auth";
+import { updateUserData } from "../firebase/firestore";
+import registerSCSS from "./register.module.scss";
 
 function Register() {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [name, setName] = useState("")
-    const [user, loading, error] = useAuthState(auth)
-    const navigate = useNavigate()
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [name, setName] = useState("");
+    const [user, loading, error] = useAuthState(auth);
+    const navigate = useNavigate();
     const register = () => {
-        if (!name) alert("Please enter name")
-        registerWithEmailAndPassword(name, email, password)
-    }
+        if (!name) alert("Please enter name");
+        registerWithEmailAndPassword(name, email, password);
+    };
     useEffect(() => {
         if (user) {
-            navigate("/")
+            updateUserData(user?.uid, name, 25, 0, 0, "UK");
+            navigate("/");
         }
-    }, [user, loading])
+    }, [user, loading]);
 
     //TODO add validation for email and password"
 
@@ -68,6 +70,6 @@ function Register() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
-export default Register
+export default Register;

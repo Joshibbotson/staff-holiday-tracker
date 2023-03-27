@@ -7,49 +7,48 @@ import {
     updateDoc,
     deleteDoc,
     where,
-} from "firebase/firestore"
-import { auth, db } from "./auth/auth"
-import { getAuth } from "firebase/auth"
-import * as admin from "firebase-admin"
-import { app } from "firebase-admin"
+} from "firebase/firestore";
+import { auth, db } from "./auth/auth";
+import { getAuth } from "firebase/auth";
+import * as admin from "firebase-admin";
+import { app } from "firebase-admin";
+import { UserType } from "../types/UserType.type";
+import { FetchedApprovedRequestsType } from "../types/fetchedApprovedRequests.type";
 
 export const updateUserData = async (
     userUID: string,
-    id: string,
     name: string,
     remainingHolidays: number,
     takenHolidays: number,
     flexTime: number,
-    birthday: string,
+    nationalHolidays: string = "UK",
     admin: boolean = false,
-    superAdmin: boolean = false,
-    nationalHolidays: string = "UK"
+    superAdmin: boolean = false
 ) => {
     try {
-        const docRef = await addDoc(collection(db, "data"), {
+        const docRef = await addDoc(collection(db, "users"), {
             uid: userUID,
             name,
-            admin: false,
-            superAdmin: false,
             nationalHolidays,
             remainingHolidays,
             takenHolidays,
             flexTime,
-            birthday,
-        })
-        await updateDoc(docRef, { docID: docRef.id, id })
+            admin: false,
+            superAdmin: false,
+        });
+        await updateDoc(docRef, { docID: docRef.id });
     } catch (err) {
-        console.log(err)
+        console.log(err);
     }
-}
+};
 
 export async function getUserData(userUID: string) {
     try {
         const queryDb = query(
             collection(db, "data"),
             where("uid", "==", userUID)
-        )
-        const querySnapShot = await getDocs(queryDb)
+        );
+        const querySnapShot = await getDocs(queryDb);
         const userData = querySnapShot.docs.map(doc => ({
             docID: doc.data().docID,
             id: doc.data().id,
@@ -61,17 +60,17 @@ export async function getUserData(userUID: string) {
             takenHolidays: doc.data().takenHolidays,
             flexTime: doc.data().flexTime,
             birthday: doc.data().birthday,
-        }))
-        return userData
+        }));
+        return userData;
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 }
 
-export async function listUsers() {
+export async function listUsers(): Promise<UserType[]> {
     try {
-        const queryDb = query(collection(db, "users"))
-        const querySnapShot = await getDocs(queryDb)
+        const queryDb = query(collection(db, "users"));
+        const querySnapShot = await getDocs(queryDb);
         const userData = querySnapShot.docs.map(doc => ({
             uid: doc.data().uid,
             name: doc.data().name,
@@ -81,10 +80,30 @@ export async function listUsers() {
             remainingHolidays: doc.data().remainingHolidays,
             takenHolidays: doc.data().takenHolidays,
             flexTime: doc.data().flexTime,
-        }))
-        return userData
+        }));
+        return userData;
     } catch (error) {
-        console.log(error)
+        console.log(error);
+        throw new Error("Failed to list users from database");
+    }
+}
+export async function listApprovedRequests(): Promise<
+    FetchedApprovedRequestsType[]
+> {
+    try {
+        const queryDb = query(collection(db, "approvedRequests"));
+        const querySnapShot = await getDocs(queryDb);
+        const userData = querySnapShot.docs.map(doc => ({
+            approvedBy: doc.data().approvedBy,
+            dateStart: doc.data().dateStart,
+            dateEnd: doc.data().dateEnd,
+            requestedBy: doc.data().requestedBy,
+            totalDays: doc.data().totalDays,
+        }));
+        return userData;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to list approved requests from database");
     }
 }
 

@@ -7,3 +7,28 @@ typings/
 
 # Node.js dependency directory
 node_modules/
+
+{
+  "extends": [
+    "eslint:recommended",
+    "google"
+  ],
+  "rules": {
+    "semi": "error",
+    "quotes": ["error", "single"],
+    "indent": ["error", 2],
+    "no-unused-vars": "off"
+  },
+  "parserOptions": {
+    "ecmaVersion": 8,
+    "sourceType": "module"
+  },
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "plugins": [
+    "googleappsscript"
+  ],
+  "fix": true
+}
