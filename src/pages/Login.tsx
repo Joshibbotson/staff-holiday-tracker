@@ -1,43 +1,37 @@
-import React from "react"
-import { useState, useEffect } from "react"
-import { Link, useNavigate } from "react-router-dom"
+import React from "react";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import {
     auth,
     signInWithGoogle,
     logInWithEmailAndPassword,
     logout,
-} from "../firebase/auth/auth"
-import { useAuthState } from "react-firebase-hooks/auth"
-import loginSCSS from "./login.module.scss"
-import { deleteUser } from "firebase/auth"
+} from "../firebase/auth/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import loginSCSS from "./login.module.scss";
+import { deleteUser } from "firebase/auth";
 
 function Login() {
-    const [email, setEmail] = useState("")
-    const [password, setPassword] = useState("")
-    const [user, loading, error] = useAuthState(auth)
-    const navigate = useNavigate()
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [user, loading, error] = useAuthState(auth);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (loading) {
-            return
+            return;
         }
         if (user) {
-            navigate("/")
+            navigate("/");
         }
-    }, [user, loading])
+    }, [user, loading]);
 
     async function handleLogin(email: string, password: string) {
         try {
-            await logInWithEmailAndPassword(email, password)
+            await logInWithEmailAndPassword(email, password);
         } catch (err) {
-            throw err
+            throw err;
         }
-    }
-
-    const handleButtonClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-        const target = event.target as HTMLInputElement
-        setEmail(target.value)
-        // rest of the code
     }
 
     return (
@@ -51,7 +45,7 @@ function Login() {
                         className={loginSCSS.login__textBox}
                         defaultValue={email}
                         onChange={e => {
-                            setEmail(e.target.value)
+                            setEmail(e.target.value);
                         }}
                         placeholder="Email Address"
                     />
@@ -61,13 +55,13 @@ function Login() {
                         className={loginSCSS.login__textBox}
                         defaultValue={password}
                         onChange={e => {
-                            setPassword(e.target.value)
+                            setPassword(e.target.value);
                         }}
                     />
                     <button
                         className={loginSCSS.login__btn}
                         onClick={() => {
-                            logInWithEmailAndPassword(email, password)
+                            handleLogin(email, password);
                         }}
                     >
                         Login
@@ -75,7 +69,7 @@ function Login() {
                     <button
                         className={`${loginSCSS.login__btn} ${loginSCSS.login__google}`}
                         onClick={() => {
-                            signInWithGoogle()
+                            signInWithGoogle();
                         }}
                     >
                         Login with Google
@@ -92,7 +86,7 @@ function Login() {
                 </a>
             </div>
         </>
-    )
+    );
 }
 
-export default Login
+export default Login;

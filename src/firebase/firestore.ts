@@ -13,7 +13,8 @@ import { getAuth } from "firebase/auth";
 import * as admin from "firebase-admin";
 import { app } from "firebase-admin";
 import { UserType } from "../types/UserType.type";
-import { FetchedApprovedRequestsType } from "../types/fetchedApprovedRequests.type";
+import { ApprovedRequestsType } from "../types/ApprovedRequests.type";
+import { RequestsType } from "../types/Requests.type";
 
 export const updateUserData = async (
     userUID: string,
@@ -87,23 +88,39 @@ export async function listUsers(): Promise<UserType[]> {
         throw new Error("Failed to list users from database");
     }
 }
-export async function listApprovedRequests(): Promise<
-    FetchedApprovedRequestsType[]
-> {
+export async function listApprovedRequests(): Promise<ApprovedRequestsType[]> {
     try {
         const queryDb = query(collection(db, "approvedRequests"));
         const querySnapShot = await getDocs(queryDb);
-        const userData = querySnapShot.docs.map(doc => ({
+        const approvedReqData = querySnapShot.docs.map(doc => ({
             approvedBy: doc.data().approvedBy,
             dateStart: doc.data().dateStart,
             dateEnd: doc.data().dateEnd,
             requestedBy: doc.data().requestedBy,
             totalDays: doc.data().totalDays,
         }));
-        return userData;
+        return approvedReqData;
     } catch (error) {
         console.log(error);
         throw new Error("Failed to list approved requests from database");
+    }
+}
+
+export async function listRequests(): Promise<RequestsType[]> {
+    try {
+        const queryDb = query(collection(db, "requests"));
+        const querySnapShot = await getDocs(queryDb);
+        const reqData = querySnapShot.docs.map(doc => ({
+            approver: doc.data().approver,
+            dateStart: doc.data().dateStart,
+            dateEnd: doc.data().dateEnd,
+            requestedBy: doc.data().requestedBy,
+            totalDays: doc.data().totalDays,
+        }));
+        return reqData;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to list requests from database");
     }
 }
 

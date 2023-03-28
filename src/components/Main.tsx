@@ -1,24 +1,48 @@
 import React from "react";
 import { auth } from "../firebase/auth/auth";
-import { listUsers, listApprovedRequests } from "../firebase/firestore";
+import {
+    listUsers,
+    listApprovedRequests,
+    listRequests,
+} from "../firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState, useEffect } from "react";
-import { FetchedApprovedRequestsType } from "../types/fetchedApprovedRequests.type";
+import { ApprovedRequestsType } from "../types/ApprovedRequests.type";
+import { RequestsType } from "../types/Requests.type";
+import { UserType } from "../types/UserType.type";
 
 function Main() {
     const [user, loading, error] = useAuthState(auth);
+    const [approvedRequests, setApprovedRequests] = useState([]);
+    const [requests, setRequests] = useState([]);
     const [users, setUsers] = useState([]);
-
-    useEffect(() => {
-        console.log(user);
-    }, []);
 
     const getApprovedRequestsFromFirebase = async () => {
         if (user) {
-            const fetchedApprovedRequests: FetchedApprovedRequestsType[] =
+            const fetchedApprovedRequests: ApprovedRequestsType[] =
                 await listApprovedRequests();
             if (fetchedApprovedRequests) {
                 setUsers(fetchedApprovedRequests);
+            } else {
+                return null;
+            }
+        }
+    };
+    const getRequestsFromFirebase = async () => {
+        if (user) {
+            const fetchedRequests: RequestsType[] = await listRequests();
+            if (fetchedRequests) {
+                setUsers(fetchedRequests);
+            } else {
+                return null;
+            }
+        }
+    };
+    const getUsersFromFirebase = async () => {
+        if (user) {
+            const fetchedUsers: UserType[] = await listApprovedRequests();
+            if (fetchedUsers) {
+                setUsers(fetchedUsers);
             } else {
                 return null;
             }
