@@ -4,7 +4,7 @@ import {
     listUsers,
     listApprovedRequests,
     listRequests,
-} from "../firebase/firestore";
+} from "../firebase/firestore/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState, useEffect } from "react";
 import { ApprovedRequestsType } from "../types/ApprovedRequests.type";
@@ -40,7 +40,7 @@ function Main() {
     };
     const getUsersFromFirebase = async () => {
         if (user) {
-            const fetchedUsers: UserType[] = await listApprovedRequests();
+            const fetchedUsers: UserType[] = await listUsers();
             if (fetchedUsers) {
                 setUsers(fetchedUsers);
             } else {
@@ -48,7 +48,6 @@ function Main() {
             }
         }
     };
-
     getApprovedRequestsFromFirebase();
 
     return (

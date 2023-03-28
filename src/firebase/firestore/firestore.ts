@@ -8,13 +8,13 @@ import {
     deleteDoc,
     where,
 } from "firebase/firestore";
-import { auth, db } from "./auth/auth";
+import { auth, db } from "../auth/auth";
 import { getAuth } from "firebase/auth";
 import * as admin from "firebase-admin";
 import { app } from "firebase-admin";
-import { UserType } from "../types/UserType.type";
-import { ApprovedRequestsType } from "../types/ApprovedRequests.type";
-import { RequestsType } from "../types/Requests.type";
+import { UserType } from "../../types/UserType.type";
+import { ApprovedRequestsType } from "../../types/ApprovedRequests.type";
+import { RequestsType } from "../../types/Requests.type";
 
 export const updateUserData = async (
     userUID: string,

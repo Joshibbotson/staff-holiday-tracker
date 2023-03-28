@@ -1,17 +1,21 @@
-import { logout } from "../firebase/auth/auth"
-import userPanelSCSS from "./userPanel.module.scss"
-import { useState } from "react"
-import { updateUserData } from "../firebase/firestore"
+import { logout } from "../firebase/auth/auth";
+import userPanelSCSS from "./userPanel.module.scss";
+import { useState } from "react";
+import { updateUserData } from "../firebase/firestore/firestore";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Button from "@mui/material/Button";
 
 const UserPanel = () => {
-    const [showUserPanel, setShowUserPanel] = useState(true) //context this
+    const [showUserPanel, setShowUserPanel] = useState(true); //context this
 
     return (
         <>
             <div className={userPanelSCSS.userPanelContainer}>
                 <div className={userPanelSCSS.topContainer}>
                     <div className={userPanelSCSS.profileContainer}>
-                        <div className={userPanelSCSS.profileImg}></div>
+                        <div className={userPanelSCSS.profileImg}>
+                            <AccountCircleIcon />
+                        </div>
                         <h2>Human</h2>
                     </div>
                     <div className={userPanelSCSS.dashboard}>Dashboard</div>
@@ -23,11 +27,18 @@ const UserPanel = () => {
                         Profile Settings
                     </div>
 
-                    <button onClick={logout}> log out</button>
+                    <Button
+                        variant="contained"
+                        color="error"
+                        size="small"
+                        onClick={logout}
+                    >
+                        Log out
+                    </Button>
                 </div>
             </div>
         </>
-    )
-}
+    );
+};
 
-export default UserPanel
+export default UserPanel;

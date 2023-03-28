@@ -4,6 +4,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    text-align: center;
     padding-top: 5rem;
     padding-bottom: 5rem;
     margin-left: 0;
@@ -17,12 +18,22 @@
 
         .profileContainer {
             padding-bottom: 3rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
             .profileImg {
-                width: 5rem;
-                height: 5rem;
-                border: 2px solid red;
-                background-color: white;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 10rem;
+                height: 10rem;
                 border-radius: 50%;
+
+                * {
+                    font-size: 7.5rem;
+                    color: white;
+                }
             }
         }
     }
