@@ -8,13 +8,19 @@ import {
     deleteDoc,
     where,
 } from "firebase/firestore";
-import { auth, db } from "../auth/auth";
+// import { auth, db } from "../auth/auth";
 import { getAuth } from "firebase/auth";
 import * as admin from "firebase-admin";
 import { app } from "firebase-admin";
 import { UserType } from "../../types/UserType.type";
 import { ApprovedRequestsType } from "../../types/ApprovedRequests.type";
 import { RequestsType } from "../../types/Requests.type";
+import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+
+//firebase emulator//
+const db = getFirestore();
+connectFirestoreEmulator(db, "localhost", 8080);
+//////////
 
 export const updateUserData = async (
     userUID: string,
