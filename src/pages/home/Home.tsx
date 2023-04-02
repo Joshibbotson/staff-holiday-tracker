@@ -1,20 +1,20 @@
-import { useEffect } from "react"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { auth } from "../../firebase/auth/auth"
-import { useNavigate } from "react-router-dom"
-import Main from "../../components/Main"
-import UserPanel from "../../components/UserPanel"
-import homeSCSS from "./home.module.scss"
+import { useEffect } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase/auth/auth";
+import { useNavigate } from "react-router-dom";
+import Main from "../../components/Main";
+import UserPanel from "../../components/user-panel/UserPanel";
+import homeSCSS from "./home.module.scss";
 
 const Home = () => {
-    const [user, loading, error] = useAuthState(auth)
-    const navigate = useNavigate()
+    const [user, loading, error] = useAuthState(auth);
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (!user) {
-            navigate("/login")
+            navigate("/login");
         }
-    }, [user, loading])
+    }, [user, loading]);
 
     return (
         <>
@@ -23,7 +23,7 @@ const Home = () => {
                 <Main />
             </div>
         </>
-    )
-}
+    );
+};
 
-export default Home
+export default Home;

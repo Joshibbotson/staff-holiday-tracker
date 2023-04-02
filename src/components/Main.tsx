@@ -58,9 +58,11 @@ function Main() {
         <>
             <div>
                 Main
-                {users.map(req => {
-                    return <li> {req?.requestedBy}</li>;
-                })}
+                {approvedRequests
+                    ? approvedRequests.map(req => {
+                          return <li> {req?.requestedBy}</li>;
+                      })
+                    : ""}
             </div>
         </>
     );

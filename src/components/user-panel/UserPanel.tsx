@@ -1,7 +1,7 @@
-import { logout } from "../firebase/auth/auth";
+import { logout } from "../../firebase/auth/auth";
 import userPanelSCSS from "./userPanel.module.scss";
 import { useState } from "react";
-import { updateUserData } from "../firebase/firestore/firestore";
+import { updateUserData } from "../../firebase/firestore/firestore";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";

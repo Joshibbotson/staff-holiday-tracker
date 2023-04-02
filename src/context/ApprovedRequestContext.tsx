@@ -1,14 +1,14 @@
 import { createContext, useState, useEffect } from "react";
-import { listUsers } from "../firebase/firestore/firestore";
-import { UserType } from "../types";
+import { listRequests } from "../firebase/firestore/firestore";
+import { RequestsType } from "../types";
 
-type UserContextType = {
-    userRequests: UserType[];
+type RequestContextType = {
+    requests: RequestsType[];
     loading: boolean;
     error: string | null;
 };
 
-const UserContext = createContext<UserContextType>({
+const RequestContext = createContext<RequestContextType>({
     userRequests: [],
     loading: false,
     error: null,
@@ -16,16 +16,16 @@ const UserContext = createContext<UserContextType>({
 
 //fix this to not be any//
 export const UserProvider: React.FC<any> = ({ children }) => {
-    const [users, setUsers] = useState<UserType[]>([]);
+    const [userRequests, setUserRequests] = useState<RequestsType[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
-        const fetchUsers = async () => {
+        const fetchRequests = async () => {
             setLoading(true);
             try {
-                const data = await listUsers();
-                setUsers(data);
+                const data = await listRequests();
+                setUserRequests(data);
                 setLoading(false);
             } catch (error) {
                 const anyError: any = error;
@@ -33,11 +33,11 @@ export const UserProvider: React.FC<any> = ({ children }) => {
                 setLoading(false);
             }
         };
-        fetchUsers();
+        fetchRequests();
     }, []);
 
     const value: UserContextType = {
-        userRequests: users,
+        userRequests,
         loading,
         error,
     };
