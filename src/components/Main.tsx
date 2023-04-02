@@ -13,16 +13,20 @@ import { UserType } from "../types/UserType.type";
 
 function Main() {
     const [user, loading, error] = useAuthState(auth);
-    const [approvedRequests, setApprovedRequests] = useState([]);
-    const [requests, setRequests] = useState([]);
-    const [users, setUsers] = useState([]);
+    const [approvedRequests, setApprovedRequests] = useState<
+        ApprovedRequestsType[] | undefined
+    >(undefined);
+    const [requests, setRequests] = useState<RequestsType[] | undefined>(
+        undefined
+    );
+    const [users, setUsers] = useState<UserType[] | undefined>(undefined);
 
     const getApprovedRequestsFromFirebase = async () => {
         if (user) {
             const fetchedApprovedRequests: ApprovedRequestsType[] =
                 await listApprovedRequests();
             if (fetchedApprovedRequests) {
-                setUsers(fetchedApprovedRequests);
+                setApprovedRequests(fetchedApprovedRequests);
             } else {
                 return null;
             }
@@ -32,7 +36,7 @@ function Main() {
         if (user) {
             const fetchedRequests: RequestsType[] = await listRequests();
             if (fetchedRequests) {
-                setUsers(fetchedRequests);
+                setRequests(fetchedRequests);
             } else {
                 return null;
             }
@@ -48,7 +52,7 @@ function Main() {
             }
         }
     };
-    getApprovedRequestsFromFirebase();
+    // getApprovedRequestsFromFirebase();
 
     return (
         <>
