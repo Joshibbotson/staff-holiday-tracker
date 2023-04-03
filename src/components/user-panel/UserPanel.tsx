@@ -1,14 +1,18 @@
 import { logout } from "../../firebase/auth/auth";
 import userPanelSCSS from "./userPanel.module.scss";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { updateUserData } from "../../firebase/firestore/firestore";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
 
+import { CurrentUserContext } from "../../context/currentUserContext";
+
 const UserPanel = () => {
     const [showUserPanel, setShowUserPanel] = useState(true); //context this
+    const { user } = useContext(CurrentUserContext);
 
+    console.log(user[0]);
     return (
         <>
             <div className={userPanelSCSS.userPanelContainer}>
@@ -17,10 +21,23 @@ const UserPanel = () => {
                         <div className={userPanelSCSS.profileImg}>
                             <AccountCircleIcon />
                         </div>
-                        <h2>Human</h2>
+                        <h2>{user ? user[0].name : "Human"}</h2>
                     </div>
-                    <div className={userPanelSCSS.dashboard}>Dashboard</div>
-                    <div className={userPanelSCSS.calendar}>Calendar</div>
+                    <div className={userPanelSCSS.dashboard}>
+                        {user
+                            ? `Remaining Holidays: ${user[0].remainingHolidays}`
+                            : "Human"}
+                    </div>
+                    <div className={userPanelSCSS.calendar}>
+                        {user
+                            ? `Taken Holidays: ${user[0].takenHolidays}`
+                            : "Human"}
+                    </div>
+                    <div className={userPanelSCSS.calendar}>
+                        {user
+                            ? `Accrued Flexi Time: ${user[0].flexTime}`
+                            : "Human"}
+                    </div>
                 </div>
                 <div className={userPanelSCSS.bottomContainer}>
                     <div className={userPanelSCSS.settings}>settings</div>

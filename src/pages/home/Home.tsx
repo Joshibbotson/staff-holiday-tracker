@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import Main from "../../components/Main";
 import UserPanel from "../../components/user-panel/UserPanel";
 import homeSCSS from "./home.module.scss";
+import UserProvider from "../../context/UserContext";
+import CurrentUserProvider from "../../context/currentUserContext";
 
 const Home = () => {
     const [user, loading, error] = useAuthState(auth);
@@ -19,8 +21,12 @@ const Home = () => {
     return (
         <>
             <div className={homeSCSS.homeContainer}>
-                <UserPanel />
-                <Main />
+                <CurrentUserProvider>
+                    <UserProvider>
+                        <UserPanel />
+                        <Main />
+                    </UserProvider>
+                </CurrentUserProvider>
             </div>
         </>
     );

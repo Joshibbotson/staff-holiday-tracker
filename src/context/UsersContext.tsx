@@ -2,20 +2,20 @@ import { createContext, useState, useEffect } from "react";
 import { listUsers } from "../firebase/firestore/firestore";
 import { UserType } from "../types";
 
-type UserContextType = {
+type UsersContextType = {
     userRequests: UserType[];
     loading: boolean;
     error: string | null;
 };
 
-const UserContext = createContext<UserContextType>({
+export const UsersContext = createContext<UsersContextType>({
     userRequests: [],
     loading: false,
     error: null,
 });
 
 //fix this to not be any//
-export const UserProvider: React.FC<any> = ({ children }) => {
+export const UsersProvider: React.FC<any> = ({ children }) => {
     const [users, setUsers] = useState<UserType[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
@@ -36,15 +36,15 @@ export const UserProvider: React.FC<any> = ({ children }) => {
         fetchUsers();
     }, []);
 
-    const value: UserContextType = {
+    const value: UsersContextType = {
         userRequests: users,
         loading,
         error,
     };
 
     return (
-        <UserContext.Provider value={value}>{children}</UserContext.Provider>
+        <UsersContext.Provider value={value}>{children}</UsersContext.Provider>
     );
 };
 
-export default UserProvider;
+export default UsersProvider;

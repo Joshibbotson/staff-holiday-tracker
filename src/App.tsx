@@ -1,8 +1,8 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import Login from "./pages/Login"
-import Register from "./pages/Register"
-import Home from "./pages/home/Home"
-import Reset from "./pages/Reset"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Home from "./pages/home/Home";
+import Reset from "./pages/Reset";
 
 function App() {
     return (
@@ -14,7 +14,7 @@ function App() {
                 <Route path="/reset" element={<Reset />}></Route>
             </Routes>
         </BrowserRouter>
-    )
+    );
 }
 
-export default App
+export default App;

@@ -22,6 +22,8 @@ import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 // connectFirestoreEmulator(db, "localhost", 8080);
 // //////////
 
+// export const currentUserUID: string = auth.currentUser!.uid;
+
 export const updateUserData = async (
     userUID: string,
     name: string,
@@ -52,13 +54,12 @@ export const updateUserData = async (
 export async function getUserData(userUID: string) {
     try {
         const queryDb = query(
-            collection(db, "data"),
+            collection(db, "users"),
             where("uid", "==", userUID)
         );
         const querySnapShot = await getDocs(queryDb);
-        const userData = querySnapShot.docs.map(doc => ({
-            docID: doc.data().docID,
-            id: doc.data().id,
+        const currentUserData = querySnapShot.docs.map(doc => ({
+            uid: doc.data().uid,
             name: doc.data().name,
             admin: doc.data().admin,
             superAdmin: doc.data().superAdmin,
@@ -66,11 +67,11 @@ export async function getUserData(userUID: string) {
             remainingHolidays: doc.data().remainingHolidays,
             takenHolidays: doc.data().takenHolidays,
             flexTime: doc.data().flexTime,
-            birthday: doc.data().birthday,
         }));
-        return userData;
+        return currentUserData;
     } catch (error) {
         console.log(error);
+        throw new Error("Failed to list current user from database");
     }
 }
 
