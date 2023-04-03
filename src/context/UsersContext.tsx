@@ -3,13 +3,13 @@ import { listUsers } from "../firebase/firestore/firestore";
 import { UserType } from "../types";
 
 type UsersContextType = {
-    userRequests: UserType[];
+    users: UserType[];
     loading: boolean;
     error: string | null;
 };
 
 export const UsersContext = createContext<UsersContextType>({
-    userRequests: [],
+    users: [],
     loading: false,
     error: null,
 });
@@ -37,7 +37,7 @@ export const UsersProvider: React.FC<any> = ({ children }) => {
     }, []);
 
     const value: UsersContextType = {
-        userRequests: users,
+        users: users,
         loading,
         error,
     };

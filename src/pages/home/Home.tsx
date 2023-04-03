@@ -2,11 +2,13 @@ import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/auth/auth";
 import { useNavigate } from "react-router-dom";
-import Main from "../../components/Main";
+import Main from "../../components/calendar/Main";
 import UserPanel from "../../components/user-panel/UserPanel";
 import homeSCSS from "./home.module.scss";
-import UserProvider from "../../context/UserContext";
+import UsersProvider from "../../context/UsersContext";
 import CurrentUserProvider from "../../context/currentUserContext";
+import ApprovedReqsProvider from "../../context/ApprovedRequestContext";
+import RequestsProvider from "../../context/RequestContext";
 
 const Home = () => {
     const [user, loading, error] = useAuthState(auth);
@@ -21,12 +23,16 @@ const Home = () => {
     return (
         <>
             <div className={homeSCSS.homeContainer}>
-                <CurrentUserProvider>
-                    <UserProvider>
-                        <UserPanel />
-                        <Main />
-                    </UserProvider>
-                </CurrentUserProvider>
+                <ApprovedReqsProvider>
+                    <RequestsProvider>
+                        <CurrentUserProvider>
+                            <UsersProvider>
+                                <UserPanel />
+                                <Main />
+                            </UsersProvider>
+                        </CurrentUserProvider>
+                    </RequestsProvider>
+                </ApprovedReqsProvider>
             </div>
         </>
     );

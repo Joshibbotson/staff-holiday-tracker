@@ -1,22 +1,29 @@
 import { createContext, useState, useEffect } from "react";
-import { listRequests } from "../firebase/firestore/firestore";
-import { RequestsType } from "../types";
+import {
+    listApprovedRequests,
+    listRequests,
+} from "../firebase/firestore/firestore";
+import { ApprovedRequestsType } from "../types";
 
-type RequestContextType = {
-    requests: RequestsType[];
+type ApprovedRequestContextType = {
+    approvedRequests: ApprovedRequestsType[];
     loading: boolean;
     error: string | null;
 };
 
-const RequestContext = createContext<RequestContextType>({
-    userRequests: [],
-    loading: false,
-    error: null,
-});
+export const ApprovedRequestContext = createContext<ApprovedRequestContextType>(
+    {
+        approvedRequests: [],
+        loading: false,
+        error: null,
+    }
+);
 
 //fix this to not be any//
-export const UserProvider: React.FC<any> = ({ children }) => {
-    const [userRequests, setUserRequests] = useState<RequestsType[]>([]);
+export const ApprovedReqsProvider: React.FC<any> = ({ children }) => {
+    const [approvedReqs, setApprovedReqs] = useState<ApprovedRequestsType[]>(
+        []
+    );
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -24,8 +31,8 @@ export const UserProvider: React.FC<any> = ({ children }) => {
         const fetchRequests = async () => {
             setLoading(true);
             try {
-                const data = await listRequests();
-                setUserRequests(data);
+                const data = await listApprovedRequests();
+                setApprovedReqs(data);
                 setLoading(false);
             } catch (error) {
                 const anyError: any = error;
@@ -36,15 +43,17 @@ export const UserProvider: React.FC<any> = ({ children }) => {
         fetchRequests();
     }, []);
 
-    const value: UserContextType = {
-        userRequests,
+    const value: ApprovedRequestContextType = {
+        approvedRequests: approvedReqs,
         loading,
         error,
     };
 
     return (
-        <UserContext.Provider value={value}>{children}</UserContext.Provider>
+        <ApprovedRequestContext.Provider value={value}>
+            {children}
+        </ApprovedRequestContext.Provider>
     );
 };
 
-export default UserProvider;
+export default ApprovedReqsProvider;

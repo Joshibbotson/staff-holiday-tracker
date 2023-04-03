@@ -1,7 +1,6 @@
 import { logout } from "../../firebase/auth/auth";
 import userPanelSCSS from "./userPanel.module.scss";
 import { useContext, useState } from "react";
-import { updateUserData } from "../../firebase/firestore/firestore";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import Button from "@mui/material/Button";
@@ -12,7 +11,6 @@ const UserPanel = () => {
     const [showUserPanel, setShowUserPanel] = useState(true); //context this
     const { user } = useContext(CurrentUserContext);
 
-    console.log(user[0]);
     return (
         <>
             <div className={userPanelSCSS.userPanelContainer}>
@@ -21,20 +19,20 @@ const UserPanel = () => {
                         <div className={userPanelSCSS.profileImg}>
                             <AccountCircleIcon />
                         </div>
-                        <h2>{user ? user[0].name : "Human"}</h2>
+                        <h2>{user[0] ? user[0].name : "Human"}</h2>
                     </div>
                     <div className={userPanelSCSS.dashboard}>
-                        {user
+                        {user[0]
                             ? `Remaining Holidays: ${user[0].remainingHolidays}`
                             : "Human"}
                     </div>
                     <div className={userPanelSCSS.calendar}>
-                        {user
+                        {user[0]
                             ? `Taken Holidays: ${user[0].takenHolidays}`
                             : "Human"}
                     </div>
                     <div className={userPanelSCSS.calendar}>
-                        {user
+                        {user[0]
                             ? `Accrued Flexi Time: ${user[0].flexTime}`
                             : "Human"}
                     </div>
