@@ -25,18 +25,13 @@ function Main() {
         }
     }, [approvedRequests]);
 
-    const holidays = [
-        {
-            name: "John",
-            start: new Date(2023, 3, 1),
-            end: new Date(2023, 3, 5),
-        },
-        {
-            name: "Jane",
-            start: new Date(2023, 3, 15),
-            end: new Date(2023, 3, 20),
-        },
-    ];
+    const holidays = approvedRequestsState?.map(req => {
+        return {
+            name: req.requestedBy,
+            start: new Date(req.dateStart.toDate().toDateString()),
+            end: new Date(req.dateEnd.toDate().toDateString()),
+        };
+    });
 
     return (
         <>
@@ -62,7 +57,7 @@ function Main() {
                           );
                       })
                     : ""}
-                <Calendar month={4} year={2023} holidays={holidays} />
+                <Calendar month={3} year={2023} holidays={holidays} />
             </div>
         </>
     );

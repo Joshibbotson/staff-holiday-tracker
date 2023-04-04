@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     width: 100%;
     height: 100%;
     border: 1px solid black;
@@ -17,38 +18,41 @@
     border-bottom: 1px solid black;
 }
 
-.calendar-table {
+table {
     display: table;
     border-collapse: collapse;
     margin: 10px;
+    width: 100%;
+    height: 100%;
 }
 
-.calendar-table thead tr {
+table thead tr {
     font-weight: bold;
     text-align: center;
     border-bottom: 1px solid black;
 }
 
-.calendar-table thead td {
+table thead td {
     padding: 10px;
 }
 
-.calendar-table tbody tr {
+table tbody tr {
     height: 40px;
     border-bottom: 1px solid black;
 }
 
-.calendar-table tbody td {
+table tbody td {
     text-align: center;
     padding: 5px;
+    // border: 1px solid;
 }
 
-.calendar-table tbody td:hover {
+table tbody td:hover {
     cursor: pointer;
     background-color: #f2f2f2;
 }
 
-.calendar-table tbody .holiday {
+table tbody .holiday {
     background-color: #ffe6e6;
 }
 

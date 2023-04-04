@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import "./calendar.scss";
+import { nanoid } from "nanoid";
 
 type Holiday = {
     name: string;
@@ -49,7 +50,7 @@ const Calendar = ({ month, year, holidays }: Props) => {
     return (
         <div className="calendar-container">
             <div className="calendar-header"></div>
-            <table>
+            <table className="calender-table">
                 <thead>
                     <tr>
                         <th>Sun</th>
