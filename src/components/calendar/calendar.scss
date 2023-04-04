@@ -1,0 +1,60 @@
+.calendar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+}
+
+.calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    background-color: #eee;
+    border-bottom: 1px solid black;
+}
+
+.calendar-table {
+    display: table;
+    border-collapse: collapse;
+    margin: 10px;
+}
+
+.calendar-table thead tr {
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 1px solid black;
+}
+
+.calendar-table thead td {
+    padding: 10px;
+}
+
+.calendar-table tbody tr {
+    height: 40px;
+    border-bottom: 1px solid black;
+}
+
+.calendar-table tbody td {
+    text-align: center;
+    padding: 5px;
+}
+
+.calendar-table tbody td:hover {
+    cursor: pointer;
+    background-color: #f2f2f2;
+}
+
+.calendar-table tbody .holiday {
+    background-color: #ffe6e6;
+}
+
+@media only screen and (min-width: 768px) {
+    .calendar-container {
+        width: 768px;
+        height: 768px;
+    }
+}

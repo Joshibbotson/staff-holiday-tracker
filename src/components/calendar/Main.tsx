@@ -5,6 +5,7 @@ import { ApprovedRequestsType } from "../../types/ApprovedRequests.type";
 import { RequestsType } from "../../types/Requests.type";
 import { UserType } from "../../types/UserType.type";
 import { ApprovedRequestContext } from "../../context/ApprovedRequestContext";
+import Calendar from "./CreateCalendar";
 
 function Main() {
     const [user, loading, error] = useAuthState(auth);
@@ -24,38 +25,18 @@ function Main() {
         }
     }, [approvedRequests]);
 
-    // const getApprovedRequestsFromFirebase = async () => {
-    //     if (user) {
-    //         const fetchedApprovedRequests: ApprovedRequestsType[] =
-    //             await listApprovedRequests();
-    //         if (fetchedApprovedRequests) {
-    //             setApprovedRequests(fetchedApprovedRequests);
-    //         } else {
-    //             return null;
-    //         }
-    //     }
-    // };
-    // const getRequestsFromFirebase = async () => {
-    //     if (user) {
-    //         const fetchedRequests: RequestsType[] = await listRequests();
-    //         if (fetchedRequests) {
-    //             setRequests(fetchedRequests);
-    //         } else {
-    //             return null;
-    //         }
-    //     }
-    // };
-    // const getUsersFromFirebase = async () => {
-    //     if (user) {
-    //         const fetchedUsers: UserType[] = await listUsers();
-    //         if (fetchedUsers) {
-    //             setUsers(fetchedUsers);
-    //         } else {
-    //             return null;
-    //         }
-    //     }
-    // };
-    // getApprovedRequestsFromFirebase();
+    const holidays = [
+        {
+            name: "John",
+            start: new Date(2023, 3, 1),
+            end: new Date(2023, 3, 5),
+        },
+        {
+            name: "Jane",
+            start: new Date(2023, 3, 15),
+            end: new Date(2023, 3, 20),
+        },
+    ];
 
     return (
         <>
@@ -81,6 +62,7 @@ function Main() {
                           );
                       })
                     : ""}
+                <Calendar month={4} year={2023} holidays={holidays} />
             </div>
         </>
     );

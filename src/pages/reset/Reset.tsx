@@ -1,17 +1,17 @@
-import { useEffect, useState } from "react"
-import { useAuthState } from "react-firebase-hooks/auth"
-import { useNavigate } from "react-router-dom"
-import { Link } from "react-router-dom"
-import { auth, sendPasswordReset } from "../firebase/auth/auth"
-import resetSCSS from "./reset.module.scss"
+import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { auth, sendPasswordReset } from "../../firebase/auth/auth";
+import resetSCSS from "./reset.module.scss";
 function Reset() {
-    const [email, setEmail] = useState("")
-    const [user, loading, error] = useAuthState(auth)
-    const navigate = useNavigate()
+    const [email, setEmail] = useState("");
+    const [user, loading, error] = useAuthState(auth);
+    const navigate = useNavigate();
     useEffect(() => {
-        if (loading) return
-        if (user) navigate("/dashboard")
-    }, [user, loading])
+        if (loading) return;
+        if (user) navigate("/dashboard");
+    }, [user, loading]);
     return (
         <div className={resetSCSS.reset}>
             <div className={resetSCSS.graphic}></div>
@@ -35,6 +35,6 @@ function Reset() {
                 </div>
             </div>
         </div>
-    )
+    );
 }
-export default Reset
+export default Reset;

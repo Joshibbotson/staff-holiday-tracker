@@ -5,8 +5,8 @@ import {
     auth,
     signInWithGoogle,
     registerWithEmailAndPassword,
-} from "../firebase/auth/auth";
-import { updateUserData } from "../firebase/firestore/firestore";
+} from "../../firebase/auth/auth";
+import { updateUserData } from "../../firebase/firestore/firestore";
 import registerSCSS from "./register.module.scss";
 
 function Register() {
