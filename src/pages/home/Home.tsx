@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/auth/auth";
 import { useNavigate } from "react-router-dom";
-import Main from "../../components/calendar/Main";
+import Main from "../../components/main/Main";
 import UserPanel from "../../components/user-panel/UserPanel";
 import homeSCSS from "./home.module.scss";
 import UsersProvider from "../../context/UsersContext";

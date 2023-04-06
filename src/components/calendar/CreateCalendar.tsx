@@ -16,16 +16,21 @@ type Props = {
 
 const Calendar = ({ month, year, holidays }: Props) => {
     const [days, setDays] = useState<Date[]>([]);
+    const [prevMonthDays, setPrevMonthDays] = useState<Date[]>([]);
 
     useEffect(() => {
         const date = new Date(year, month - 1, 1);
         const firstDayOfWeek = date.getDay();
         const lastDayOfMonth = new Date(year, month, 0).getDate();
 
+        // Create an array of Date objects representing the days of the previous month that appear in the current month's calendar
         const prevMonthDays = Array.from(
+            // Create an object with a length property set to firstDayOfWeek
             { length: firstDayOfWeek },
+            // For each element in the array, create a new Date object for the corresponding day of the previous month
             (_, i) => new Date(year, month - 1, 1 - firstDayOfWeek + i)
         );
+
         const thisMonthDays = Array.from(
             { length: lastDayOfMonth },
             (_, i) => new Date(year, month - 1, i + 1)
@@ -36,6 +41,7 @@ const Calendar = ({ month, year, holidays }: Props) => {
         );
 
         setDays([...prevMonthDays, ...thisMonthDays, ...nextMonthDays]);
+        setPrevMonthDays([...prevMonthDays]);
     }, [month, year]);
 
     const getHolidayColor = (date: Date) => {
@@ -63,6 +69,7 @@ const Calendar = ({ month, year, holidays }: Props) => {
                     </tr>
                 </thead>
                 <tbody>
+                    {/* creates 6 table rows */}
                     {[0, 1, 2, 3, 4, 5].map(weekIndex => (
                         <tr key={weekIndex}>
                             {days

@@ -5,7 +5,7 @@ import { ApprovedRequestsType } from "../../types/ApprovedRequests.type";
 import { RequestsType } from "../../types/Requests.type";
 import { UserType } from "../../types/UserType.type";
 import { ApprovedRequestContext } from "../../context/ApprovedRequestContext";
-import Calendar from "./CreateCalendar";
+import Calendar from "../calendar/CreateCalendar";
 
 function Main() {
     const [user, loading, error] = useAuthState(auth);
