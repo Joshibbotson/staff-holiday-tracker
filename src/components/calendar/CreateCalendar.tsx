@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import "./calendar.scss";
+import SCSS from "./calendar.module.scss";
 import { nanoid } from "nanoid";
 
 type Holiday = {
@@ -11,7 +11,7 @@ type Holiday = {
 type Props = {
     month: number;
     year: number;
-    holidays: Holiday[];
+    holidays: Holiday[] | undefined;
 };
 
 const Calendar = ({ month, year, holidays }: Props) => {
@@ -45,7 +45,7 @@ const Calendar = ({ month, year, holidays }: Props) => {
     }, [month, year]);
 
     const getHolidayColor = (date: Date) => {
-        const holiday = holidays.find(h => date >= h.start && date <= h.end);
+        const holiday = holidays?.find(h => date >= h.start && date <= h.end);
         return holiday ? "blue" : "black";
     };
 
@@ -54,9 +54,8 @@ const Calendar = ({ month, year, holidays }: Props) => {
     };
 
     return (
-        <div className="calendar-container">
-            <div className="calendar-header"></div>
-            <table className="calender-table">
+        <div className={SCSS.calendar}>
+            <table className={SCSS.calender__table}>
                 <thead>
                     <tr>
                         <th>Sun</th>

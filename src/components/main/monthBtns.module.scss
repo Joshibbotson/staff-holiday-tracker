@@ -1,0 +1,19 @@
+.btnBar {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgb(38, 166, 154);
+
+    button {
+        background: none;
+        border: none;
+        color: rgba(255, 255, 255, 0.594);
+        cursor: pointer;
+        height: 3rem;
+        width: 3rem;
+    }
+    button:hover {
+        color: white;
+    }
+}

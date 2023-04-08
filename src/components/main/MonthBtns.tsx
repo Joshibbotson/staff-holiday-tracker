@@ -1,6 +1,7 @@
 import { nanoid } from "nanoid";
 import { SelectedMonthContext } from "../../context/SelectedMonth";
 import { useContext } from "react";
+import SCSS from "./monthBtns.module.scss";
 
 export const MonthBtns = () => {
     const { month, updateMonth } = useContext(SelectedMonthContext);
@@ -10,7 +11,7 @@ export const MonthBtns = () => {
         updateMonth(month);
     }
     return (
-        <div>
+        <div className={SCSS.btnBar}>
             {[
                 "Jan",
                 "Feb",

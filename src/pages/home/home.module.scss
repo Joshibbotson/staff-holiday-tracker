@@ -1,8 +1,9 @@
 .homeContainer {
     height: 100svh;
-    width: 100%;
-    display: grid;
-    grid-template-columns: 20rem 70%;
+    scroll-behavior: smooth;
+    display: flex;
+    flex-direction: column;
+    overflow-x: hidden;
 }
 
 /* Small devices (tablets) */
@@ -11,18 +12,27 @@
 
 /* Medium devices (desktops) */
 @media only screen and (min-width: 768px) and (max-width: 992px) {
+    .homeContainer {
+        height: 100svh;
+        display: grid;
+        grid-template-columns: 20% 80%;
+    }
 }
 
 /* Large devices (large desktops) */
 @media only screen and (min-width: 992px) and (max-width: 1200px) {
+    .homeContainer {
+        height: 100svh;
+        display: grid;
+        grid-template-columns: 20% 80%;
+    }
 }
 
 /* Extra large devices (extra large desktops) */
 @media only screen and (min-width: 1200px) {
     .homeContainer {
         height: 100svh;
-        width: 100%;
         display: grid;
-        grid-template-columns: 20rem 70%;
+        grid-template-columns: 20% 80%;
     }
 }

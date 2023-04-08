@@ -8,6 +8,7 @@ import { ApprovedRequestContext } from "../../context/ApprovedRequestContext";
 import Calendar from "../calendar/CreateCalendar";
 import { SelectedMonthContext } from "../../context/SelectedMonth";
 import { MonthBtns } from "./MonthBtns";
+import SCSS from "./main.module.scss";
 
 function Main() {
     const { month } = useContext(SelectedMonthContext);
@@ -39,9 +40,9 @@ function Main() {
     console.log(month);
     return (
         <>
-            <div>
+            <main className={SCSS.mainContainer}>
                 <MonthBtns />
-                {approvedRequestsState
+                {/* {approvedRequestsState
                     ? approvedRequestsState.map(req => {
                           return (
                               <>
@@ -60,9 +61,9 @@ function Main() {
                               </>
                           );
                       })
-                    : ""}
+                    : ""} */}
                 <Calendar month={month + 1} year={2023} holidays={holidays} />
-            </div>
+            </main>
         </>
     );
 }
