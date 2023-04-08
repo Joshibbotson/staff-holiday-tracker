@@ -6,8 +6,11 @@ import { RequestsType } from "../../types/Requests.type";
 import { UserType } from "../../types/UserType.type";
 import { ApprovedRequestContext } from "../../context/ApprovedRequestContext";
 import Calendar from "../calendar/CreateCalendar";
+import { SelectedMonthContext } from "../../context/SelectedMonth";
+import { MonthBtns } from "./MonthBtns";
 
 function Main() {
+    const { month } = useContext(SelectedMonthContext);
     const [user, loading, error] = useAuthState(auth);
     const [approvedRequestsState, setApprovedRequestsState] = useState<
         ApprovedRequestsType[] | undefined
@@ -33,10 +36,11 @@ function Main() {
         };
     });
 
+    console.log(month);
     return (
         <>
             <div>
-                Main
+                <MonthBtns />
                 {approvedRequestsState
                     ? approvedRequestsState.map(req => {
                           return (
@@ -57,7 +61,7 @@ function Main() {
                           );
                       })
                     : ""}
-                <Calendar month={3} year={2023} holidays={holidays} />
+                <Calendar month={month + 1} year={2023} holidays={holidays} />
             </div>
         </>
     );

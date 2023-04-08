@@ -1,6 +1,14 @@
-import React from "react";
+import { nanoid } from "nanoid";
+import { SelectedMonthContext } from "../../context/SelectedMonth";
+import { useContext } from "react";
 
 export const MonthBtns = () => {
+    const { month, updateMonth } = useContext(SelectedMonthContext);
+    const months = [];
+
+    function handleClick(month: number) {
+        updateMonth(month);
+    }
     return (
         <div>
             {[
@@ -16,8 +24,17 @@ export const MonthBtns = () => {
                 "Oct",
                 "Nov",
                 "Dec",
-            ].map(month => {
-                return <button>{month}</button>;
+            ].map((month, i) => {
+                return (
+                    <button
+                        key={nanoid()}
+                        onClick={() => {
+                            handleClick(i);
+                        }}
+                    >
+                        {month}
+                    </button>
+                );
             })}
         </div>
     );
