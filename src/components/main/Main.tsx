@@ -42,7 +42,7 @@ function Main() {
         <>
             <main className={SCSS.mainContainer}>
                 <MonthBtns />
-                {/* {approvedRequestsState
+                {approvedRequestsState
                     ? approvedRequestsState.map(req => {
                           return (
                               <>
@@ -61,8 +61,8 @@ function Main() {
                               </>
                           );
                       })
-                    : ""} */}
-                <Calendar month={month + 1} year={2023} holidays={holidays} />
+                    : ""}
+                <Calendar month={month} year={2023} holidays={holidays} />
             </main>
         </>
     );

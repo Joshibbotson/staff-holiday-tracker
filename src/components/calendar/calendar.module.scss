@@ -31,6 +31,9 @@
     }
 }
 
+.calendar__dayHoliday {
+    background-color: red;
+}
 @media only screen and (min-width: 768px) {
     .calendar-container {
         width: 768px;

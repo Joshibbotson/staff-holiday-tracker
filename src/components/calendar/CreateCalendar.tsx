@@ -15,11 +15,13 @@ type Props = {
 };
 
 const Calendar = ({ month, year, holidays }: Props) => {
+    console.log(month);
     const [days, setDays] = useState<Date[]>([]);
     const [prevMonthDays, setPrevMonthDays] = useState<Date[]>([]);
+    const [nextMonthDays, setNextMonthDays] = useState<Date[]>([]);
 
     useEffect(() => {
-        const date = new Date(year, month - 1, 1);
+        const date = new Date(year, month, 1);
         const firstDayOfWeek = date.getDay();
         const lastDayOfMonth = new Date(year, month, 0).getDate();
 
@@ -28,29 +30,52 @@ const Calendar = ({ month, year, holidays }: Props) => {
             // Create an object with a length property set to firstDayOfWeek
             { length: firstDayOfWeek },
             // For each element in the array, create a new Date object for the corresponding day of the previous month
-            (_, i) => new Date(year, month - 1, 1 - firstDayOfWeek + i)
+            (_, i) => new Date(year, month, 1 - firstDayOfWeek + i)
         );
 
         const thisMonthDays = Array.from(
             { length: lastDayOfMonth },
-            (_, i) => new Date(year, month - 1, i + 1)
+            (_, i) => new Date(year, month, i + 1)
         );
         const nextMonthDays = Array.from(
             { length: 6 * 7 - (prevMonthDays.length + thisMonthDays.length) },
-            (_, i) => new Date(year, month, i + 1)
+            (_, i) => new Date(year, month + 1, i + 1)
         );
 
         setDays([...prevMonthDays, ...thisMonthDays, ...nextMonthDays]);
         setPrevMonthDays([...prevMonthDays]);
+        setNextMonthDays([...nextMonthDays]);
     }, [month, year]);
 
     const getHolidayColor = (date: Date) => {
         const holiday = holidays?.find(h => date >= h.start && date <= h.end);
-        return holiday ? "blue" : "black";
+        return holiday ? SCSS.calendar__dayHoliday : "";
     };
 
     const handleDayClick = (date: Date) => {
         console.log(`Clicked on ${date.toLocaleDateString()}`);
+    };
+
+    const isWeekend = (dayIndex: number) => {
+        return dayIndex === 0 || dayIndex === 6;
+    };
+
+    const isToday = date;
+
+    const getDayClassName = (date: Date): string => {
+        const holiday = holidays?.find(h => date >= h.start && date <= h.end);
+
+        if (date.getMonth() !== month) {
+            return SCSS.calendar__dayOtherMonth;
+        } else if (new Date().toDateString() === date.toDateString()) {
+            return `${SCSS.calendar__day} ${SCSS.calendar__dayToday}`;
+        } else if (holiday) {
+            return `${SCSS.calendar__day} ${SCSS.calendar__dayHoliday}`;
+        } else if (date.getDay() === 0 || date.getDay() === 6) {
+            return `${SCSS.calendar__day} ${SCSS.calendar__dayWeekend}`;
+        } else {
+            return SCSS.calendar__day;
+        }
     };
 
     return (
@@ -58,13 +83,13 @@ const Calendar = ({ month, year, holidays }: Props) => {
             <table className={SCSS.calender__table}>
                 <thead>
                     <tr>
-                        <th>Sun</th>
+                        <th className={SCSS.calendar__titleWeekend}>Sun</th>
                         <th>Mon</th>
                         <th>Tue</th>
                         <th>Wed</th>
                         <th>Thu</th>
                         <th>Fri</th>
-                        <th>Sat</th>
+                        <th className={SCSS.calendar__titleWeekend}>Sat</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -76,7 +101,22 @@ const Calendar = ({ month, year, holidays }: Props) => {
                                 .map((date, dayIndex) => (
                                     <td
                                         key={weekIndex * 7 + dayIndex}
-                                        style={{ color: getHolidayColor(date) }}
+                                        className={
+                                            prevMonthDays.includes(date)
+                                                ? SCSS.calendar__prevMonth
+                                                : nextMonthDays.includes(date)
+                                                ? SCSS.calendar__NextMonth
+                                                : isWeekend(date.getDay())
+                                                ? SCSS.calendar__weekend
+                                                : getHolidayColor(date)
+                                        }
+                                        style={{
+                                            color:
+                                                prevMonthDays.includes(date) ||
+                                                nextMonthDays.includes(date)
+                                                    ? "grey"
+                                                    : getHolidayColor(date),
+                                        }}
                                         onClick={() => handleDayClick(date)}
                                     >
                                         {date.getDate()}

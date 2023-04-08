@@ -7,8 +7,9 @@ export const MonthBtns = () => {
     const { month, updateMonth } = useContext(SelectedMonthContext);
     const months = [];
 
-    function handleClick(month: number) {
-        updateMonth(month);
+    function handleClick(newMonth: number) {
+        console.log(newMonth);
+        updateMonth(newMonth);
     }
     return (
         <div className={SCSS.btnBar}>
