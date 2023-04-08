@@ -30,9 +30,26 @@
         background-color: #ffe6e6;
     }
 }
-
-.calendar__dayHoliday {
-    background-color: red;
+td {
+    font-size: 1.3rem;
+}
+.calendar__day {
+}
+.calendar__prevMonth {
+    color: rgb(212, 212, 212);
+}
+.calendar__nextMonth {
+    color: rgb(212, 212, 212);
+}
+.calendar__weekend {
+    background-color: rgb(221, 221, 221);
+}
+.calendar__holiday {
+    background-color: rgb(184, 237, 184);
+}
+.calendar__weekendDiffMonth {
+    background-color: rgb(221, 221, 221);
+    color: rgb(141, 140, 140);
 }
 @media only screen and (min-width: 768px) {
     .calendar-container {

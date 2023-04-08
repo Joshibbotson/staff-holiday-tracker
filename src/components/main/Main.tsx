@@ -46,7 +46,7 @@ function Main() {
                     ? approvedRequestsState.map(req => {
                           return (
                               <>
-                                  {console.log(
+                                  {/* {console.log(
                                       req?.dateEnd.toDate().toDateString()
                                   )}
                                   <li> {req?.requestedBy}</li>
@@ -57,7 +57,7 @@ function Main() {
                                   <li>
                                       {" "}
                                       {req?.dateEnd.toDate().toDateString()}
-                                  </li>
+                                  </li> */}
                               </>
                           );
                       })

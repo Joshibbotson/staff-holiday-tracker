@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import SCSS from "./calendar.module.scss";
-import { nanoid } from "nanoid";
 
 type Holiday = {
     name: string;
@@ -15,7 +14,6 @@ type Props = {
 };
 
 const Calendar = ({ month, year, holidays }: Props) => {
-    console.log(month);
     const [days, setDays] = useState<Date[]>([]);
     const [prevMonthDays, setPrevMonthDays] = useState<Date[]>([]);
     const [nextMonthDays, setNextMonthDays] = useState<Date[]>([]);
@@ -23,7 +21,7 @@ const Calendar = ({ month, year, holidays }: Props) => {
     useEffect(() => {
         const date = new Date(year, month, 1);
         const firstDayOfWeek = date.getDay();
-        const lastDayOfMonth = new Date(year, month, 0).getDate();
+        const lastDayOfMonth = new Date(year, month + 1, 0).getDate();
 
         // Create an array of Date objects representing the days of the previous month that appear in the current month's calendar
         const prevMonthDays = Array.from(
@@ -49,30 +47,31 @@ const Calendar = ({ month, year, holidays }: Props) => {
 
     const getHolidayColor = (date: Date) => {
         const holiday = holidays?.find(h => date >= h.start && date <= h.end);
-        return holiday ? SCSS.calendar__dayHoliday : "";
+        return holiday ? true : false;
     };
 
     const handleDayClick = (date: Date) => {
-        console.log(`Clicked on ${date.toLocaleDateString()}`);
+        console.log(`Clicked on ${date}`);
     };
 
     const isWeekend = (dayIndex: number) => {
         return dayIndex === 0 || dayIndex === 6;
     };
 
-    const isToday = date;
-
-    const getDayClassName = (date: Date): string => {
-        const holiday = holidays?.find(h => date >= h.start && date <= h.end);
-
-        if (date.getMonth() !== month) {
-            return SCSS.calendar__dayOtherMonth;
-        } else if (new Date().toDateString() === date.toDateString()) {
-            return `${SCSS.calendar__day} ${SCSS.calendar__dayToday}`;
-        } else if (holiday) {
-            return `${SCSS.calendar__day} ${SCSS.calendar__dayHoliday}`;
-        } else if (date.getDay() === 0 || date.getDay() === 6) {
-            return `${SCSS.calendar__day} ${SCSS.calendar__dayWeekend}`;
+    const getClassName = (date: Date) => {
+        if (
+            (isWeekend(date.getDay()) && prevMonthDays.includes(date)) ||
+            (isWeekend(date.getDay()) && nextMonthDays.includes(date))
+        ) {
+            return SCSS.calendar__weekendDiffMonth;
+        } else if (prevMonthDays.includes(date)) {
+            return SCSS.calendar__prevMonth;
+        } else if (nextMonthDays.includes(date)) {
+            return SCSS.calendar__nextMonth;
+        } else if (isWeekend(date.getDay())) {
+            return SCSS.calendar__weekend;
+        } else if (getHolidayColor(date)) {
+            return SCSS.calendar__holiday;
         } else {
             return SCSS.calendar__day;
         }
@@ -101,22 +100,7 @@ const Calendar = ({ month, year, holidays }: Props) => {
                                 .map((date, dayIndex) => (
                                     <td
                                         key={weekIndex * 7 + dayIndex}
-                                        className={
-                                            prevMonthDays.includes(date)
-                                                ? SCSS.calendar__prevMonth
-                                                : nextMonthDays.includes(date)
-                                                ? SCSS.calendar__NextMonth
-                                                : isWeekend(date.getDay())
-                                                ? SCSS.calendar__weekend
-                                                : getHolidayColor(date)
-                                        }
-                                        style={{
-                                            color:
-                                                prevMonthDays.includes(date) ||
-                                                nextMonthDays.includes(date)
-                                                    ? "grey"
-                                                    : getHolidayColor(date),
-                                        }}
+                                        className={getClassName(date)}
                                         onClick={() => handleDayClick(date)}
                                     >
                                         {date.getDate()}
