@@ -5,7 +5,6 @@ import SCSS from "./monthBtns.module.scss";
 
 export const MonthBtns = () => {
     const { month, updateMonth } = useContext(SelectedMonthContext);
-    const months = [];
 
     function handleClick(newMonth: number) {
         console.log(newMonth);

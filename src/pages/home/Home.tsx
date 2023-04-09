@@ -10,6 +10,7 @@ import CurrentUserProvider from "../../context/currentUserContext";
 import ApprovedReqsProvider from "../../context/ApprovedRequestContext";
 import RequestsProvider from "../../context/RequestContext";
 import { SelectedMonthProvider } from "../../context/SelectedMonth";
+import { SelectedYearProvider } from "../../context/SelectedYear";
 
 const Home = () => {
     const [user, loading, error] = useAuthState(auth);
@@ -24,18 +25,20 @@ const Home = () => {
     return (
         <>
             <div className={homeSCSS.homeContainer}>
-                <SelectedMonthProvider>
-                    <ApprovedReqsProvider>
-                        <RequestsProvider>
-                            <CurrentUserProvider>
-                                <UsersProvider>
-                                    <UserPanel />
-                                    <Main />
-                                </UsersProvider>
-                            </CurrentUserProvider>
-                        </RequestsProvider>
-                    </ApprovedReqsProvider>
-                </SelectedMonthProvider>
+                <SelectedYearProvider>
+                    <SelectedMonthProvider>
+                        <ApprovedReqsProvider>
+                            <RequestsProvider>
+                                <CurrentUserProvider>
+                                    <UsersProvider>
+                                        <UserPanel />
+                                        <Main />
+                                    </UsersProvider>
+                                </CurrentUserProvider>
+                            </RequestsProvider>
+                        </ApprovedReqsProvider>
+                    </SelectedMonthProvider>
+                </SelectedYearProvider>
             </div>
         </>
     );

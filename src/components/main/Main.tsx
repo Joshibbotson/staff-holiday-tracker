@@ -7,11 +7,14 @@ import { UserType } from "../../types/UserType.type";
 import { ApprovedRequestContext } from "../../context/ApprovedRequestContext";
 import Calendar from "../calendar/CreateCalendar";
 import { SelectedMonthContext } from "../../context/SelectedMonth";
+import { SelectedYearContext } from "../../context/SelectedYear";
 import { MonthBtns } from "./MonthBtns";
+import { YearBtns } from "./YearBtns";
 import SCSS from "./main.module.scss";
 
 function Main() {
     const { month } = useContext(SelectedMonthContext);
+    const { year } = useContext(SelectedYearContext);
     const [user, loading, error] = useAuthState(auth);
     const [approvedRequestsState, setApprovedRequestsState] = useState<
         ApprovedRequestsType[] | undefined
@@ -41,6 +44,7 @@ function Main() {
     return (
         <>
             <main className={SCSS.mainContainer}>
+                <YearBtns />
                 <MonthBtns />
                 {approvedRequestsState
                     ? approvedRequestsState.map(req => {
@@ -62,7 +66,7 @@ function Main() {
                           );
                       })
                     : ""}
-                <Calendar month={month} year={2023} holidays={holidays} />
+                <Calendar month={month} year={year} holidays={holidays} />
             </main>
         </>
     );
