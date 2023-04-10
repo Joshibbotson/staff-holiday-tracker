@@ -7,7 +7,6 @@ export const YearBtns = () => {
     const { year, updateYear } = useContext(SelectedYearContext);
 
     function handleClick(newYear: number) {
-        console.log(newYear);
         updateYear(newYear);
     }
     return (

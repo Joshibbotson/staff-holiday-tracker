@@ -11,9 +11,10 @@ type Props = {
     month: number;
     year: number;
     holidays: Holiday[] | undefined;
+    handleClick: () => void;
 };
 
-const Calendar = ({ month, year, holidays }: Props) => {
+const Calendar = ({ month, year, holidays, handleClick }: Props) => {
     const [days, setDays] = useState<Date[]>([]);
     const [prevMonthDays, setPrevMonthDays] = useState<Date[]>([]);
     const [nextMonthDays, setNextMonthDays] = useState<Date[]>([]);
@@ -48,10 +49,6 @@ const Calendar = ({ month, year, holidays }: Props) => {
     const getHolidayColor = (date: Date) => {
         const holiday = holidays?.find(h => date >= h.start && date <= h.end);
         return holiday ? true : false;
-    };
-
-    const handleDayClick = (date: Date) => {
-        console.log(`Clicked on ${date}`);
     };
 
     const isWeekend = (dayIndex: number) => {
@@ -101,7 +98,7 @@ const Calendar = ({ month, year, holidays }: Props) => {
                                     <td
                                         key={weekIndex * 7 + dayIndex}
                                         className={getClassName(date)}
-                                        onClick={() => handleDayClick(date)}
+                                        onClick={() => handleClick()}
                                     >
                                         {date.getDate()}
                                     </td>

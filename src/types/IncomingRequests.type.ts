@@ -1,6 +1,6 @@
 import { Timestamp } from "firebase-admin/firestore";
 
-export interface RequestsType {
+export interface IncomingRequestsType {
     approver: string;
     dateEnd: Timestamp;
     dateStart: Timestamp;

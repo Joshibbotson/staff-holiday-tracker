@@ -1,9 +1,9 @@
 import { createContext, useState, useEffect } from "react";
 import { listRequests } from "../firebase/firestore/firestore";
-import { RequestsType } from "../types";
+import { IncomingRequestsType } from "../types";
 
 type RequestContextType = {
-    requests: RequestsType[];
+    requests: IncomingRequestsType[];
     loading: boolean;
     error: string | null;
 };
@@ -16,7 +16,9 @@ const RequestContext = createContext<RequestContextType>({
 
 //fix this to not be any//
 export const RequestsProvider: React.FC<any> = ({ children }) => {
-    const [userRequests, setUserRequests] = useState<RequestsType[]>([]);
+    const [userRequests, setUserRequests] = useState<IncomingRequestsType[]>(
+        []
+    );
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 

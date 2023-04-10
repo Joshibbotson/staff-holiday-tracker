@@ -2,15 +2,16 @@ import { auth } from "../../firebase/auth/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useContext, useState, useEffect } from "react";
 import { ApprovedRequestsType } from "../../types/ApprovedRequests.type";
-import { RequestsType } from "../../types/Requests.type";
+import { IncomingRequestsType } from "../../types/IncomingRequests.type";
 import { UserType } from "../../types/UserType.type";
 import { ApprovedRequestContext } from "../../context/ApprovedRequestContext";
-import Calendar from "../calendar/CreateCalendar";
+import Calendar from "./calendar/CreateCalendar";
 import { SelectedMonthContext } from "../../context/SelectedMonth";
 import { SelectedYearContext } from "../../context/SelectedYear";
 import { MonthBtns } from "./MonthBtns";
 import { YearBtns } from "./YearBtns";
 import SCSS from "./main.module.scss";
+import RequestModal from "./request-modal/RequestModal";
 
 function Main() {
     const { month } = useContext(SelectedMonthContext);
@@ -19,11 +20,12 @@ function Main() {
     const [approvedRequestsState, setApprovedRequestsState] = useState<
         ApprovedRequestsType[] | undefined
     >(undefined);
-    const [requests, setRequests] = useState<RequestsType[] | undefined>(
-        undefined
-    );
+    const [requests, setRequests] = useState<
+        IncomingRequestsType[] | undefined
+    >(undefined);
     const [users, setUsers] = useState<UserType[] | undefined>(undefined);
     const { approvedRequests } = useContext(ApprovedRequestContext);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         if (approvedRequests) {
@@ -40,12 +42,18 @@ function Main() {
         };
     });
 
+    function handleClick() {
+        setShowModal(!showModal);
+        console.log("mod");
+    }
+
     console.log(month);
     return (
         <>
             <main className={SCSS.mainContainer}>
                 <YearBtns />
                 <MonthBtns />
+
                 {approvedRequestsState
                     ? approvedRequestsState.map(req => {
                           return (
@@ -66,8 +74,14 @@ function Main() {
                           );
                       })
                     : ""}
-                <Calendar month={month} year={year} holidays={holidays} />
+                <Calendar
+                    month={month}
+                    year={year}
+                    holidays={holidays}
+                    handleClick={handleClick}
+                />
             </main>
+            {showModal ? <RequestModal handleClick={handleClick} /> : ""}
         </>
     );
 }

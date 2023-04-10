@@ -14,7 +14,8 @@ import * as admin from "firebase-admin";
 import { app } from "firebase-admin";
 import { UserType } from "../../types/UserType.type";
 import { ApprovedRequestsType } from "../../types/ApprovedRequests.type";
-import { RequestsType } from "../../types/Requests.type";
+import { IncomingRequestsType } from "../../types/IncomingRequests.type";
+import { OutgoingRequestData } from "../../types/OutgoingRequestData.type";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 
 // //firebase emulator//
@@ -113,7 +114,7 @@ export async function listApprovedRequests(): Promise<ApprovedRequestsType[]> {
     }
 }
 
-export async function listRequests(): Promise<RequestsType[]> {
+export async function listRequests(): Promise<IncomingRequestsType[]> {
     try {
         const queryDb = query(collection(db, "requests"));
         const querySnapShot = await getDocs(queryDb);
@@ -128,6 +129,16 @@ export async function listRequests(): Promise<RequestsType[]> {
     } catch (error) {
         console.log(error);
         throw new Error("Failed to list requests from database");
+    }
+}
+
+export async function addRequest(request: OutgoingRequestData): Promise<void> {
+    try {
+        const requestsCollection = collection(db, "requests");
+        await addDoc(requestsCollection, request);
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to add request to database");
     }
 }
 
