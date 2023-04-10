@@ -3,13 +3,19 @@ import userPanelSCSS from "./userPanel.module.scss";
 import { useContext, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
+import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
+import RequestModal from "../main/request-modal/RequestModal";
 
 import { CurrentUserContext } from "../../context/currentUserContext";
 
 const UserPanel = () => {
-    const [showUserPanel, setShowUserPanel] = useState(true); //context this
+    const [showUserPanel, setShowUserPanel] = useState<boolean>(true);
     const { user } = useContext(CurrentUserContext);
+    const [showModal, setShowModal] = useState<boolean>(false);
+    function handleClick() {
+        setShowModal(!showModal);
+    }
 
     return (
         <>
@@ -36,6 +42,17 @@ const UserPanel = () => {
                             ? `Accrued Flexi Time: ${user[0].flexTime}`
                             : "Human"}
                     </div>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        onClick={() => {
+                            handleClick();
+                        }}
+                        startIcon={<AddIcon />}
+                    >
+                        Make new Request
+                    </Button>
                 </div>
                 <div className={userPanelSCSS.bottomContainer}>
                     <div className={userPanelSCSS.settings}>settings</div>
@@ -54,6 +71,7 @@ const UserPanel = () => {
                     </Button>
                 </div>
             </div>
+            {showModal ? <RequestModal handleClick={handleClick} /> : ""}
         </>
     );
 };

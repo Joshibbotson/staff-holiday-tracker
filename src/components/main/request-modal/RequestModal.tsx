@@ -4,6 +4,7 @@ import { OutgoingRequestData } from "../../../types/OutgoingRequestData.type";
 import { useState } from "react";
 import { CurrentUserContext } from "../../../context/currentUserContext";
 import { useContext } from "react";
+import ClearIcon from "@mui/icons-material/Clear";
 interface Props {
     handleClick: () => void;
 }
@@ -31,16 +32,8 @@ export const RequestModal = ({ handleClick }: Props) => {
         handleAddRequest(newRequest);
     };
 
-    interface NewRequestData {
-        approver: string;
-        requestedBy: string;
-        dateStart: Date;
-        dateEnd: Date;
-        totalDays: number;
-    }
-
     const handleAddRequest = async (
-        newRequest: NewRequestData
+        newRequest: OutgoingRequestData
     ): Promise<void> => {
         try {
             await addRequest(newRequest);
@@ -59,7 +52,15 @@ export const RequestModal = ({ handleClick }: Props) => {
                 }}
             >
                 <div className={SCSS.modalCard} onClick={handleModalCardClick}>
-                    <p>this is a modal card</p>
+                    <button
+                        className={SCSS.modalCard__exitBtn}
+                        onClick={() => {
+                            handleClick();
+                        }}
+                    >
+                        <ClearIcon />
+                    </button>
+                    <h3>New Request</h3>
                     <form onSubmit={handleSubmit}>
                         <div className={SCSS.wrapper}>
                             <label htmlFor="approver">Approver: </label>
@@ -77,9 +78,10 @@ export const RequestModal = ({ handleClick }: Props) => {
                             <label htmlFor="requestedBy">Requested by: </label>
 
                             <input
+                                readOnly={true}
                                 name="requestedBy"
                                 type="text"
-                                value={requestedBy}
+                                value={user[0].name}
                                 onChange={event =>
                                     setRequestedBy(event.target.value)
                                 }
@@ -110,10 +112,10 @@ export const RequestModal = ({ handleClick }: Props) => {
                         </div>
                         <div className={SCSS.wrapper}>
                             <label htmlFor="totalDays">Total days: </label>
-
                             <input
                                 name="totalDays"
                                 type="number"
+                                step={0.5}
                                 value={totalDays}
                                 onChange={event =>
                                     setTotalDays(event.target.value)

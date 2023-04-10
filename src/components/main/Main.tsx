@@ -44,10 +44,8 @@ function Main() {
 
     function handleClick() {
         setShowModal(!showModal);
-        console.log("mod");
     }
 
-    console.log(month);
     return (
         <>
             <main className={SCSS.mainContainer}>
