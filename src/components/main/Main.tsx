@@ -8,10 +8,11 @@ import { ApprovedRequestContext } from "../../context/ApprovedRequestContext";
 import Calendar from "./calendar/CreateCalendar";
 import { SelectedMonthContext } from "../../context/SelectedMonth";
 import { SelectedYearContext } from "../../context/SelectedYear";
-import { MonthBtns } from "./MonthBtns";
-import { YearBtns } from "./YearBtns";
+import { MonthBtns } from "./month-btns/MonthBtns";
+import { YearBtns } from "./years-btns/YearBtns";
 import SCSS from "./main.module.scss";
 import RequestModal from "./request-modal/RequestModal";
+import { Requests } from "./requests/requests";
 
 function Main() {
     const { month } = useContext(SelectedMonthContext);
@@ -78,6 +79,7 @@ function Main() {
                     holidays={holidays}
                     handleClick={handleClick}
                 />
+                <Requests />
             </main>
             {showModal ? <RequestModal handleClick={handleClick} /> : ""}
         </>

@@ -1,27 +1,65 @@
 import SCSS from "./requestModal.module.scss";
 import { addRequest } from "../../../firebase/firestore/firestore";
 import { OutgoingRequestData } from "../../../types/OutgoingRequestData.type";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CurrentUserContext } from "../../../context/currentUserContext";
 import { useContext } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
+import { Button } from "@mui/material";
 interface Props {
     handleClick: () => void;
 }
 
 export const RequestModal = ({ handleClick }: Props) => {
     const { user } = useContext(CurrentUserContext);
+    const [approver, setApprover] = useState<string>("");
+    const [requestedBy, setRequestedBy] = useState<string>(user[0].name);
+    const [dateStart, setDateStart] = useState<string>("");
+    const [dateEnd, setDateEnd] = useState<string>("");
+    const [totalDays, setTotalDays] = useState<string>("");
+
     const handleModalCardClick = (event: React.MouseEvent<HTMLDivElement>) => {
         event.stopPropagation();
     };
-    const [approver, setApprover] = useState("");
-    const [requestedBy, setRequestedBy] = useState("");
-    const [dateStart, setDateStart] = useState("");
-    const [dateEnd, setDateEnd] = useState("");
-    const [totalDays, setTotalDays] = useState("");
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault();
+    const checkDate = (form: HTMLFormElement) => {
+        const startDate = new Date(dateStart);
+        const endDate = new Date(dateEnd);
+
+        if (endDate <= startDate) {
+            const dateEndInput = form.elements.namedItem(
+                "dateEnd"
+            ) as HTMLInputElement;
+            dateEndInput.setCustomValidity(
+                "End date should come after start date"
+            );
+            form.reportValidity();
+        }
+        if (startDate >= endDate) {
+            console.log("larger");
+            const dateStartInput = form.elements.namedItem(
+                "dateStart"
+            ) as HTMLInputElement;
+            dateStartInput.setCustomValidity(
+                "Start date should come before end date"
+            );
+            form.reportValidity();
+        } else {
+            const dateEndInput = form.elements.namedItem(
+                "dateEnd"
+            ) as HTMLInputElement;
+            dateEndInput.setCustomValidity("");
+        }
+    };
+
+    const handleSubmit = (
+        e: React.FormEvent<HTMLFormElement>,
+        form: HTMLFormElement
+    ) => {
+        console.log(e.currentTarget.form!);
+
+        e.preventDefault();
+
         const newRequest = {
             approver: approver,
             requestedBy: requestedBy,
@@ -61,67 +99,84 @@ export const RequestModal = ({ handleClick }: Props) => {
                         <ClearIcon />
                     </button>
                     <h3>New Request</h3>
-                    <form onSubmit={handleSubmit}>
+                    <form
+                        onSubmit={e => {
+                            handleSubmit(e, e.currentTarget.form!);
+                        }}
+                    >
                         <div className={SCSS.wrapper}>
                             <label htmlFor="approver">Approver: </label>
 
                             <input
+                                required
                                 name="approver"
                                 type="text"
                                 value={approver}
-                                onChange={event =>
-                                    setApprover(event.target.value)
-                                }
+                                onChange={e => setApprover(e.target.value)}
                             />
                         </div>
                         <div className={SCSS.wrapper}>
                             <label htmlFor="requestedBy">Requested by: </label>
 
                             <input
+                                required
                                 readOnly={true}
                                 name="requestedBy"
                                 type="text"
                                 value={user[0].name}
-                                onChange={event =>
-                                    setRequestedBy(event.target.value)
-                                }
                             />
                         </div>
                         <div className={SCSS.wrapper}>
                             <label htmlFor="dateStart">Date start: </label>
 
                             <input
+                                required
                                 name="dateStart"
                                 type="date"
                                 value={dateStart}
-                                onChange={event =>
-                                    setDateStart(event.target.value)
-                                }
+                                onChange={e => {
+                                    return (
+                                        setDateStart(e.target.value),
+                                        checkDate(e.currentTarget.form!)
+                                    );
+                                }}
                             />
                         </div>
                         <div className={SCSS.wrapper}>
                             <label htmlFor="dateEnd">Date end:</label>
 
                             <input
+                                required
                                 type="date"
                                 value={dateEnd}
-                                onChange={event =>
-                                    setDateEnd(event.target.value)
-                                }
+                                onChange={e => {
+                                    return (
+                                        setDateEnd(e.target.value),
+                                        checkDate(e.currentTarget.form!)
+                                    );
+                                }}
+                                name="dateEnd"
                             />
                         </div>
                         <div className={SCSS.wrapper}>
                             <label htmlFor="totalDays">Total days: </label>
                             <input
+                                required
                                 name="totalDays"
                                 type="number"
                                 step={0.5}
                                 value={totalDays}
-                                onChange={event =>
-                                    setTotalDays(event.target.value)
-                                }
+                                onChange={e => setTotalDays(e.target.value)}
                             />
                         </div>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            size="small"
+                            type="submit"
+                        >
+                            Submit Request
+                        </Button>{" "}
                     </form>
                 </div>
             </div>
