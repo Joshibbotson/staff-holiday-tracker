@@ -8,7 +8,7 @@ type RequestContextType = {
     error: string | null;
 };
 
-const RequestContext = createContext<RequestContextType>({
+export const RequestContext = createContext<RequestContextType>({
     requests: [],
     loading: false,
     error: null,

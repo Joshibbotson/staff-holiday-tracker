@@ -1,0 +1,58 @@
+.requestTable {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
+        sans-serif;
+    font-size: 1rem;
+    height: 100svh;
+    margin-top: auto;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    table {
+        display: table;
+        border-collapse: collapse;
+        margin: 1rem;
+        height: 100%;
+        width: 100%;
+
+        overflow-y: scroll;
+
+        th {
+            width: 10rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid rgb(170, 170, 170);
+            text-align: center;
+        }
+        tr {
+            height: 6rem;
+            border-bottom: 2px solid rgb(170, 170, 170);
+        }
+
+        td {
+            width: 5rem;
+            font-size: 1rem;
+            text-align: center;
+            position: relative;
+        }
+        .requestTable__td::before {
+            content: "";
+            width: 1rem;
+            height: 1rem;
+            background-color: orange;
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 1rem;
+            transform: translate(-50%, -50%);
+            /* Set the position and size of the pseudo-element */
+        }
+
+        table tbody td:hover {
+            cursor: pointer;
+            background-color: #f2f2f2;
+        }
+    }
+}

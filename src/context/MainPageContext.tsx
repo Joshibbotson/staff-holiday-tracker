@@ -22,11 +22,13 @@ export const MainPageProvider: React.FC<MainPageProps> = ({ children }) => {
     const [showRequests, setShowRequests] = useState<boolean>(false);
 
     const updateShowCalendar = () => {
-        setShowCalender(!showCalender);
+        setShowCalender(true);
+        setShowRequests(false);
     };
 
     const updateShowRequests = () => {
-        setShowRequests(!showRequests);
+        setShowRequests(true);
+        setShowCalender(false);
     };
 
     const value: MainPageContextType = {

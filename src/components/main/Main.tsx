@@ -13,11 +13,13 @@ import { YearBtns } from "./years-btns/YearBtns";
 import SCSS from "./main.module.scss";
 import RequestModal from "./request-modal/RequestModal";
 import Requests from "./requests/Requests";
+import { MainPageContext } from "../../context/MainPageContext";
 
 function Main() {
     const { month } = useContext(SelectedMonthContext);
     const { year } = useContext(SelectedYearContext);
     const { approvedRequests } = useContext(ApprovedRequestContext);
+    const { showCalendar, showRequests } = useContext(MainPageContext);
 
     const [user, loading, error] = useAuthState(auth);
     const [approvedRequestsState, setApprovedRequestsState] = useState<
@@ -29,8 +31,6 @@ function Main() {
     const [users, setUsers] = useState<UserType[] | undefined>(undefined);
 
     const [showModal, setShowModal] = useState(false);
-    const [showCalendar, setShowCalendar] = useState(true);
-    const [showRequests, setShowRequests] = useState(false);
 
     useEffect(() => {
         if (approvedRequests) {
@@ -54,15 +54,22 @@ function Main() {
     return (
         <>
             <main className={SCSS.mainContainer}>
-                <YearBtns />
-                <MonthBtns />
-                <Requests />
-                <Calendar
-                    month={month}
-                    year={year}
-                    holidays={holidays}
-                    handleClick={handleClick}
-                />
+                {showCalendar ? (
+                    <>
+                        <YearBtns />
+                        <MonthBtns />
+                        <Calendar
+                            month={month}
+                            year={year}
+                            holidays={holidays}
+                            handleClick={handleClick}
+                        />
+                    </>
+                ) : showRequests ? (
+                    <Requests />
+                ) : (
+                    ""
+                )}
             </main>
             {showModal ? <RequestModal handleClick={handleClick} /> : ""}
         </>

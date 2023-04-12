@@ -16,8 +16,6 @@ import { useState } from "react";
 const Home = () => {
     const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate();
-    const [showCalendar, setShowCalendar] = useState(true);
-    const [showRequests, setShowRequests] = useState(false);
 
     useEffect(() => {
         if (!user) {

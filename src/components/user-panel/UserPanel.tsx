@@ -8,7 +8,7 @@ import Button from "@mui/material/Button";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import RequestModal from "../main/request-modal/RequestModal";
-
+import { MainPageContext } from "../../context/MainPageContext";
 import { CurrentUserContext } from "../../context/currentUserContext";
 
 const UserPanel = () => {
@@ -18,6 +18,8 @@ const UserPanel = () => {
     function handleClick() {
         setShowModal(!showModal);
     }
+    const { updateShowCalendar, updateShowRequests } =
+        useContext(MainPageContext);
 
     return (
         <>
@@ -59,7 +61,7 @@ const UserPanel = () => {
                         variant="text"
                         color="inherit"
                         size="small"
-                        onClick={logout}
+                        onClick={updateShowCalendar}
                         startIcon={<CalendarMonthIcon />}
                     >
                         Calendar
@@ -68,7 +70,7 @@ const UserPanel = () => {
                         variant="text"
                         color="inherit"
                         size="small"
-                        onClick={logout}
+                        onClick={updateShowRequests}
                         startIcon={<ContentPasteIcon />}
                     >
                         Requests
