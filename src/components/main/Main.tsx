@@ -12,11 +12,13 @@ import { MonthBtns } from "./month-btns/MonthBtns";
 import { YearBtns } from "./years-btns/YearBtns";
 import SCSS from "./main.module.scss";
 import RequestModal from "./request-modal/RequestModal";
-import { Requests } from "./requests/requests";
+import Requests from "./requests/Requests";
 
 function Main() {
     const { month } = useContext(SelectedMonthContext);
     const { year } = useContext(SelectedYearContext);
+    const { approvedRequests } = useContext(ApprovedRequestContext);
+
     const [user, loading, error] = useAuthState(auth);
     const [approvedRequestsState, setApprovedRequestsState] = useState<
         ApprovedRequestsType[] | undefined
@@ -25,8 +27,10 @@ function Main() {
         IncomingRequestsType[] | undefined
     >(undefined);
     const [users, setUsers] = useState<UserType[] | undefined>(undefined);
-    const { approvedRequests } = useContext(ApprovedRequestContext);
+
     const [showModal, setShowModal] = useState(false);
+    const [showCalendar, setShowCalendar] = useState(true);
+    const [showRequests, setShowRequests] = useState(false);
 
     useEffect(() => {
         if (approvedRequests) {
@@ -52,34 +56,13 @@ function Main() {
             <main className={SCSS.mainContainer}>
                 <YearBtns />
                 <MonthBtns />
-
-                {approvedRequestsState
-                    ? approvedRequestsState.map(req => {
-                          return (
-                              <>
-                                  {/* {console.log(
-                                      req?.dateEnd.toDate().toDateString()
-                                  )}
-                                  <li> {req?.requestedBy}</li>
-                                  <li>
-                                      {" "}
-                                      {req?.dateStart.toDate().toDateString()}
-                                  </li>
-                                  <li>
-                                      {" "}
-                                      {req?.dateEnd.toDate().toDateString()}
-                                  </li> */}
-                              </>
-                          );
-                      })
-                    : ""}
+                <Requests />
                 <Calendar
                     month={month}
                     year={year}
                     holidays={holidays}
                     handleClick={handleClick}
                 />
-                <Requests />
             </main>
             {showModal ? <RequestModal handleClick={handleClick} /> : ""}
         </>

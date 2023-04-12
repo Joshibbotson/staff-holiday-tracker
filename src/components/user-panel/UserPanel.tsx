@@ -5,6 +5,8 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
+import ContentPasteIcon from "@mui/icons-material/ContentPaste";
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import RequestModal from "../main/request-modal/RequestModal";
 
 import { CurrentUserContext } from "../../context/currentUserContext";
@@ -53,6 +55,24 @@ const UserPanel = () => {
                     >
                         Make new Request
                     </Button>
+                    <Button
+                        variant="text"
+                        color="inherit"
+                        size="small"
+                        onClick={logout}
+                        startIcon={<CalendarMonthIcon />}
+                    >
+                        Calendar
+                    </Button>
+                    <Button
+                        variant="text"
+                        color="inherit"
+                        size="small"
+                        onClick={logout}
+                        startIcon={<ContentPasteIcon />}
+                    >
+                        Requests
+                    </Button>
                 </div>
                 <div className={userPanelSCSS.bottomContainer}>
                     <div className={userPanelSCSS.settings}>settings</div>
@@ -65,7 +85,7 @@ const UserPanel = () => {
                         color="error"
                         size="small"
                         onClick={logout}
-                        endIcon={<LogoutIcon />}
+                        startIcon={<LogoutIcon />}
                     >
                         Log out
                     </Button>

@@ -1,31 +1,32 @@
 import SCSS from "./requests.module.scss";
 
-export const Requests = () => {
+const Requests = () => {
     return (
         <>
             <div className={SCSS.requestTable}>
                 <table>
                     <td>
-                        <th>Name</th>
-                        <th>Status</th>
-                        <th>Approver</th>
-                        <th>Date Start</th>
-                        <th>Date End</th>
-                        <th>Total days</th>
+                        <th colSpan={1}>Name</th>
+                        <th colSpan={1}>Status</th>
+                        <th colSpan={1}>Approver</th>
+                        <th colSpan={1}>Date Start</th>
+                        <th colSpan={1}>Date End</th>
+                        <th colSpan={1}>Total days</th>
                     </td>
                 </table>
                 <tbody>
                     <tr>
-                        <td>person</td>
-                    </tr>
-                    <tr>
-                        <td>person</td>
-                    </tr>
-                    <tr>
-                        <td>person</td>
+                        <td>dogg</td>
+                        <td>two</td>
+                        <td>three</td>
+                        <td>four</td>
+                        <td>ffive</td>
+                        <td>fri</td>
                     </tr>
                 </tbody>
             </div>
         </>
     );
 };
+
+export default Requests;
