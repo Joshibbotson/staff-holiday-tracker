@@ -1,11 +1,21 @@
 import SCSS from "./requests.module.scss";
 import { RequestContext } from "../../../context/RequestContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import dateConvert from "../../../util-functions/dateConvert";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+
 const Requests = () => {
     const { requests } = useContext(RequestContext);
-    console.log(requests);
+    const [loadedRequests, setLoadedRequests] = useState(requests.slice(0, 9));
+    const [loadCount, setLoadCount] = useState(1);
+
+    const loadMore = () => {
+        const newLoadedRequests = requests.slice(0, (loadCount + 1) * 9);
+        setLoadedRequests(newLoadedRequests);
+        setLoadCount(loadCount + 1);
+    };
+
     return (
         <>
             <div className={SCSS.requestTable}>
@@ -23,14 +33,14 @@ const Requests = () => {
                     </thead>
 
                     <tbody>
-                        {requests.map(req => {
+                        {loadedRequests.map((req, index) => {
                             return (
-                                <tr>
-                                    <td>{req.requestedBy}</td>
+                                <tr key={index}>
+                                    <td>{req.requestedByEmail}</td>
                                     <td className={SCSS.requestTable__td}>
                                         Awaiting Approval
                                     </td>
-                                    <td>{req.approver}</td>
+                                    <td>{req.approverEmail}</td>
                                     <td>
                                         {dateConvert(
                                             req.dateStart.seconds,
@@ -52,6 +62,14 @@ const Requests = () => {
                         })}
                     </tbody>
                 </table>
+                {loadedRequests.length < requests.length && (
+                    <button
+                        onClick={loadMore}
+                        className={SCSS.requestTable__LoadMoreBtn}
+                    >
+                        <MoreHorizIcon fontSize="inherit" />
+                    </button>
+                )}
             </div>
         </>
     );

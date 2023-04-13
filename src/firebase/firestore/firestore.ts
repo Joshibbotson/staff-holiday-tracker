@@ -28,6 +28,7 @@ import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 export const updateUserData = async (
     userUID: string,
     name: string,
+    email: string,
     remainingHolidays: number,
     takenHolidays: number,
     flexTime: number,
@@ -39,6 +40,7 @@ export const updateUserData = async (
         const docRef = await addDoc(collection(db, "users"), {
             uid: userUID,
             name,
+            email,
             nationalHolidays,
             remainingHolidays,
             takenHolidays,
@@ -62,6 +64,7 @@ export async function getUserData(userUID: string) {
         const currentUserData = querySnapShot.docs.map(doc => ({
             uid: doc.data().uid,
             name: doc.data().name,
+            email: doc.data().email,
             admin: doc.data().admin,
             superAdmin: doc.data().superAdmin,
             nationalHolidays: doc.data().nationalHolidays,
@@ -83,6 +86,7 @@ export async function listUsers(): Promise<UserType[]> {
         const userData = querySnapShot.docs.map(doc => ({
             uid: doc.data().uid,
             name: doc.data().name,
+            email: doc.data().email,
             admin: doc.data().admin,
             superAdmin: doc.data().superAdmin,
             nationalHolidays: doc.data().nationalHolidays,
@@ -114,15 +118,20 @@ export async function listApprovedRequests(): Promise<ApprovedRequestsType[]> {
     }
 }
 
-export async function listRequests(): Promise<IncomingRequestsType[]> {
+export async function listRequests(
+    email: string
+): Promise<IncomingRequestsType[]> {
     try {
-        const queryDb = query(collection(db, "requests"));
+        const queryDb = query(
+            collection(db, "requests"),
+            where("requestedBy", "==", email)
+        );
         const querySnapShot = await getDocs(queryDb);
         const reqData = querySnapShot.docs.map(doc => ({
-            approver: doc.data().approver,
+            approverEmail: doc.data().approver,
             dateStart: doc.data().dateStart,
             dateEnd: doc.data().dateEnd,
-            requestedBy: doc.data().requestedBy,
+            requestedByEmail: doc.data().requestedBy,
             totalDays: doc.data().totalDays,
         }));
         return reqData;

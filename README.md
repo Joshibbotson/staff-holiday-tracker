@@ -7,3 +7,11 @@ A holiday tracking web app, created for tracking holiday time, and allowing empl
 -   Ability to track holiday time of any employee
 -   A calendar interface to request holiday time from and see other employees' time off.
 -   Direct to email holiday requests
+
+## Technology
+
+-   React
+-   Typescript
+-   Firebase
+-   SCSS in modules
+-   React Router

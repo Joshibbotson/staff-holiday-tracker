@@ -55,4 +55,17 @@
             background-color: #f2f2f2;
         }
     }
+
+    .requestTable__LoadMoreBtn {
+        background: none;
+        border: none;
+        font-size: 4rem;
+        color: rgb(185, 183, 183);
+        transition: color 250ms;
+        cursor: pointer;
+    }
+
+    .requestTable__LoadMoreBtn:hover {
+        color: rgb(104, 104, 104);
+    }
 }

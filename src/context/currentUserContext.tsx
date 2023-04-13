@@ -24,6 +24,7 @@ export const CurrentUserProvider: React.FC<any> = ({ children }) => {
 
     useEffect(() => {
         if (user) {
+            console.log("fetch");
             const fetchCurrentUser = async () => {
                 setLoading(true);
                 try {

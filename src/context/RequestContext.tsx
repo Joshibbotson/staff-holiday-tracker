@@ -1,6 +1,8 @@
 import { createContext, useState, useEffect } from "react";
 import { listRequests } from "../firebase/firestore/firestore";
 import { IncomingRequestsType } from "../types";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../firebase/auth/auth";
 
 type RequestContextType = {
     requests: IncomingRequestsType[];
@@ -21,21 +23,24 @@ export const RequestsProvider: React.FC<any> = ({ children }) => {
     );
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const [user, loadingUser, errorUser] = useAuthState(auth);
 
     useEffect(() => {
-        const fetchRequests = async () => {
-            setLoading(true);
-            try {
-                const data = await listRequests();
-                setUserRequests(data);
-                setLoading(false);
-            } catch (error) {
-                const anyError: any = error;
-                setError(anyError.message);
-                setLoading(false);
-            }
-        };
-        fetchRequests();
+        if (user) {
+            const fetchRequests = async () => {
+                setLoading(true);
+                try {
+                    const data = await listRequests(user.email!);
+                    setUserRequests(data);
+                    setLoading(false);
+                } catch (error) {
+                    const anyError: any = error;
+                    setError(anyError.message);
+                    setLoading(false);
+                }
+            };
+            fetchRequests();
+        }
     }, []);
 
     const value: RequestContextType = {

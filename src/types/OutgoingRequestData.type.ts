@@ -1,6 +1,6 @@
 export interface OutgoingRequestData {
-    approver: string;
-    requestedBy: string;
+    approverEmail: string;
+    requestedByEmail: string;
     dateStart: Date;
     dateEnd: Date;
     totalDays: number;

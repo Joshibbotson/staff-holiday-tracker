@@ -9,7 +9,7 @@ import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import RequestModal from "../main/request-modal/RequestModal";
 import { MainPageContext } from "../../context/MainPageContext";
-import { CurrentUserContext } from "../../context/currentUserContext";
+import { CurrentUserContext } from "../../context/CurrentUserContext";
 
 const UserPanel = () => {
     const [showUserPanel, setShowUserPanel] = useState<boolean>(true);

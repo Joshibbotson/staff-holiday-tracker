@@ -13,11 +13,11 @@ interface Props {
 export const RequestModal = ({ handleClick }: Props) => {
     const { user } = useContext(CurrentUserContext);
     const [approver, setApprover] = useState<string>("");
-    const [requestedBy, setRequestedBy] = useState<string>(user[0].name);
+    const [requestedBy, setRequestedBy] = useState<string>(user[0]?.email);
     const [dateStart, setDateStart] = useState<string>("");
     const [dateEnd, setDateEnd] = useState<string>("");
     const [totalDays, setTotalDays] = useState<string>("");
-
+    console.log(user);
     const handleModalCardClick = (event: React.MouseEvent<HTMLDivElement>) => {
         event.stopPropagation();
     };
@@ -61,8 +61,8 @@ export const RequestModal = ({ handleClick }: Props) => {
         e.preventDefault();
 
         const newRequest = {
-            approver: approver,
-            requestedBy: requestedBy,
+            approverEmail: approver,
+            requestedByEmail: user[0].email,
             dateStart: new Date(dateStart),
             dateEnd: new Date(dateEnd),
             totalDays: Number(totalDays),
@@ -123,7 +123,7 @@ export const RequestModal = ({ handleClick }: Props) => {
                                 readOnly={true}
                                 name="requestedBy"
                                 type="text"
-                                value={user[0].name}
+                                value={user[0]?.email}
                             />
                         </div>
                         <div className={SCSS.wrapper}>

@@ -1,6 +1,7 @@
 export interface UserType {
     uid: string;
     name: string;
+    email: string;
     admin: boolean;
     superAdmin: boolean;
     nationalHolidays: number;

@@ -21,7 +21,7 @@ function Register() {
     };
     useEffect(() => {
         if (user) {
-            updateUserData(user?.uid, name, 25, 0, 0, "UK");
+            updateUserData(user?.uid, name, email, 25, 0, 0, "UK");
             navigate("/");
         }
     }, [user, loading]);
