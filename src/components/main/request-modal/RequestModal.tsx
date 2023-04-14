@@ -2,7 +2,7 @@ import SCSS from "./requestModal.module.scss";
 import { addRequest } from "../../../firebase/firestore/firestore";
 import { OutgoingRequestData } from "../../../types/OutgoingRequestData.type";
 import { useEffect, useState } from "react";
-import { CurrentUserContext } from "../../../context/currentUserContext";
+import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import { useContext } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Button } from "@mui/material";
@@ -17,7 +17,7 @@ export const RequestModal = ({ handleClick }: Props) => {
     const [dateStart, setDateStart] = useState<string>("");
     const [dateEnd, setDateEnd] = useState<string>("");
     const [totalDays, setTotalDays] = useState<string>("");
-    console.log(user);
+
     const handleModalCardClick = (event: React.MouseEvent<HTMLDivElement>) => {
         event.stopPropagation();
     };
