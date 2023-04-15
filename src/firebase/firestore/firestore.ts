@@ -79,9 +79,26 @@ export async function getUserData(userUID: string) {
     }
 }
 
-export async function listUsers(): Promise<UserType[]> {
+export async function listUsers(
+    admin: boolean,
+    superAdmin: boolean
+): Promise<UserType[]> {
     try {
-        const queryDb = query(collection(db, "users"));
+        let queryDb;
+        if (admin) {
+            queryDb = query(
+                collection(db, "users"),
+                where("admin", "==", "true")
+            );
+        }
+        if (superAdmin) {
+            queryDb = query(
+                collection(db, "users"),
+                where("superSdmin", "==", "true")
+            );
+        } else {
+            queryDb = query(collection(db, "users"));
+        }
         const querySnapShot = await getDocs(queryDb);
         const userData = querySnapShot.docs.map(doc => ({
             uid: doc.data().uid,

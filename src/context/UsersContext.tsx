@@ -24,7 +24,7 @@ export const UsersProvider: React.FC<any> = ({ children }) => {
         const fetchUsers = async () => {
             setLoading(true);
             try {
-                const data = await listUsers();
+                const data = await listUsers(false, false);
                 setUsers(data);
                 setLoading(false);
             } catch (error) {

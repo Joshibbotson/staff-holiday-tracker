@@ -55,11 +55,14 @@
             width: 100%;
 
             input {
-                height: 2rem;
+                height: 1rem;
+            }
+            input[type="date"] {
+                height: 3rem;
                 border-radius: 4px;
-                border: none;
-                box-shadow: 0px 0px 2px grey;
-                padding-left: 0.5rem;
+                border: 1px solid rgb(196, 196, 196);
+                padding-left: 0.8rem;
+                padding-right: 0.8rem;
             }
 
             label {
@@ -68,10 +71,22 @@
                     "Helvetica Neue", sans-serif;
                 font-weight: 500;
             }
+            .dateLabel {
+                color: rgb(111, 111, 111);
+                font-size: 0.8rem;
+                position: absolute;
+                top: -0.5rem;
+                left: 0.6rem;
+                padding-left: 0.3rem;
+                padding-right: 0.3rem;
+
+                background-color: white;
+            }
 
             .wrapper {
                 display: flex;
                 flex-direction: column;
+                position: relative;
             }
         }
     }

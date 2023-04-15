@@ -6,17 +6,35 @@ import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import { useContext } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Button } from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import { UsersContext } from "../../../context/UsersContext";
+
 interface Props {
     handleClick: () => void;
 }
 
 export const RequestModal = ({ handleClick }: Props) => {
     const { user } = useContext(CurrentUserContext);
+    const { users } = useContext(UsersContext);
+    const [adminUsers, setAdminUsers] = useState<
+        { value: string; label: string }[]
+    >([]);
     const [approver, setApprover] = useState<string>("");
     const [requestedBy, setRequestedBy] = useState<string>(user[0]?.email);
     const [dateStart, setDateStart] = useState<string>("");
     const [dateEnd, setDateEnd] = useState<string>("");
     const [totalDays, setTotalDays] = useState<string>("");
+
+    useEffect(() => {
+        if (users) {
+            setAdminUsers(
+                users
+                    .filter(user => user.admin)
+                    .map(user => ({ value: user.email, label: user.name }))
+            );
+        }
+    }, [users]);
 
     const handleModalCardClick = (event: React.MouseEvent<HTMLDivElement>) => {
         event.stopPropagation();
@@ -62,7 +80,7 @@ export const RequestModal = ({ handleClick }: Props) => {
 
         const newRequest = {
             approverEmail: approver,
-            requestedByEmail: user[0].email,
+            requestedByEmail: requestedBy,
             dateStart: new Date(dateStart),
             dateEnd: new Date(dateEnd),
             totalDays: Number(totalDays),
@@ -104,30 +122,41 @@ export const RequestModal = ({ handleClick }: Props) => {
                             handleSubmit(e, e.currentTarget.form!);
                         }}
                     >
+                        <Autocomplete
+                            disablePortal
+                            options={adminUsers}
+                            sx={{ width: "100%" }}
+                            autoSelect={true}
+                            autoHighlight={true}
+                            isOptionEqualToValue={(option, value) =>
+                                option.value === value.value
+                            }
+                            onChange={(
+                                event: any,
+                                newValue: {
+                                    value: string;
+                                    label: string;
+                                } | null
+                            ) => setApprover(newValue ? newValue.value : "")}
+                            renderInput={params => (
+                                <TextField {...params} label="Approver" />
+                            )}
+                        />
                         <div className={SCSS.wrapper}>
-                            <label htmlFor="approver">Approver: </label>
-
-                            <input
-                                required
-                                name="approver"
-                                type="text"
-                                value={approver}
-                                onChange={e => setApprover(e.target.value)}
+                            <TextField
+                                label="Requested by:"
+                                variant="outlined"
+                                aria-readonly={true}
+                                value={user[0].name}
                             />
                         </div>
                         <div className={SCSS.wrapper}>
-                            <label htmlFor="requestedBy">Requested by: </label>
-
-                            <input
-                                required
-                                readOnly={true}
-                                name="requestedBy"
-                                type="text"
-                                value={user[0]?.email}
-                            />
-                        </div>
-                        <div className={SCSS.wrapper}>
-                            <label htmlFor="dateStart">Date start: </label>
+                            <label
+                                className={SCSS.dateLabel}
+                                htmlFor="dateStart"
+                            >
+                                Date start:{" "}
+                            </label>
 
                             <input
                                 required
@@ -143,7 +172,9 @@ export const RequestModal = ({ handleClick }: Props) => {
                             />
                         </div>
                         <div className={SCSS.wrapper}>
-                            <label htmlFor="dateEnd">Date end:</label>
+                            <label className={SCSS.dateLabel} htmlFor="dateEnd">
+                                Date end:
+                            </label>
 
                             <input
                                 required
@@ -158,18 +189,20 @@ export const RequestModal = ({ handleClick }: Props) => {
                                 name="dateEnd"
                             />
                         </div>
-                        <div className={SCSS.wrapper}>
-                            <label htmlFor="totalDays">Total days: </label>
-                            <input
-                                required
-                                name="totalDays"
-                                type="number"
-                                step={0.5}
-                                value={totalDays}
-                                onChange={e => setTotalDays(e.target.value)}
-                            />
-                        </div>
+                        <TextField
+                            label="Total days:"
+                            variant="outlined"
+                            type="number"
+                            aria-readonly={true}
+                            value={totalDays}
+                            onChange={e => setTotalDays(e.target.value)}
+                            inputProps={{
+                                inputMode: "numeric",
+                                pattern: "[0-9]*",
+                            }}
+                        />
                         <Button
+                            aria-required={true}
                             variant="contained"
                             color="primary"
                             size="small"
