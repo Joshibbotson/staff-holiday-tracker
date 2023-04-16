@@ -10,30 +10,46 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import { blue, red } from "@mui/material/colors";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import { deleteRequest } from "../../firebase/firestore/firestore";
 
 export interface SimpleDialogProps {
     open: boolean;
     onClose: (value: string) => void;
+    uid: string;
 }
 
 function SimpleDialog(props: SimpleDialogProps) {
-    const { onClose, open } = props;
+    const { onClose, open, uid } = props;
 
     const handleClose = (name: string) => {
         onClose(name);
     };
 
-    const handleListItemClick = (value: string) => {
-        onClose(value);
-        if (value === "edit") {
+    const handleListItemClick = (uid: string) => {
+        onClose(uid);
+        if (uid === "edit") {
             console.log("edit");
-        } else if (value === "Cancel Request") {
+        } else if (uid === "Cancel Request") {
             console.log("cancel request");
+            handleDelete(uid);
+        }
+    };
+
+    const handleDelete = async (uid: string) => {
+        try {
+            await deleteRequest(uid);
+            console.log("succesful delete");
+        } catch (error) {
+            console.log(error);
         }
     };
 
     return (
-        <Dialog onClose={handleClose} open={open}>
+        <Dialog
+            onClose={handleClose}
+            open={open}
+            style={{ position: "absolute", right: 0 }}
+        >
             <List sx={{ pt: 0 }}>
                 <ListItem disableGutters>
                     <ListItemButton
@@ -55,7 +71,7 @@ function SimpleDialog(props: SimpleDialogProps) {
                 </ListItem>
                 <ListItem disableGutters>
                     <ListItemButton
-                        onClick={() => handleListItemClick("Cancel Request")}
+                        onClick={() => handleDelete(uid)}
                         key={"Cancel Request"}
                     >
                         <ListItemAvatar>
@@ -76,7 +92,7 @@ function SimpleDialog(props: SimpleDialogProps) {
     );
 }
 
-export default function EditPopUp() {
+export default function EditPopUp({ uid }: any) {
     const [open, setOpen] = React.useState(false);
 
     const handleClickOpen = () => {
@@ -88,9 +104,9 @@ export default function EditPopUp() {
     };
 
     return (
-        <div>
+        <>
             <MoreVertIcon onClick={handleClickOpen} />
-            <SimpleDialog open={open} onClose={handleClose} />
-        </div>
+            <SimpleDialog open={open} onClose={handleClose} uid={uid} />
+        </>
     );
 }

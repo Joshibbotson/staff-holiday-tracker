@@ -3,6 +3,8 @@ import { listRequests } from "../firebase/firestore/firestore";
 import { IncomingRequestsType } from "../types";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/auth/auth";
+import { collection, onSnapshot } from "firebase/firestore";
+import { db } from "../firebase/auth/auth";
 
 type RequestContextType = {
     requests: IncomingRequestsType[];
@@ -24,6 +26,20 @@ export const RequestsProvider: React.FC<any> = ({ children }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [user, loadingUser, errorUser] = useAuthState(auth);
+
+    //Ensure userRequests is updated if requests collection changes//
+    useEffect(() => {
+        const unsubscribe = onSnapshot(collection(db, "requests"), snapshot => {
+            const requests: IncomingRequestsType[] = [];
+            snapshot.forEach(doc => {
+                const data = doc.data() as IncomingRequestsType;
+                data.uid = doc.id;
+                requests.push(data);
+            });
+            setUserRequests(requests);
+        });
+        return () => unsubscribe();
+    }, []);
 
     useEffect(() => {
         if (user) {

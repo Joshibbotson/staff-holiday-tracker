@@ -183,6 +183,16 @@ export async function editRequest(request: OutgoingRequestData): Promise<void> {
     }
 }
 
+export async function deleteRequest(requestId: string): Promise<void> {
+    try {
+        const requestDocRef = doc(db, "requests", requestId);
+        await deleteDoc(requestDocRef);
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to delete request from database");
+    }
+}
+
 // export const editUserData = async (
 //     docID: string,
 //     name: string,

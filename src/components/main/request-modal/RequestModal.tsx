@@ -86,6 +86,7 @@ export const RequestModal = ({ handleClick }: Props) => {
             totalDays: Number(totalDays),
         };
         handleAddRequest(newRequest);
+        handleClick();
     };
 
     const handleAddRequest = async (

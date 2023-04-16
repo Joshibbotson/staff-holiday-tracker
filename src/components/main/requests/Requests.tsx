@@ -1,6 +1,6 @@
 import SCSS from "./requests.module.scss";
 import { RequestContext } from "../../../context/RequestContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import dateConvert from "../../../util-functions/dateConvert";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
@@ -11,6 +11,11 @@ const Requests = () => {
     const { requests } = useContext(RequestContext);
     const [loadedRequests, setLoadedRequests] = useState(requests.slice(0, 9));
     const [loadCount, setLoadCount] = useState(1);
+
+    //Ensure Requests is re-rendered when requests change//
+    useEffect(() => {
+        setLoadedRequests(requests.slice(0, 9));
+    }, [requests]);
 
     const loadMore = () => {
         const newLoadedRequests = requests.slice(0, (loadCount + 1) * 9);
@@ -57,7 +62,7 @@ const Requests = () => {
                                     </td>
                                     <td>{req.totalDays}</td>
                                     <td>
-                                        <EditPopUp />
+                                        <EditPopUp uid={req.uid} />
                                     </td>
                                 </tr>
                             );
