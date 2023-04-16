@@ -41,7 +41,7 @@ function Main() {
 
     const holidays = approvedRequestsState?.map(req => {
         return {
-            name: req.requestedBy,
+            name: req.requestedByEmail,
             start: new Date(req.dateStart.toDate().toDateString()),
             end: new Date(req.dateEnd.toDate().toDateString()),
         };

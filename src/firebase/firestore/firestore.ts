@@ -122,10 +122,11 @@ export async function listApprovedRequests(): Promise<ApprovedRequestsType[]> {
         const queryDb = query(collection(db, "approvedRequests"));
         const querySnapShot = await getDocs(queryDb);
         const approvedReqData = querySnapShot.docs.map(doc => ({
-            approvedBy: doc.data().approvedBy,
+            uid: doc.data().uid,
+            approverEmail: doc.data().approvedBy,
             dateStart: doc.data().dateStart,
             dateEnd: doc.data().dateEnd,
-            requestedBy: doc.data().requestedBy,
+            requestedByEmail: doc.data().requestedBy,
             totalDays: doc.data().totalDays,
         }));
         return approvedReqData;
@@ -141,14 +142,15 @@ export async function listRequests(
     try {
         const queryDb = query(
             collection(db, "requests"),
-            where("requestedBy", "==", email)
+            where("requestedByEmail", "==", email)
         );
         const querySnapShot = await getDocs(queryDb);
         const reqData = querySnapShot.docs.map(doc => ({
-            approverEmail: doc.data().approver,
+            uid: doc.data().uid,
+            approverEmail: doc.data().approverEmail,
             dateStart: doc.data().dateStart,
             dateEnd: doc.data().dateEnd,
-            requestedByEmail: doc.data().requestedBy,
+            requestedByEmail: doc.data().requestedByEmail,
             totalDays: doc.data().totalDays,
         }));
         return reqData;
@@ -159,6 +161,19 @@ export async function listRequests(
 }
 
 export async function addRequest(request: OutgoingRequestData): Promise<void> {
+    try {
+        const requestsCollection = collection(db, "requests");
+        const docRef = await addDoc(requestsCollection, request);
+        const uid = docRef.id;
+        const requestDocRef = doc(db, docRef.path); // create a DocumentReference from the document path
+        await updateDoc(requestDocRef, { uid }); // set the uid field to the document's ID
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to add request to database");
+    }
+}
+
+export async function editRequest(request: OutgoingRequestData): Promise<void> {
     try {
         const requestsCollection = collection(db, "requests");
         await addDoc(requestsCollection, request);

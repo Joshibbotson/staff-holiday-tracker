@@ -1,9 +1,10 @@
 import { Timestamp } from "firebase-admin/firestore";
 
 export interface ApprovedRequestsType {
-    approvedBy: string;
+    uid: string;
+    approverEmail: string;
     dateEnd: Timestamp;
     dateStart: Timestamp;
-    requestedBy: string;
+    requestedByEmail: string;
     totalDays: number;
 }

@@ -4,6 +4,8 @@ import { useContext, useState } from "react";
 import dateConvert from "../../../util-functions/dateConvert";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import { Button } from "@mui/material";
+import EditPopUp from "../../UI/SimpleDialog";
 
 const Requests = () => {
     const { requests } = useContext(RequestContext);
@@ -15,7 +17,7 @@ const Requests = () => {
         setLoadedRequests(newLoadedRequests);
         setLoadCount(loadCount + 1);
     };
-
+    console.log(requests);
     return (
         <>
             <div className={SCSS.requestTable}>
@@ -55,7 +57,7 @@ const Requests = () => {
                                     </td>
                                     <td>{req.totalDays}</td>
                                     <td>
-                                        <MoreVertIcon />
+                                        <EditPopUp />
                                     </td>
                                 </tr>
                             );
