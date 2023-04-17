@@ -7,6 +7,7 @@ import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Button } from "@mui/material";
 import EditPopUp from "../../UI/SimpleDialog";
 import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext";
+import FilterListIcon from "@mui/icons-material/FilterList";
 
 const Requests = () => {
     const { requests } = useContext(RequestContext);
@@ -39,7 +40,12 @@ const Requests = () => {
                             <th colSpan={1}>Date Start</th>
                             <th colSpan={1}>Date End</th>
                             <th colSpan={1}>Total days</th>
-                            <th colSpan={1}></th>
+                            <th colSpan={1}>
+                                <FilterListIcon
+                                    color={"primary"}
+                                    className={SCSS.requestTable__filterIcon}
+                                />
+                            </th>
                         </tr>
                     </thead>
 
