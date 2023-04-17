@@ -37,7 +37,7 @@
             text-align: center;
             position: relative;
         }
-        .requestTable__td {
+        .requestTable__tdWaitApproval {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -45,7 +45,7 @@
             width: 100%;
             height: 100%;
         }
-        .requestTable__td::before {
+        .requestTable__tdWaitApproval::before {
             content: "";
             width: 1rem;
             height: 1rem;
@@ -55,7 +55,25 @@
             top: 50%;
             left: 0.5rem;
             transform: translate(-50%, -50%);
-            /* Set the position and size of the pseudo-element */
+        }
+        .requestTable__tdApproved {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 100%;
+        }
+        .requestTable__tdApproved::before {
+            content: "";
+            width: 1rem;
+            height: 1rem;
+            background-color: rgb(34, 176, 34);
+            border-radius: 50%;
+            position: absolute;
+            top: 50%;
+            left: 0.5rem;
+            transform: translate(-50%, -50%);
         }
 
         table tbody td:hover {

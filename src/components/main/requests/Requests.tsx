@@ -6,16 +6,20 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import { Button } from "@mui/material";
 import EditPopUp from "../../UI/SimpleDialog";
+import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext";
 
 const Requests = () => {
     const { requests } = useContext(RequestContext);
-    const [loadedRequests, setLoadedRequests] = useState(requests.slice(0, 9));
+    const { approvedRequests } = useContext(ApprovedRequestContext);
+    const [loadedRequests, setLoadedRequests] = useState(
+        [...requests, ...approvedRequests].slice(0, 9)
+    );
     const [loadCount, setLoadCount] = useState(1);
 
     //Ensure Requests is re-rendered when requests change//
     useEffect(() => {
-        setLoadedRequests(requests.slice(0, 9));
-    }, [requests]);
+        setLoadedRequests([...requests, ...approvedRequests].slice(0, 9));
+    }, [requests, approvedRequests]);
 
     const loadMore = () => {
         const newLoadedRequests = requests.slice(0, (loadCount + 1) * 9);
@@ -44,9 +48,24 @@ const Requests = () => {
                             return (
                                 <tr key={index}>
                                     <td>{req.requestedByEmail}</td>
-                                    <td className={SCSS.requestTable__td}>
-                                        Awaiting Approval
-                                    </td>
+                                    {requests.includes(req) ? (
+                                        <td
+                                            className={
+                                                SCSS.requestTable__tdWaitApproval
+                                            }
+                                        >
+                                            Awaiting Approval
+                                        </td>
+                                    ) : (
+                                        <td
+                                            className={
+                                                SCSS.requestTable__tdApproved
+                                            }
+                                        >
+                                            Approved
+                                        </td>
+                                    )}
+
                                     <td>{req.approverEmail}</td>
                                     <td>
                                         {dateConvert(
@@ -61,9 +80,11 @@ const Requests = () => {
                                         ).toDateString()}
                                     </td>
                                     <td>{req.totalDays}</td>
-                                    <td>
-                                        <EditPopUp uid={req.uid} />
-                                    </td>
+                                    {requests.includes(req) ? (
+                                        <td>
+                                            <EditPopUp uid={req.uid} />
+                                        </td>
+                                    ) : null}
                                 </tr>
                             );
                         })}

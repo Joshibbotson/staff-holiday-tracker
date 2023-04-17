@@ -117,9 +117,14 @@ export async function listUsers(
         throw new Error("Failed to list users from database");
     }
 }
-export async function listApprovedRequests(): Promise<ApprovedRequestsType[]> {
+export async function listApprovedRequests(
+    email: string
+): Promise<ApprovedRequestsType[]> {
     try {
-        const queryDb = query(collection(db, "approvedRequests"));
+        const queryDb = query(
+            collection(db, "approvedRequests"),
+            where("requestedByEmail", "==", email)
+        );
         const querySnapShot = await getDocs(queryDb);
         const approvedReqData = querySnapShot.docs.map(doc => ({
             uid: doc.data().uid,

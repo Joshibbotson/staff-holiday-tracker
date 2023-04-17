@@ -1,9 +1,9 @@
 import { createContext, useState, useEffect } from "react";
-import {
-    listApprovedRequests,
-    listRequests,
-} from "../firebase/firestore/firestore";
-import { ApprovedRequestsType } from "../types";
+import { listApprovedRequests } from "../firebase/firestore/firestore";
+import { ApprovedRequestsType, IncomingRequestsType } from "../types";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth, db } from "../firebase/auth/auth";
+import { onSnapshot, collection } from "firebase/firestore";
 
 type ApprovedRequestContextType = {
     approvedRequests: ApprovedRequestsType[];
@@ -21,26 +21,46 @@ export const ApprovedRequestContext = createContext<ApprovedRequestContextType>(
 
 //fix this to not be any//
 export const ApprovedReqsProvider: React.FC<any> = ({ children }) => {
+    const [user, loadingUser, errorUser] = useAuthState(auth);
     const [approvedReqs, setApprovedReqs] = useState<ApprovedRequestsType[]>(
         []
     );
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
+    //Ensure userRequests is updated if requests collection changes//
     useEffect(() => {
-        const fetchRequests = async () => {
-            setLoading(true);
-            try {
-                const data = await listApprovedRequests();
-                setApprovedReqs(data);
-                setLoading(false);
-            } catch (error) {
-                const anyError: any = error;
-                setError(anyError.message);
-                setLoading(false);
+        const unsubscribe = onSnapshot(
+            collection(db, "approvedRequests"),
+            snapshot => {
+                const requests: IncomingRequestsType[] = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data() as IncomingRequestsType;
+                    data.uid = doc.id;
+                    requests.push(data);
+                });
+                setApprovedReqs(requests);
             }
-        };
-        fetchRequests();
+        );
+        return () => unsubscribe();
+    }, []);
+
+    useEffect(() => {
+        if (user) {
+            const fetchRequests = async () => {
+                setLoading(true);
+                try {
+                    const data = await listApprovedRequests(user.email!);
+                    setApprovedReqs(data);
+                    setLoading(false);
+                } catch (error) {
+                    const anyError: any = error;
+                    setError(anyError.message);
+                    setLoading(false);
+                }
+            };
+            fetchRequests();
+        }
     }, []);
 
     const value: ApprovedRequestContextType = {

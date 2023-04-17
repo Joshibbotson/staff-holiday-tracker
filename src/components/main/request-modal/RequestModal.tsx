@@ -25,6 +25,7 @@ export const RequestModal = ({ handleClick }: Props) => {
     const [dateStart, setDateStart] = useState<string>("");
     const [dateEnd, setDateEnd] = useState<string>("");
     const [totalDays, setTotalDays] = useState<string>("");
+    const [submitScreen, setSubmitScreen] = useState<boolean>(false);
 
     useEffect(() => {
         if (users) {
@@ -86,7 +87,8 @@ export const RequestModal = ({ handleClick }: Props) => {
             totalDays: Number(totalDays),
         };
         handleAddRequest(newRequest);
-        handleClick();
+        // handleClick();
+        setSubmitScreen(true);
     };
 
     const handleAddRequest = async (
@@ -108,111 +110,129 @@ export const RequestModal = ({ handleClick }: Props) => {
                     handleClick();
                 }}
             >
-                <div className={SCSS.modalCard} onClick={handleModalCardClick}>
-                    <button
-                        className={SCSS.modalCard__exitBtn}
-                        onClick={() => {
-                            handleClick();
-                        }}
+                {submitScreen ? (
+                    <div
+                        className={SCSS.modalCard}
+                        onClick={handleModalCardClick}
                     >
-                        <ClearIcon />
-                    </button>
-                    <h3>New Request</h3>
-                    <form
-                        onSubmit={e => {
-                            handleSubmit(e, e.currentTarget.form!);
-                        }}
+                        {" "}
+                        submitted
+                    </div>
+                ) : (
+                    <div
+                        className={SCSS.modalCard}
+                        onClick={handleModalCardClick}
                     >
-                        <Autocomplete
-                            disablePortal
-                            options={adminUsers}
-                            sx={{ width: "100%" }}
-                            autoSelect={true}
-                            autoHighlight={true}
-                            isOptionEqualToValue={(option, value) =>
-                                option.value === value.value
-                            }
-                            onChange={(
-                                event: any,
-                                newValue: {
-                                    value: string;
-                                    label: string;
-                                } | null
-                            ) => setApprover(newValue ? newValue.value : "")}
-                            renderInput={params => (
-                                <TextField {...params} label="Approver" />
-                            )}
-                        />
-                        <div className={SCSS.wrapper}>
-                            <TextField
-                                label="Requested by:"
-                                variant="outlined"
-                                aria-readonly={true}
-                                value={user[0].name}
-                            />
-                        </div>
-                        <div className={SCSS.wrapper}>
-                            <label
-                                className={SCSS.dateLabel}
-                                htmlFor="dateStart"
-                            >
-                                Date start:{" "}
-                            </label>
-
-                            <input
-                                required
-                                name="dateStart"
-                                type="date"
-                                value={dateStart}
-                                onChange={e => {
-                                    return (
-                                        setDateStart(e.target.value),
-                                        checkDate(e.currentTarget.form!)
-                                    );
-                                }}
-                            />
-                        </div>
-                        <div className={SCSS.wrapper}>
-                            <label className={SCSS.dateLabel} htmlFor="dateEnd">
-                                Date end:
-                            </label>
-
-                            <input
-                                required
-                                type="date"
-                                value={dateEnd}
-                                onChange={e => {
-                                    return (
-                                        setDateEnd(e.target.value),
-                                        checkDate(e.currentTarget.form!)
-                                    );
-                                }}
-                                name="dateEnd"
-                            />
-                        </div>
-                        <TextField
-                            label="Total days:"
-                            variant="outlined"
-                            type="number"
-                            aria-readonly={true}
-                            value={totalDays}
-                            onChange={e => setTotalDays(e.target.value)}
-                            inputProps={{
-                                inputMode: "numeric",
-                                pattern: "[0-9]*",
+                        <button
+                            className={SCSS.modalCard__exitBtn}
+                            onClick={() => {
+                                handleClick();
                             }}
-                        />
-                        <Button
-                            aria-required={true}
-                            variant="contained"
-                            color="primary"
-                            size="small"
-                            type="submit"
                         >
-                            Submit Request
-                        </Button>{" "}
-                    </form>
-                </div>
+                            <ClearIcon />
+                        </button>
+                        <h3>New Request</h3>
+                        <form
+                            onSubmit={e => {
+                                handleSubmit(e, e.currentTarget.form!);
+                            }}
+                        >
+                            <Autocomplete
+                                disablePortal
+                                options={adminUsers}
+                                sx={{ width: "100%" }}
+                                autoSelect={true}
+                                autoHighlight={true}
+                                isOptionEqualToValue={(option, value) =>
+                                    option.value === value.value
+                                }
+                                onChange={(
+                                    event: any,
+                                    newValue: {
+                                        value: string;
+                                        label: string;
+                                    } | null
+                                ) =>
+                                    setApprover(newValue ? newValue.value : "")
+                                }
+                                renderInput={params => (
+                                    <TextField {...params} label="Approver" />
+                                )}
+                            />
+                            <div className={SCSS.wrapper}>
+                                <TextField
+                                    label="Requested by:"
+                                    variant="outlined"
+                                    aria-readonly={true}
+                                    value={user[0].name}
+                                />
+                            </div>
+                            <div className={SCSS.wrapper}>
+                                <label
+                                    className={SCSS.dateLabel}
+                                    htmlFor="dateStart"
+                                >
+                                    Date start:{" "}
+                                </label>
+
+                                <input
+                                    required
+                                    name="dateStart"
+                                    type="date"
+                                    value={dateStart}
+                                    onChange={e => {
+                                        return (
+                                            setDateStart(e.target.value),
+                                            checkDate(e.currentTarget.form!)
+                                        );
+                                    }}
+                                />
+                            </div>
+                            <div className={SCSS.wrapper}>
+                                <label
+                                    className={SCSS.dateLabel}
+                                    htmlFor="dateEnd"
+                                >
+                                    Date end:
+                                </label>
+
+                                <input
+                                    required
+                                    type="date"
+                                    value={dateEnd}
+                                    onChange={e => {
+                                        return (
+                                            setDateEnd(e.target.value),
+                                            checkDate(e.currentTarget.form!)
+                                        );
+                                    }}
+                                    name="dateEnd"
+                                />
+                            </div>
+                            <TextField
+                                label="Total days:"
+                                variant="outlined"
+                                type="number"
+                                aria-readonly={true}
+                                value={totalDays}
+                                onChange={e => setTotalDays(e.target.value)}
+                                inputProps={{
+                                    inputMode: "numeric",
+                                    pattern: "[0-9]*",
+                                }}
+                            />
+                            <Button
+                                aria-required={true}
+                                variant="contained"
+                                color="primary"
+                                size="small"
+                                type="submit"
+                            >
+                                Submit Request
+                            </Button>{" "}
+                        </form>
+                    </div>
+                )}
             </div>
         </>
     );
