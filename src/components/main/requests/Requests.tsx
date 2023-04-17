@@ -2,37 +2,105 @@ import SCSS from "./requests.module.scss";
 import { RequestContext } from "../../../context/RequestContext";
 import { useContext, useEffect, useState } from "react";
 import dateConvert from "../../../util-functions/dateConvert";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
-import { Button } from "@mui/material";
+import {
+    Checkbox,
+    FormControl,
+    InputLabel,
+    ListItemText,
+    OutlinedInput,
+} from "@mui/material";
 import EditPopUp from "../../UI/SimpleDialog";
 import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import MenuItem from "@mui/material/MenuItem";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import React from "react";
 
 const Requests = () => {
     const { requests } = useContext(RequestContext);
     const { approvedRequests } = useContext(ApprovedRequestContext);
-    const [loadedRequests, setLoadedRequests] = useState(
-        [...requests, ...approvedRequests].slice(0, 9)
-    );
-    const [loadCount, setLoadCount] = useState(1);
+    const [loadedRequests, setLoadedRequests] = useState([
+        ...requests,
+        ...approvedRequests,
+    ]);
+    const [loadCount, setLoadCount] = useState<number>(1);
+    const [currentFilters, setCurrentFilters] = React.useState<string[]>([]);
+
+    const filters = ["Approved", "Awaiting approval"];
 
     //Ensure Requests is re-rendered when requests change//
     useEffect(() => {
-        setLoadedRequests([...requests, ...approvedRequests].slice(0, 9));
+        setLoadedRequests([...requests, ...approvedRequests]);
     }, [requests, approvedRequests]);
 
-    const loadMore = () => {
-        const newLoadedRequests = requests.slice(0, (loadCount + 1) * 9);
-        setLoadedRequests(newLoadedRequests);
-        setLoadCount(loadCount + 1);
+    useEffect(() => {
+        if (
+            currentFilters.includes("Approved") &&
+            !currentFilters.includes("Awaiting approval")
+        ) {
+            setLoadedRequests([...approvedRequests]);
+        } else if (
+            currentFilters.includes("Approved") &&
+            currentFilters.includes("Awaiting approval")
+        ) {
+            setLoadedRequests([...requests, ...approvedRequests]);
+        } else if (
+            currentFilters.includes("Awaiting approval") &&
+            !currentFilters.includes("Approved")
+        ) {
+            setLoadedRequests([...requests]);
+        } else {
+            setLoadedRequests([...requests, ...approvedRequests]);
+        }
+    }, [currentFilters]);
+
+    const handleChange = (event: SelectChangeEvent<typeof filters>) => {
+        const {
+            target: { value },
+        } = event;
+        setCurrentFilters(
+            // On autofill we get a stringified value.
+            typeof value === "string" ? value.split(",") : value
+        );
     };
-    console.log(requests);
+
     return (
         <>
             <div className={SCSS.requestTable}>
                 <table>
                     <thead>
+                        {/* <tr> */}
+                        <th colSpan={2}>
+                            <FormControl sx={{ m: 1, width: 400 }}>
+                                <InputLabel>
+                                    <FilterListIcon /> Filters
+                                </InputLabel>
+                                <Select
+                                    multiple
+                                    value={currentFilters}
+                                    onChange={handleChange}
+                                    input={<OutlinedInput label="Filter" />}
+                                    renderValue={selected =>
+                                        selected.join(", ")
+                                    }
+                                >
+                                    {filters.map(filter => (
+                                        <MenuItem key={filter} value={filter}>
+                                            <Checkbox
+                                                checked={
+                                                    currentFilters.indexOf(
+                                                        filter
+                                                    ) > -1
+                                                }
+                                            />
+                                            <ListItemText primary={filter} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </th>
+                        {/* </tr> */}
                         <tr>
                             <th colSpan={1}>Name</th>
                             <th colSpan={1}>Status</th>
@@ -40,15 +108,9 @@ const Requests = () => {
                             <th colSpan={1}>Date Start</th>
                             <th colSpan={1}>Date End</th>
                             <th colSpan={1}>Total days</th>
-                            <th colSpan={1}>
-                                <FilterListIcon
-                                    color={"primary"}
-                                    className={SCSS.requestTable__filterIcon}
-                                />
-                            </th>
+                            <th colSpan={1}></th>
                         </tr>
                     </thead>
-
                     <tbody>
                         {loadedRequests.map((req, index) => {
                             return (
@@ -96,14 +158,6 @@ const Requests = () => {
                         })}
                     </tbody>
                 </table>
-                {loadedRequests.length < requests.length && (
-                    <button
-                        onClick={loadMore}
-                        className={SCSS.requestTable__LoadMoreBtn}
-                    >
-                        <MoreHorizIcon fontSize="inherit" />
-                    </button>
-                )}
             </div>
         </>
     );

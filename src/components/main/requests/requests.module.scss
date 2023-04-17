@@ -6,7 +6,6 @@
         Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue",
         sans-serif;
     font-size: 1rem;
-    // height: 100svh;
     margin-bottom: auto;
     overflow-y: visible;
     overflow-x: hidden;
@@ -18,17 +17,38 @@
         height: 100%;
         width: 100%;
         overflow-y: scroll;
+        scroll-behavior: smooth;
         border-spacing: 1rem;
+
+        label {
+            display: flex;
+            justify-content: space-between;
+            background-color: white;
+        }
+        thead {
+            tr {
+                background-color: white;
+                z-index: 1;
+                position: sticky;
+                top: 0;
+            }
+        }
 
         th {
             width: 10rem;
-            padding-bottom: 1rem;
+
             border-bottom: 3px solid rgb(170, 170, 170);
             text-align: center;
         }
         tr {
-            height: 6rem;
+            height: 3rem;
             border-bottom: 2px solid rgb(170, 170, 170);
+        }
+        tbody {
+            overflow-y: scroll;
+            tr {
+                height: 6rem;
+            }
         }
 
         td {
@@ -80,15 +100,6 @@
         table tbody td:hover {
             cursor: pointer;
             background-color: #f2f2f2;
-        }
-        .requestTable__filterIcon {
-            color: rgb(192, 192, 192);
-            font-size: 2rem;
-            transition: color 250ms;
-            cursor: pointer;
-        }
-        .requestTable__filterIcon:hover {
-            color: rgb(85, 84, 84);
         }
     }
 
