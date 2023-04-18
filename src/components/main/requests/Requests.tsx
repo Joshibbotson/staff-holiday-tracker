@@ -70,38 +70,43 @@ const Requests = () => {
             <div className={SCSS.requestTable}>
                 <table>
                     <thead>
-                        {/* <tr> */}
-                        <th colSpan={2}>
-                            <FormControl sx={{ m: 1, width: 400 }}>
-                                <InputLabel>
-                                    <FilterListIcon /> Filters
-                                </InputLabel>
-                                <Select
-                                    multiple
-                                    value={currentFilters}
-                                    onChange={handleChange}
-                                    input={<OutlinedInput label="Filter" />}
-                                    renderValue={selected =>
-                                        selected.join(", ")
-                                    }
-                                >
-                                    {filters.map(filter => (
-                                        <MenuItem key={filter} value={filter}>
-                                            <Checkbox
-                                                checked={
-                                                    currentFilters.indexOf(
-                                                        filter
-                                                    ) > -1
-                                                }
-                                            />
-                                            <ListItemText primary={filter} />
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </th>
-                        {/* </tr> */}
                         <tr>
+                            <th colSpan={2}>
+                                <FormControl sx={{ m: 1, width: 400 }}>
+                                    <InputLabel>
+                                        <FilterListIcon /> Filters
+                                    </InputLabel>
+                                    <Select
+                                        multiple
+                                        value={currentFilters}
+                                        onChange={handleChange}
+                                        input={<OutlinedInput label="Filter" />}
+                                        renderValue={selected =>
+                                            selected.join(", ")
+                                        }
+                                    >
+                                        {filters.map(filter => (
+                                            <MenuItem
+                                                key={filter}
+                                                value={filter}
+                                            >
+                                                <Checkbox
+                                                    checked={
+                                                        currentFilters.indexOf(
+                                                            filter
+                                                        ) > -1
+                                                    }
+                                                />
+                                                <ListItemText
+                                                    primary={filter}
+                                                />
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </th>
+                        </tr>
+                        <tr className={SCSS.requestTable__header}>
                             <th colSpan={1}>Name</th>
                             <th colSpan={1}>Status</th>
                             <th colSpan={1}>Approver</th>
@@ -122,7 +127,7 @@ const Requests = () => {
                                                 SCSS.requestTable__tdWaitApproval
                                             }
                                         >
-                                            Awaiting Approval
+                                            Waiting
                                         </td>
                                     ) : (
                                         <td

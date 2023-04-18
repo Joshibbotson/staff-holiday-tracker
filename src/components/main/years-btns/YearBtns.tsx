@@ -5,25 +5,30 @@ import SCSS from "./yearBtns.module.scss";
 
 export const YearBtns = () => {
     const { year, updateYear } = useContext(SelectedYearContext);
+    const pastCurrFutureYear = [
+        (new Date().getFullYear() - 1).toString(),
+        new Date().getFullYear().toString(),
+        (new Date().getFullYear() + 1).toString(),
+    ];
 
     function handleClick(newYear: number) {
         updateYear(newYear);
     }
+
     return (
         <div className={SCSS.btnBar}>
-            {[
-                (new Date().getFullYear() - 1).toString(),
-                new Date().getFullYear().toString(),
-                (new Date().getFullYear() + 1).toString(),
-            ].map(year => {
+            {pastCurrFutureYear.map(y => {
                 return (
                     <button
-                        key={nanoid()}
+                        key={y}
                         onClick={() => {
-                            handleClick(parseInt(year));
+                            handleClick(parseInt(y));
                         }}
+                        className={
+                            parseInt(y) === year ? SCSS.selectedYearBtn : ""
+                        }
                     >
-                        {year}
+                        {y}
                     </button>
                 );
             })}

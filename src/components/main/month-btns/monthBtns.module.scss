@@ -5,6 +5,10 @@
     flex-wrap: wrap;
     background-color: rgb(38, 166, 154);
 
+    .selectedMonth {
+        color: white;
+    }
+
     button {
         background: none;
         border: none;

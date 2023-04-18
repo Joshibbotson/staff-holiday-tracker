@@ -28,7 +28,7 @@ export const ApprovedReqsProvider: React.FC<any> = ({ children }) => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    //Ensure userRequests is updated if requests collection changes//
+    //Ensure approvedUserRequests is updated if requests collection changes//
     useEffect(() => {
         const unsubscribe = onSnapshot(
             collection(db, "approvedRequests"),

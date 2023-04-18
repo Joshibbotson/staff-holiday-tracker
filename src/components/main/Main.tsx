@@ -29,27 +29,27 @@ function Main() {
         IncomingRequestsType[] | undefined
     >(undefined);
     const [users, setUsers] = useState<UserType[] | undefined>(undefined);
-
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         if (approvedRequests) {
-            setApprovedRequestsState(approvedRequests);
             console.log(approvedRequests);
+            setApprovedRequestsState(approvedRequests);
         }
     }, [approvedRequests]);
 
-    const holidays = approvedRequestsState?.map(req => {
+    function handleClick() {
+        setShowModal(!showModal);
+    }
+
+    const holidays = approvedRequests.map(req => {
+        console.log(req);
         return {
             name: req.requestedByEmail,
             start: new Date(req.dateStart.toDate().toDateString()),
             end: new Date(req.dateEnd.toDate().toDateString()),
         };
     });
-
-    function handleClick() {
-        setShowModal(!showModal);
-    }
 
     return (
         <>

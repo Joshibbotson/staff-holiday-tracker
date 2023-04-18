@@ -105,7 +105,14 @@ export default function EditPopUp({ uid }: any) {
 
     return (
         <>
-            <MoreVertIcon onClick={handleClickOpen} />
+            <MoreVertIcon
+                onClick={handleClickOpen}
+                style={{
+                    cursor: "pointer",
+                    color: "rgb(185, 185, 185)",
+                    fontSize: "2rem",
+                }}
+            />
             <SimpleDialog open={open} onClose={handleClose} uid={uid} />
         </>
     );

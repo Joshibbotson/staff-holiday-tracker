@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import SCSS from "./calendar.module.scss";
+import { da } from "date-fns/locale";
 
 type Holiday = {
     name: string;
@@ -51,6 +52,12 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
         return holiday ? true : false;
     };
 
+    const getNameForHoliday = (date: Date) => {
+        holidays!.filter(h => {
+            return date >= h.start && date <= h.end ? <p>{h.name}</p> : null;
+        });
+    };
+
     const isWeekend = (dayIndex: number) => {
         return dayIndex === 0 || dayIndex === 6;
     };
@@ -94,15 +101,26 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
                         <tr key={weekIndex}>
                             {days
                                 .slice(weekIndex * 7, weekIndex * 7 + 7)
-                                .map((date, dayIndex) => (
-                                    <td
-                                        key={weekIndex * 7 + dayIndex}
-                                        className={getClassName(date)}
-                                        onClick={() => handleClick()}
-                                    >
-                                        {date.getDate()}
-                                    </td>
-                                ))}
+                                .map((date, dayIndex) =>
+                                    getHolidayColor(date) ? (
+                                        <td
+                                            key={weekIndex * 7 + dayIndex}
+                                            className={getClassName(date)}
+                                            onClick={() => handleClick()}
+                                        >
+                                            {date.getDate()}
+                                            <p> {getNameForHoliday(date)}</p>
+                                        </td>
+                                    ) : (
+                                        <td
+                                            key={weekIndex * 7 + dayIndex}
+                                            className={getClassName(date)}
+                                            onClick={() => handleClick()}
+                                        >
+                                            {date.getDate()}
+                                        </td>
+                                    )
+                                )}
                         </tr>
                     ))}
                 </tbody>
