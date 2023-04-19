@@ -5,6 +5,7 @@ import SCSS from "./yearBtns.module.scss";
 
 export const YearBtns = () => {
     const { year, updateYear } = useContext(SelectedYearContext);
+    console.log(year);
     const pastCurrFutureYear = [
         (new Date().getFullYear() - 1).toString(),
         new Date().getFullYear().toString(),
@@ -18,6 +19,7 @@ export const YearBtns = () => {
     return (
         <div className={SCSS.btnBar}>
             {pastCurrFutureYear.map(y => {
+                console.log(year);
                 return (
                     <button
                         key={y}

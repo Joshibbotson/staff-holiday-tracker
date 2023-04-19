@@ -9,14 +9,14 @@ type SelectedYearContextType = {
     updateYear: (arg0: number) => void;
 };
 export const SelectedYearContext = createContext<SelectedYearContextType>({
-    year: 0,
+    year: new Date().getFullYear(),
     updateYear: (newYear: number) => {},
 });
 
 export const SelectedYearProvider: React.FC<SelectedYearProps> = ({
     children,
 }) => {
-    const [year, setYear] = useState<number>(new Date().getMonth());
+    const [year, setYear] = useState<number>(new Date().getFullYear());
 
     const updateYear = (newYear: number) => {
         setYear(newYear);

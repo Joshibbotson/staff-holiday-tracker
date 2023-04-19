@@ -28,6 +28,7 @@ export const RequestsProvider: React.FC<any> = ({ children }) => {
     const [user, loadingUser, errorUser] = useAuthState(auth);
 
     //Ensure userRequests is updated if requests collection changes//
+    //update this with a where statement to ensure only user's requests are pulled in//
     useEffect(() => {
         const unsubscribe = onSnapshot(collection(db, "requests"), snapshot => {
             const requests: IncomingRequestsType[] = [];
