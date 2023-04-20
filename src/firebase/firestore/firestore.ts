@@ -7,6 +7,7 @@ import {
     updateDoc,
     deleteDoc,
     where,
+    or,
 } from "firebase/firestore";
 import { auth, db } from "../auth/auth";
 import { getAuth } from "firebase/auth";
@@ -117,21 +118,39 @@ export async function listUsers(
         throw new Error("Failed to list users from database");
     }
 }
+
+//come back to this
 export async function listApprovedRequests(
-    email: string
+    month: number,
+    year: number
 ): Promise<ApprovedRequestsType[]> {
+    const startMonth = new Date(Date.UTC(year, month - 1, 1));
+    const endMonth = new Date(Date.UTC(year, month - 1, 1));
+    //adjust end date to be last millisecond of the previous day
+    endMonth.setTime(endMonth.getTime() - 1);
+
+    const prevMonthEndDate = new Date(Date.UTC(year, month - 1, 1));
+    prevMonthEndDate.setTime(prevMonthEndDate.getTime() - 1);
+
+    const nextMonthStartDate = new Date(Date.UTC(year, month, 1));
+
     try {
         const queryDb = query(
-            collection(db, "approvedRequests")
-            // where("requestedByEmail", "==", email)
+            collection(db, "approvedRequests"),
+            or(
+                where("dateStart", "<=", startMonth),
+                where("dateStart", "<=", endMonth),
+                where("dateEnd", ">=", startMonth),
+                where("dateEnd", "<=", endMonth)
+            )
         );
         const querySnapShot = await getDocs(queryDb);
         const approvedReqData = querySnapShot.docs.map(doc => ({
             uid: doc.data().uid,
-            approverEmail: doc.data().approvedBy,
+            approverEmail: doc.data().approverEmail,
             dateStart: doc.data().dateStart,
             dateEnd: doc.data().dateEnd,
-            requestedByEmail: doc.data().requestedBy,
+            requestedByEmail: doc.data().requestedByEmail,
             totalDays: doc.data().totalDays,
         }));
         return approvedReqData;

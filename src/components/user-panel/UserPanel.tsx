@@ -1,6 +1,6 @@
 import { logout } from "../../firebase/auth/auth";
 import userPanelSCSS from "./userPanel.module.scss";
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
@@ -15,12 +15,22 @@ import { CurrentUserContext } from "../../context/CurrentUserContext";
 const UserPanel = () => {
     const [showUserPanel, setShowUserPanel] = useState<boolean>(true);
     const { user } = useContext(CurrentUserContext);
+    // const [admin, setAdmin] = useState(false);
     const [showModal, setShowModal] = useState<boolean>(false);
     function handleClick() {
         setShowModal(!showModal);
     }
     const { updateShowCalendar, updateShowRequests } =
         useContext(MainPageContext);
+
+    // useEffect(() => {
+    //     console.log(user);
+    //     if (user) {
+    //         if (user[0].admin) {
+    //             setAdmin(true);
+    //         }
+    //     }
+    // }, [user]);
 
     return (
         <>
@@ -76,15 +86,19 @@ const UserPanel = () => {
                     >
                         Requests
                     </Button>
-                    <Button
-                        variant="text"
-                        color="inherit"
-                        size="small"
-                        // onClick={updateShowRequests}
-                        startIcon={<SupervisorAccountIcon />}
-                    >
-                        Handle Requests
-                    </Button>
+                    {/* {admin ? (
+                        <Button
+                            variant="text"
+                            color="inherit"
+                            size="small"
+                            // onClick={updateShowRequests}
+                            startIcon={<SupervisorAccountIcon />}
+                        >
+                            Handle Requests
+                        </Button>
+                    ) : (
+                        ""
+                    )} */}
                 </div>
                 <div className={userPanelSCSS.bottomContainer}>
                     <div className={userPanelSCSS.settings}>settings</div>
