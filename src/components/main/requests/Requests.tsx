@@ -2,7 +2,6 @@ import SCSS from "./requests.module.scss";
 import { RequestContext } from "../../../context/RequestContext";
 import { useContext, useEffect, useState } from "react";
 import dateConvert from "../../../util-functions/dateConvert";
-import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import {
     Checkbox,
     FormControl,
@@ -17,21 +16,35 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import React from "react";
 
+import { CurrentUserContext } from "../../../context/CurrentUserContext";
+
 const Requests = () => {
+    const { user } = useContext(CurrentUserContext);
     const { requests } = useContext(RequestContext);
     const { approvedRequests } = useContext(ApprovedRequestContext);
+    const [userApprovedRequests, setUserApprovedRequests] = useState(
+        approvedRequests.filter(req => {
+            return req.requestedByEmail === user[0].email;
+        })
+    );
+
     const [loadedRequests, setLoadedRequests] = useState([
         ...requests,
-        ...approvedRequests,
+        ...userApprovedRequests,
     ]);
-    const [loadCount, setLoadCount] = useState<number>(1);
     const [currentFilters, setCurrentFilters] = React.useState<string[]>([]);
 
     const filters = ["Approved", "Awaiting approval"];
 
     //Ensure Requests is re-rendered when requests change//
     useEffect(() => {
-        setLoadedRequests([...requests, ...approvedRequests]);
+        console.log(userApprovedRequests);
+        setUserApprovedRequests(
+            approvedRequests.filter(req => {
+                return req.requestedByEmail === user[0].email;
+            })
+        );
+        setLoadedRequests([...requests, ...userApprovedRequests]);
     }, [requests, approvedRequests]);
 
     useEffect(() => {
@@ -39,19 +52,19 @@ const Requests = () => {
             currentFilters.includes("Approved") &&
             !currentFilters.includes("Awaiting approval")
         ) {
-            setLoadedRequests([...approvedRequests]);
+            setLoadedRequests([...userApprovedRequests]);
         } else if (
             currentFilters.includes("Approved") &&
             currentFilters.includes("Awaiting approval")
         ) {
-            setLoadedRequests([...requests, ...approvedRequests]);
+            setLoadedRequests([...requests, ...userApprovedRequests]);
         } else if (
             currentFilters.includes("Awaiting approval") &&
             !currentFilters.includes("Approved")
         ) {
             setLoadedRequests([...requests]);
         } else {
-            setLoadedRequests([...requests, ...approvedRequests]);
+            setLoadedRequests([...requests, ...userApprovedRequests]);
         }
     }, [currentFilters]);
 

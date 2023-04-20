@@ -122,8 +122,8 @@ export async function listApprovedRequests(
 ): Promise<ApprovedRequestsType[]> {
     try {
         const queryDb = query(
-            collection(db, "approvedRequests"),
-            where("requestedByEmail", "==", email)
+            collection(db, "approvedRequests")
+            // where("requestedByEmail", "==", email)
         );
         const querySnapShot = await getDocs(queryDb);
         const approvedReqData = querySnapShot.docs.map(doc => ({

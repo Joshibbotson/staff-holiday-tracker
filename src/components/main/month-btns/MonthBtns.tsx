@@ -5,6 +5,8 @@ import SCSS from "./monthBtns.module.scss";
 
 export const MonthBtns = () => {
     const { month, updateMonth } = useContext(SelectedMonthContext);
+    console.log(month);
+
     const monthsArr = [
         "Jan",
         "Feb",

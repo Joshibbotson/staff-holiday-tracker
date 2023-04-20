@@ -109,7 +109,7 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
                                             onClick={() => handleClick()}
                                         >
                                             {date.getDate()}
-                                            <p> {getNameForHoliday(date)}</p>
+                                            {/* <p> {getNameForHoliday(date)}</p> */}
                                         </td>
                                     ) : (
                                         <td

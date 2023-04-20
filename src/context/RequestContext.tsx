@@ -3,7 +3,7 @@ import { listRequests } from "../firebase/firestore/firestore";
 import { IncomingRequestsType } from "../types";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/auth/auth";
-import { collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase/auth/auth";
 
 type RequestContextType = {
@@ -30,9 +30,13 @@ export const RequestsProvider: React.FC<any> = ({ children }) => {
     //Ensure userRequests is updated if requests collection changes//
     //update this with a where statement to ensure only user's requests are pulled in//
     useEffect(() => {
-        const unsubscribe = onSnapshot(collection(db, "requests"), snapshot => {
+        const q = query(
+            collection(db, "requests"),
+            where("requestedByEmail", "==", user?.email)
+        );
+        const unsubscribe = onSnapshot(q, querySnapshot => {
             const requests: IncomingRequestsType[] = [];
-            snapshot.forEach(doc => {
+            querySnapshot.forEach(doc => {
                 const data = doc.data() as IncomingRequestsType;
                 data.uid = doc.id;
                 requests.push(data);
