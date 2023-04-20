@@ -7,6 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import RequestModal from "../main/request-modal/RequestModal";
 import { MainPageContext } from "../../context/MainPageContext";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
@@ -74,6 +75,15 @@ const UserPanel = () => {
                         startIcon={<ContentPasteIcon />}
                     >
                         Requests
+                    </Button>
+                    <Button
+                        variant="text"
+                        color="inherit"
+                        size="small"
+                        // onClick={updateShowRequests}
+                        startIcon={<SupervisorAccountIcon />}
+                    >
+                        Handle Requests
                     </Button>
                 </div>
                 <div className={userPanelSCSS.bottomContainer}>
