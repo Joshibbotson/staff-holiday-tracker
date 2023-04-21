@@ -1,9 +1,19 @@
-import { createContext, useState, useEffect } from "react";
+import { createContext, useState, useEffect, useContext } from "react";
 import { listApprovedRequests } from "../firebase/firestore/firestore";
 import { ApprovedRequestsType, IncomingRequestsType } from "../types";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase/auth/auth";
-import { onSnapshot, collection, query, where } from "firebase/firestore";
+import {
+    onSnapshot,
+    collection,
+    query,
+    where,
+    or,
+    and,
+    orderBy,
+} from "firebase/firestore";
+import { SelectedMonthContext } from "./SelectedMonth";
+import { SelectedYearContext } from "./SelectedYear";
 
 type ApprovedRequestContextType = {
     approvedRequests: ApprovedRequestsType[];
@@ -27,13 +37,18 @@ export const ApprovedReqsProvider: React.FC<any> = ({ children }) => {
     );
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const { month } = useContext(SelectedMonthContext);
+    const { year } = useContext(SelectedYearContext);
 
     //Ensure approvedUserRequests is updated if requests collection changes//
+    // will need adjusting to only show current month and year requests
     useEffect(() => {
-        const q = query(
-            collection(db, "approvedRequests")
-            // where("requestByEmail", "==", user?.email)
-        );
+        const startMonth = new Date(Date.UTC(year, month - 1, 1));
+        const endMonth = new Date(Date.UTC(year, month - 1, 1));
+        //adjust end date to be last millisecond of the previous day
+        endMonth.setTime(endMonth.getTime() - 1);
+
+        const q = query(collection(db, "approvedRequests"));
 
         const unsubscribe = onSnapshot(q, snapshot => {
             const requests: IncomingRequestsType[] = [];
@@ -52,7 +67,7 @@ export const ApprovedReqsProvider: React.FC<any> = ({ children }) => {
             const fetchRequests = async () => {
                 setLoading(true);
                 try {
-                    const data = await listApprovedRequests();
+                    const data = await listApprovedRequests(month, year);
                     setApprovedReqs(data);
                     setLoading(false);
                 } catch (error) {

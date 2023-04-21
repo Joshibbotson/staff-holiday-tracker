@@ -15,7 +15,7 @@ import { CurrentUserContext } from "../../context/CurrentUserContext";
 const UserPanel = () => {
     const [showUserPanel, setShowUserPanel] = useState<boolean>(true);
     const { user } = useContext(CurrentUserContext);
-    // const [admin, setAdmin] = useState(false);
+    const [admin, setAdmin] = useState(false);
     const [showModal, setShowModal] = useState<boolean>(false);
     function handleClick() {
         setShowModal(!showModal);
@@ -23,14 +23,13 @@ const UserPanel = () => {
     const { updateShowCalendar, updateShowRequests } =
         useContext(MainPageContext);
 
-    // useEffect(() => {
-    //     console.log(user);
-    //     if (user) {
-    //         if (user[0].admin) {
-    //             setAdmin(true);
-    //         }
-    //     }
-    // }, [user]);
+    useEffect(() => {
+        if (user[0]) {
+            if (user[0].admin === true) {
+                setAdmin(true);
+            }
+        }
+    }, [user]);
 
     return (
         <>
@@ -86,7 +85,7 @@ const UserPanel = () => {
                     >
                         Requests
                     </Button>
-                    {/* {admin ? (
+                    {admin ? (
                         <Button
                             variant="text"
                             color="inherit"
@@ -98,7 +97,7 @@ const UserPanel = () => {
                         </Button>
                     ) : (
                         ""
-                    )} */}
+                    )}
                 </div>
                 <div className={userPanelSCSS.bottomContainer}>
                     <div className={userPanelSCSS.settings}>settings</div>

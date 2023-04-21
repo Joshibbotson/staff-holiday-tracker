@@ -8,6 +8,8 @@ import {
     deleteDoc,
     where,
     or,
+    orderBy,
+    QueryFieldFilterConstraint,
 } from "firebase/firestore";
 import { auth, db } from "../auth/auth";
 import { getAuth } from "firebase/auth";
@@ -119,7 +121,7 @@ export async function listUsers(
     }
 }
 
-//come back to this
+//Will need adjusting to only show current month and year
 export async function listApprovedRequests(
     month: number,
     year: number
@@ -129,21 +131,8 @@ export async function listApprovedRequests(
     //adjust end date to be last millisecond of the previous day
     endMonth.setTime(endMonth.getTime() - 1);
 
-    const prevMonthEndDate = new Date(Date.UTC(year, month - 1, 1));
-    prevMonthEndDate.setTime(prevMonthEndDate.getTime() - 1);
-
-    const nextMonthStartDate = new Date(Date.UTC(year, month, 1));
-
     try {
-        const queryDb = query(
-            collection(db, "approvedRequests"),
-            or(
-                where("dateStart", "<=", startMonth),
-                where("dateStart", "<=", endMonth),
-                where("dateEnd", ">=", startMonth),
-                where("dateEnd", "<=", endMonth)
-            )
-        );
+        const queryDb = query(collection(db, "approvedRequests"));
         const querySnapShot = await getDocs(queryDb);
         const approvedReqData = querySnapShot.docs.map(doc => ({
             uid: doc.data().uid,
@@ -153,6 +142,7 @@ export async function listApprovedRequests(
             requestedByEmail: doc.data().requestedByEmail,
             totalDays: doc.data().totalDays,
         }));
+
         return approvedReqData;
     } catch (error) {
         console.log(error);
@@ -217,6 +207,12 @@ export async function deleteRequest(requestId: string): Promise<void> {
     }
 }
 
+function and(
+    arg0: QueryFieldFilterConstraint,
+    arg1: QueryFieldFilterConstraint
+): import("@firebase/firestore").QueryConstraint {
+    throw new Error("Function not implemented.");
+}
 // export const editUserData = async (
 //     docID: string,
 //     name: string,
