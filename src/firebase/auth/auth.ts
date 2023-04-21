@@ -114,6 +114,7 @@ export async function registerWithEmailAndPassword(
             takenHolidays: 0,
             flexTime: 0,
             birthday: undefined,
+            manager: "admin@hotmail.com",
         });
     } catch (error) {
         console.log(error);

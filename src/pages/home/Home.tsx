@@ -12,6 +12,7 @@ import RequestsProvider from "../../context/RequestContext";
 import { SelectedMonthProvider } from "../../context/SelectedMonth";
 import { SelectedYearProvider } from "../../context/SelectedYear";
 import { MainPageProvider } from "../../context/MainPageContext";
+import AwaitApprovReqProvider from "../../context/AwaitApprovalReqContext";
 
 const Home = () => {
     const [user, loading, error] = useAuthState(auth);
@@ -29,16 +30,18 @@ const Home = () => {
                 <SelectedYearProvider>
                     <SelectedMonthProvider>
                         <ApprovedReqsProvider>
-                            <RequestsProvider>
-                                <CurrentUserProvider>
-                                    <UsersProvider>
-                                        <MainPageProvider>
-                                            <UserPanel />
-                                            <Main />
-                                        </MainPageProvider>
-                                    </UsersProvider>
-                                </CurrentUserProvider>
-                            </RequestsProvider>
+                            <AwaitApprovReqProvider>
+                                <RequestsProvider>
+                                    <CurrentUserProvider>
+                                        <UsersProvider>
+                                            <MainPageProvider>
+                                                <UserPanel />
+                                                <Main />
+                                            </MainPageProvider>
+                                        </UsersProvider>
+                                    </CurrentUserProvider>
+                                </RequestsProvider>
+                            </AwaitApprovReqProvider>
                         </ApprovedReqsProvider>
                     </SelectedMonthProvider>
                 </SelectedYearProvider>

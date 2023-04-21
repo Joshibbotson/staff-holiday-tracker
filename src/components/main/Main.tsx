@@ -14,12 +14,14 @@ import SCSS from "./main.module.scss";
 import RequestModal from "./request-modal/RequestModal";
 import Requests from "./requests/Requests";
 import { MainPageContext } from "../../context/MainPageContext";
+import HandleRequests from "./admin/HandleRequests";
 
 function Main() {
     const { month } = useContext(SelectedMonthContext);
     const { year } = useContext(SelectedYearContext);
     const { approvedRequests } = useContext(ApprovedRequestContext);
-    const { showCalendar, showRequests } = useContext(MainPageContext);
+    const { showCalendar, showRequests, showHandleRequests } =
+        useContext(MainPageContext);
 
     const [user, loading, error] = useAuthState(auth);
     const [approvedRequestsState, setApprovedRequestsState] = useState<
@@ -68,7 +70,7 @@ function Main() {
                 ) : showRequests ? (
                     <Requests />
                 ) : (
-                    ""
+                    <HandleRequests />
                 )}
             </main>
             {showModal ? <RequestModal handleClick={handleClick} /> : ""}

@@ -174,6 +174,30 @@ export async function listRequests(
     }
 }
 
+export async function listRequestsForApproval(
+    email: string
+): Promise<IncomingRequestsType[]> {
+    try {
+        const queryDb = query(
+            collection(db, "requests"),
+            where("approverEmail", "==", email)
+        );
+        const querySnapShot = await getDocs(queryDb);
+        const reqData = querySnapShot.docs.map(doc => ({
+            uid: doc.data().uid,
+            approverEmail: doc.data().approverEmail,
+            dateStart: doc.data().dateStart,
+            dateEnd: doc.data().dateEnd,
+            requestedByEmail: doc.data().requestedByEmail,
+            totalDays: doc.data().totalDays,
+        }));
+        return reqData;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to list requests from database");
+    }
+}
+
 export async function addRequest(request: OutgoingRequestData): Promise<void> {
     try {
         const requestsCollection = collection(db, "requests");
@@ -207,12 +231,6 @@ export async function deleteRequest(requestId: string): Promise<void> {
     }
 }
 
-function and(
-    arg0: QueryFieldFilterConstraint,
-    arg1: QueryFieldFilterConstraint
-): import("@firebase/firestore").QueryConstraint {
-    throw new Error("Function not implemented.");
-}
 // export const editUserData = async (
 //     docID: string,
 //     name: string,

@@ -1,28 +1,30 @@
 import { createContext, useState, useEffect } from "react";
-import { listRequests } from "../firebase/firestore/firestore";
+import { listRequestsForApproval } from "../firebase/firestore/firestore";
 import { IncomingRequestsType } from "../types";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/auth/auth";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase/auth/auth";
 
-type RequestContextType = {
+type AwaitApprovReqContextType = {
     requests: IncomingRequestsType[];
     loading: boolean;
     error: string | null;
 };
 
-export const RequestContext = createContext<RequestContextType>({
-    requests: [],
-    loading: false,
-    error: null,
-});
+export const AwaitApprovalReqContext = createContext<AwaitApprovReqContextType>(
+    {
+        requests: [],
+        loading: false,
+        error: null,
+    }
+);
 
 //fix this to not be any//
-export const RequestsProvider: React.FC<any> = ({ children }) => {
-    const [userRequests, setUserRequests] = useState<IncomingRequestsType[]>(
-        []
-    );
+export const AwaitApprovReqProvider: React.FC<any> = ({ children }) => {
+    const [requestsForApproval, setRequestsForApproval] = useState<
+        IncomingRequestsType[]
+    >([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
     const [user, loadingUser, errorUser] = useAuthState(auth);
@@ -32,7 +34,7 @@ export const RequestsProvider: React.FC<any> = ({ children }) => {
         if (user) {
             const q = query(
                 collection(db, "requests"),
-                where("requestedByEmail", "==", user?.email)
+                where("approverEmail", "==", user?.email)
             );
             const unsubscribe = onSnapshot(q, querySnapshot => {
                 const requests: IncomingRequestsType[] = [];
@@ -41,7 +43,7 @@ export const RequestsProvider: React.FC<any> = ({ children }) => {
                     data.uid = doc.id;
                     requests.push(data);
                 });
-                setUserRequests(requests);
+                setRequestsForApproval(requests);
             });
             return () => unsubscribe();
         }
@@ -52,8 +54,8 @@ export const RequestsProvider: React.FC<any> = ({ children }) => {
             const fetchRequests = async () => {
                 setLoading(true);
                 try {
-                    const data = await listRequests(user.email!);
-                    setUserRequests(data);
+                    const data = await listRequestsForApproval(user.email!);
+                    setRequestsForApproval(data);
                     setLoading(false);
                 } catch (error) {
                     const anyError: any = error;
@@ -65,17 +67,17 @@ export const RequestsProvider: React.FC<any> = ({ children }) => {
         }
     }, []);
 
-    const value: RequestContextType = {
-        requests: userRequests,
+    const value: AwaitApprovReqContextType = {
+        requests: requestsForApproval,
         loading,
         error,
     };
 
     return (
-        <RequestContext.Provider value={value}>
+        <AwaitApprovalReqContext.Provider value={value}>
             {children}
-        </RequestContext.Provider>
+        </AwaitApprovalReqContext.Provider>
     );
 };
 
-export default RequestsProvider;
+export default AwaitApprovReqProvider;

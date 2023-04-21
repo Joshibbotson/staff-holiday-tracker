@@ -20,7 +20,7 @@ const UserPanel = () => {
     function handleClick() {
         setShowModal(!showModal);
     }
-    const { updateShowCalendar, updateShowRequests } =
+    const { updateShowCalendar, updateShowRequests, updateShowHandleRequests } =
         useContext(MainPageContext);
 
     useEffect(() => {
@@ -90,7 +90,7 @@ const UserPanel = () => {
                             variant="text"
                             color="inherit"
                             size="small"
-                            // onClick={updateShowRequests}
+                            onClick={updateShowHandleRequests}
                             startIcon={<SupervisorAccountIcon />}
                         >
                             Handle Requests
