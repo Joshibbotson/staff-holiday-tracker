@@ -74,6 +74,7 @@ export async function getUserData(userUID: string) {
             remainingHolidays: doc.data().remainingHolidays,
             takenHolidays: doc.data().takenHolidays,
             flexTime: doc.data().flexTime,
+            docID: doc.data().docID,
         }));
         return currentUserData;
     } catch (error) {
@@ -99,6 +100,7 @@ export async function getUserDataViaEmail(userEmail: string) {
             remainingHolidays: doc.data().remainingHolidays,
             takenHolidays: doc.data().takenHolidays,
             flexTime: doc.data().flexTime,
+            docID: doc.data().docID,
         }));
         return currentUserData;
     } catch (error) {
@@ -274,17 +276,10 @@ export async function approveRequest(
 
         const user = await getUserDataViaEmail(request.requestedByEmail);
         console.log(user);
-        const userRef = doc(db, "users", user[0].uid);
+        const userRef = doc(db, "users", user[0].docID);
         await updateDoc(userRef, {
-            uid: user[0].uid,
-            name: user[0].name,
-            email: user[0].email,
             remainingHolidays: user[0].remainingHolidays - request.totalDays,
             takenHolidays: user[0].takenHolidays + request.totalDays,
-            flexTime: user[0].flexTime,
-            nationalHolidays: user[0].nationalHolidays,
-            admin: user[0].admin,
-            superAdmin: user[0].superAdmin,
         });
     } catch (error) {
         console.log(error);
