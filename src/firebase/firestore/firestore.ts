@@ -82,6 +82,31 @@ export async function getUserData(userUID: string) {
     }
 }
 
+export async function getUserDataViaEmail(userEmail: string) {
+    try {
+        const queryDb = query(
+            collection(db, "users"),
+            where("email", "==", userEmail)
+        );
+        const querySnapShot = await getDocs(queryDb);
+        const currentUserData = querySnapShot.docs.map(doc => ({
+            uid: doc.data().uid,
+            name: doc.data().name,
+            email: doc.data().email,
+            admin: doc.data().admin,
+            superAdmin: doc.data().superAdmin,
+            nationalHolidays: doc.data().nationalHolidays,
+            remainingHolidays: doc.data().remainingHolidays,
+            takenHolidays: doc.data().takenHolidays,
+            flexTime: doc.data().flexTime,
+        }));
+        return currentUserData;
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to list current user from database");
+    }
+}
+
 export async function listUsers(
     admin: boolean,
     superAdmin: boolean
@@ -228,6 +253,42 @@ export async function deleteRequest(requestId: string): Promise<void> {
     } catch (error) {
         console.log(error);
         throw new Error("Failed to delete request from database");
+    }
+}
+export async function approveRequest(
+    request: IncomingRequestsType
+): Promise<void> {
+    try {
+        const requestDocRef = doc(db, "requests", request.uid);
+        //add request to approved requests
+        await addDoc(collection(db, "approvedRequests"), {
+            uid: request.uid,
+            approverEmail: request.approverEmail,
+            dateStart: request.dateStart,
+            dateEnd: request.dateEnd,
+            requestedByEmail: request.requestedByEmail,
+            totalDays: request.totalDays,
+        });
+        //remove un needed request
+        await deleteDoc(requestDocRef);
+
+        const user = await getUserDataViaEmail(request.requestedByEmail);
+        console.log(user);
+        const userRef = doc(db, "users", user[0].uid);
+        await updateDoc(userRef, {
+            uid: user[0].uid,
+            name: user[0].name,
+            email: user[0].email,
+            remainingHolidays: user[0].remainingHolidays - request.totalDays,
+            takenHolidays: user[0].takenHolidays + request.totalDays,
+            flexTime: user[0].flexTime,
+            nationalHolidays: user[0].nationalHolidays,
+            admin: user[0].admin,
+            superAdmin: user[0].superAdmin,
+        });
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed approve request and delete existing request");
     }
 }
 

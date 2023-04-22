@@ -9,7 +9,7 @@ import {
     ListItemText,
     OutlinedInput,
 } from "@mui/material";
-import EditPopUp from "../../UI/SimpleDialog";
+import EditPopUp from "../../UI/simple-dialog/EditPopUp";
 import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import MenuItem from "@mui/material/MenuItem";
@@ -168,7 +168,7 @@ const HandleRequests = () => {
                                     <td>{req.totalDays}</td>
                                     {requests.includes(req) ? (
                                         <td>
-                                            <EditPopUp uid={req.uid} />
+                                            <EditPopUp request={req} />
                                         </td>
                                     ) : null}
                                 </tr>
