@@ -70,7 +70,7 @@ export default function DialogModal(props: DialogModalProps) {
             style={{ position: "absolute", right: 0 }}
         >
             <List sx={{ pt: 0 }}>
-                {user[0].admin ? (
+                {user[0].admin && user[0].email !== request.requestedByEmail ? (
                     <ListItem disableGutters>
                         <ListItemButton
                             onClick={() => handleApproval(request)}

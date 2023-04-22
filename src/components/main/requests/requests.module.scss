@@ -10,24 +10,28 @@
     overflow-y: visible;
     overflow-x: hidden;
 
+    .requestTable__title {
+        font-size: 2rem;
+        text-align: center;
+        color: white;
+    }
+
     table {
         display: table;
         border-collapse: collapse;
-
         height: 100%;
         width: 100%;
         overflow-y: scroll;
         scroll-behavior: smooth;
-        border-spacing: 1rem;
-        margin-left: 1rem;
 
         label {
             display: flex;
             justify-content: space-between;
-            background-color: white;
         }
 
         thead {
+            background-color: rgb(0, 150, 136);
+
             tr {
                 border-bottom: 2px solid rgb(170, 170, 170);
             }
@@ -38,6 +42,10 @@
                 position: sticky;
                 top: 0;
                 color: rgb(139, 139, 139);
+                th {
+                    word-wrap: break-word;
+                    padding: 1rem;
+                }
             }
         }
 
@@ -58,12 +66,18 @@
             }
         }
 
+        .requestTable__td__edit {
+            text-align: center;
+        }
+
         td {
             width: 5rem;
             font-size: 1rem;
             position: relative;
             font-weight: 500;
             text-align: left;
+            word-wrap: break-word;
+            padding: 1rem;
         }
         .requestTable__tdWaitApproval {
             display: flex;

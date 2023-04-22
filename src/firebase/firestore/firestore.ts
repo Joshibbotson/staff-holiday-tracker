@@ -274,6 +274,7 @@ export async function approveRequest(
         //remove un needed request
         await deleteDoc(requestDocRef);
 
+        //update user's reminaing holidays and taken holidays appropriately
         const user = await getUserDataViaEmail(request.requestedByEmail);
         console.log(user);
         const userRef = doc(db, "users", user[0].docID);

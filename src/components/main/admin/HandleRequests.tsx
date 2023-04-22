@@ -24,7 +24,7 @@ const HandleRequests = () => {
     const { approvedRequests } = useContext(ApprovedRequestContext);
     const [userApprovedRequests, setUserApprovedRequests] = useState(
         approvedRequests.filter(req => {
-            return req.requestedByEmail === user[0].email;
+            return req.approverEmail === user[0].email;
         })
     );
 
@@ -41,7 +41,7 @@ const HandleRequests = () => {
         console.log(userApprovedRequests);
         setUserApprovedRequests(
             approvedRequests.filter(req => {
-                return req.requestedByEmail === user[0].email;
+                return req.approverEmail === user[0].email;
             })
         );
         setLoadedRequests([...requests, ...userApprovedRequests]);
@@ -85,7 +85,14 @@ const HandleRequests = () => {
                     <thead>
                         <tr>
                             <th colSpan={2}>
-                                <FormControl sx={{ m: 1, width: 400 }}>
+                                <FormControl
+                                    sx={{
+                                        m: 1,
+                                        width: 400,
+                                        backgroundColor: "white",
+                                        borderRadius: "4px",
+                                    }}
+                                >
                                     <InputLabel>
                                         <FilterListIcon /> Filters
                                     </InputLabel>
@@ -118,11 +125,17 @@ const HandleRequests = () => {
                                     </Select>
                                 </FormControl>
                             </th>
+                            <th
+                                colSpan={4}
+                                className={SCSS.requestTable__title}
+                            >
+                                Handle Requests
+                            </th>
                         </tr>
+
                         <tr className={SCSS.requestTable__header}>
-                            <th colSpan={1}>Name</th>
+                            <th colSpan={1}>Requested by</th>
                             <th colSpan={1}>Status</th>
-                            <th colSpan={1}>Approver</th>
                             <th colSpan={1}>Date Start</th>
                             <th colSpan={1}>Date End</th>
                             <th colSpan={1}>Total days</th>
@@ -152,7 +165,6 @@ const HandleRequests = () => {
                                         </td>
                                     )}
 
-                                    <td>{req.approverEmail}</td>
                                     <td>
                                         {dateConvert(
                                             req.dateStart.seconds,
@@ -167,7 +179,11 @@ const HandleRequests = () => {
                                     </td>
                                     <td>{req.totalDays}</td>
                                     {requests.includes(req) ? (
-                                        <td>
+                                        <td
+                                            className={
+                                                SCSS.requestTable__td__edit
+                                            }
+                                        >
                                             <EditPopUp request={req} />
                                         </td>
                                     ) : null}
