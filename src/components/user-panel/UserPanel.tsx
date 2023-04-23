@@ -14,6 +14,7 @@ import { CurrentUserContext } from "../../context/CurrentUserContext";
 
 const UserPanel = () => {
     const [showUserPanel, setShowUserPanel] = useState<boolean>(true);
+    const [activeBtn, setActiveBtn] = useState<string>("Calendar");
     const { user } = useContext(CurrentUserContext);
     const [admin, setAdmin] = useState(false);
     const [showModal, setShowModal] = useState<boolean>(false);
@@ -71,8 +72,19 @@ const UserPanel = () => {
                         variant="text"
                         color="inherit"
                         size="small"
-                        onClick={updateShowCalendar}
+                        onClick={() => {
+                            updateShowCalendar();
+                            setActiveBtn("Calendar");
+                        }}
                         startIcon={<CalendarMonthIcon />}
+                        style={
+                            activeBtn === "Calendar"
+                                ? {
+                                      backgroundColor:
+                                          "rgba(255, 255, 255, 0.253)",
+                                  }
+                                : {}
+                        }
                     >
                         Calendar
                     </Button>
@@ -80,8 +92,19 @@ const UserPanel = () => {
                         variant="text"
                         color="inherit"
                         size="small"
-                        onClick={updateShowRequests}
+                        onClick={() => {
+                            updateShowRequests();
+                            setActiveBtn("Requests");
+                        }}
                         startIcon={<ContentPasteIcon />}
+                        style={
+                            activeBtn === "Requests"
+                                ? {
+                                      backgroundColor:
+                                          "rgba(255, 255, 255, 0.253)",
+                                  }
+                                : {}
+                        }
                     >
                         Requests
                     </Button>
@@ -90,8 +113,19 @@ const UserPanel = () => {
                             variant="text"
                             color="inherit"
                             size="small"
-                            onClick={updateShowHandleRequests}
+                            onClick={() => {
+                                updateShowHandleRequests();
+                                setActiveBtn("Handle Requests");
+                            }}
                             startIcon={<SupervisorAccountIcon />}
+                            style={
+                                activeBtn === "Handle Requests"
+                                    ? {
+                                          backgroundColor:
+                                              "rgba(255, 255, 255, 0.253)",
+                                      }
+                                    : {}
+                            }
                         >
                             Handle Requests
                         </Button>
