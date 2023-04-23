@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import SCSS from "./calendar.module.scss";
-import { da } from "date-fns/locale";
+import HolidayTab from "../../UI/holiday-tab/HolidayTab";
 
 type Holiday = {
     name: string;
@@ -19,7 +19,7 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
     const [days, setDays] = useState<Date[]>([]);
     const [prevMonthDays, setPrevMonthDays] = useState<Date[]>([]);
     const [nextMonthDays, setNextMonthDays] = useState<Date[]>([]);
-
+    console.log(holidays);
     useEffect(() => {
         const date = new Date(year, month, 1);
         const firstDayOfWeek = date.getDay();
@@ -52,10 +52,21 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
         return holiday ? true : false;
     };
 
-    const getNameForHoliday = (date: Date) => {
-        holidays!.filter(h => {
-            return date >= h.start && date <= h.end ? <p>{h.name}</p> : null;
-        });
+    const getNameForHoliday = (date: Date, dayIndex: number) => {
+        if (dayIndex === 0 || dayIndex === 6) {
+            return;
+        } else {
+            let nameArr: Array<string> = [];
+            holidays!.forEach(h => {
+                if (
+                    date.getDate() >= h.start.getDate() &&
+                    date.getDate() <= h.end.getDate()
+                ) {
+                    nameArr.push(h.name);
+                }
+            });
+            return nameArr;
+        }
     };
 
     const isWeekend = (dayIndex: number) => {
@@ -74,8 +85,6 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
             return SCSS.calendar__nextMonth;
         } else if (isWeekend(date.getDay())) {
             return SCSS.calendar__weekend;
-        } else if (getHolidayColor(date)) {
-            return SCSS.calendar__holiday;
         } else {
             return SCSS.calendar__day;
         }
@@ -108,7 +117,13 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
                                             className={getClassName(date)}
                                             onClick={() => handleClick()}
                                         >
-                                            {date.getDate()}
+                                            <HolidayTab
+                                                day={date.getDate()}
+                                                name={getNameForHoliday(
+                                                    date,
+                                                    dayIndex
+                                                )}
+                                            />
                                         </td>
                                     ) : (
                                         <td
@@ -116,7 +131,10 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
                                             className={getClassName(date)}
                                             onClick={() => handleClick()}
                                         >
-                                            {date.getDate()}
+                                            <HolidayTab
+                                                day={date.getDate()}
+                                                name={undefined}
+                                            />
                                         </td>
                                     )
                                 )}

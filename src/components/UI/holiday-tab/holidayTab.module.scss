@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.3rem;
+    height: 7rem;
+    width: 100%;
+
+    // border: 1px solid red;
+
+    .container__day {
+        width: 100%;
+        text-align: left;
+        padding-left: 0.5rem;
+        font-size: 1rem;
+    }
+    .container__nameContainer {
+        display: flex;
+        // flex-direction: column;
+        flex-wrap: wrap;
+        gap: 0.2rem;
+        width: 90%;
+        // overflow-x: scroll;
+
+        p {
+            padding-left: 0.5rem;
+            font-size: 1rem;
+            width: 100%;
+            word-wrap: break-word;
+            background-color: rgb(37, 174, 37);
+            color: white;
+            padding-top: 0.3rem;
+            padding-bottom: 0.3rem;
+            border-radius: 4px;
+        }
+    }
+}
