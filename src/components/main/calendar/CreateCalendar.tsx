@@ -19,7 +19,7 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
     const [days, setDays] = useState<Date[]>([]);
     const [prevMonthDays, setPrevMonthDays] = useState<Date[]>([]);
     const [nextMonthDays, setNextMonthDays] = useState<Date[]>([]);
-    console.log(holidays);
+
     useEffect(() => {
         const date = new Date(year, month, 1);
         const firstDayOfWeek = date.getDay();
@@ -45,7 +45,7 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
         setDays([...prevMonthDays, ...thisMonthDays, ...nextMonthDays]);
         setPrevMonthDays([...prevMonthDays]);
         setNextMonthDays([...nextMonthDays]);
-    }, [month, year]);
+    }, [holidays, month, year]);
 
     const getHolidayColor = (date: Date) => {
         const holiday = holidays?.find(h => date >= h.start && date <= h.end);
@@ -56,6 +56,7 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
         if (dayIndex === 0 || dayIndex === 6) {
             return;
         } else {
+            console.log(date);
             let nameArr: Array<string> = [];
             holidays!.forEach(h => {
                 if (
@@ -95,13 +96,13 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
             <table className={SCSS.calender__table}>
                 <thead>
                     <tr>
-                        <th className={SCSS.calendar__titleWeekend}>Sun</th>
-                        <th>Mon</th>
-                        <th>Tue</th>
-                        <th>Wed</th>
-                        <th>Thu</th>
-                        <th>Fri</th>
-                        <th className={SCSS.calendar__titleWeekend}>Sat</th>
+                        <th className={SCSS.calendar__titleWeekend}>SUN</th>
+                        <th>MON</th>
+                        <th>TUE</th>
+                        <th>WED</th>
+                        <th>THU</th>
+                        <th>FRI</th>
+                        <th className={SCSS.calendar__titleWeekend}>SAT</th>
                     </tr>
                 </thead>
                 <tbody>

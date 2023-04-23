@@ -7,8 +7,6 @@
     height: 7rem;
     width: 100%;
 
-    // border: 1px solid red;
-
     .container__day {
         width: 100%;
         text-align: left;
@@ -17,11 +15,10 @@
     }
     .container__nameContainer {
         display: flex;
-        // flex-direction: column;
         flex-wrap: wrap;
         gap: 0.2rem;
         width: 90%;
-        // overflow-x: scroll;
+        overflow-x: hidden;
 
         p {
             padding-left: 0.5rem;

@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 90vh;
+    height: 100%;
     margin-top: auto;
 
     table {
@@ -13,6 +13,14 @@
         table-layout: fixed;
         width: 100%;
         height: 100%;
+
+        thead {
+            th {
+                padding-left: 0.3rem;
+                text-align: left;
+                font-size: 1.3rem;
+            }
+        }
 
         tbody {
             tr {
