@@ -11,6 +11,7 @@ import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import RequestModal from "../main/request-modal/RequestModal";
 import { MainPageContext } from "../../context/MainPageContext";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
+import { CircularProgress } from "@mui/material";
 
 const UserPanel = () => {
     const [showUserPanel, setShowUserPanel] = useState<boolean>(true);
@@ -40,23 +41,30 @@ const UserPanel = () => {
                         <div className={userPanelSCSS.profileImg}>
                             <AccountCircleIcon />
                         </div>
-                        <h2>{user[0] ? user[0].name : "Human"}</h2>
+                        <h2>{user[0] ? user[0].name : <CircularProgress />}</h2>
                     </div>
                     <div className={userPanelSCSS.dashboard}>
-                        {user[0]
-                            ? `Remaining Holidays: ${user[0].remainingHolidays}`
-                            : "Human"}
+                        {user[0] ? (
+                            `Remaining Holidays: ${user[0].remainingHolidays}`
+                        ) : (
+                            <CircularProgress />
+                        )}
                     </div>
                     <div className={userPanelSCSS.calendar}>
-                        {user[0]
-                            ? `Taken Holidays: ${user[0].takenHolidays}`
-                            : "Human"}
+                        {user[0] ? (
+                            `Taken Holidays: ${user[0].takenHolidays}`
+                        ) : (
+                            <CircularProgress />
+                        )}
                     </div>
                     <div className={userPanelSCSS.calendar}>
-                        {user[0]
-                            ? `Accrued Flexi Time: ${user[0].flexTime}`
-                            : "Human"}
+                        {user[0] ? (
+                            `Accrued Flexi Time: ${user[0].flexTime}`
+                        ) : (
+                            <CircularProgress />
+                        )}
                     </div>
+
                     <Button
                         variant="contained"
                         color="primary"

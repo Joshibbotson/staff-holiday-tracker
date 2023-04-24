@@ -32,6 +32,7 @@
 
         thead {
             background-color: rgb(0, 150, 136);
+            height: 10rem;
             tr {
                 border-bottom: 2px solid rgb(170, 170, 170);
             }
@@ -44,6 +45,7 @@
                 color: rgb(139, 139, 139);
                 th {
                     word-wrap: break-word;
+                    padding: 1rem;
                 }
             }
         }
