@@ -8,17 +8,22 @@ import Button from "@mui/material/Button";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import RequestModal from "../main/request-modal/RequestModal";
 import { MainPageContext } from "../../context/MainPageContext";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { CircularProgress } from "@mui/material";
 
+import { AwaitApprovalReqContext } from "../../context/AwaitApprovalReqContext";
+
 const UserPanel = () => {
     const [showUserPanel, setShowUserPanel] = useState<boolean>(true);
     const [activeBtn, setActiveBtn] = useState<string>("Calendar");
     const { user } = useContext(CurrentUserContext);
+    const { requests } = useContext(AwaitApprovalReqContext);
     const [admin, setAdmin] = useState(false);
     const [showModal, setShowModal] = useState<boolean>(false);
+    const [showNotifcations, setShowNotifcations] = useState<boolean>(true);
     function handleClick() {
         setShowModal(!showModal);
     }
@@ -33,6 +38,12 @@ const UserPanel = () => {
         }
     }, [user]);
 
+    useEffect(() => {
+        requests.length > 0
+            ? setShowNotifcations(true)
+            : setShowNotifcations(false);
+    }, [requests]);
+
     return (
         <>
             <div className={userPanelSCSS.userPanelContainer}>
@@ -44,25 +55,19 @@ const UserPanel = () => {
                         <h2>{user[0] ? user[0].name : <CircularProgress />}</h2>
                     </div>
                     <div className={userPanelSCSS.dashboard}>
-                        {user[0] ? (
-                            `Remaining Holidays: ${user[0].remainingHolidays}`
-                        ) : (
-                            <CircularProgress />
-                        )}
+                        {user[0]
+                            ? `Remaining Holidays: ${user[0].remainingHolidays}`
+                            : ""}
                     </div>
                     <div className={userPanelSCSS.calendar}>
-                        {user[0] ? (
-                            `Taken Holidays: ${user[0].takenHolidays}`
-                        ) : (
-                            <CircularProgress />
-                        )}
+                        {user[0]
+                            ? `Taken Holidays: ${user[0].takenHolidays}`
+                            : ""}
                     </div>
                     <div className={userPanelSCSS.calendar}>
-                        {user[0] ? (
-                            `Accrued Flexi Time: ${user[0].flexTime}`
-                        ) : (
-                            <CircularProgress />
-                        )}
+                        {user[0]
+                            ? `Accrued Flexi Time: ${user[0].flexTime}`
+                            : ""}
                     </div>
 
                     <Button
@@ -124,8 +129,29 @@ const UserPanel = () => {
                             onClick={() => {
                                 updateShowHandleRequests();
                                 setActiveBtn("Handle Requests");
+                                setShowNotifcations(false);
                             }}
                             startIcon={<SupervisorAccountIcon />}
+                            endIcon={
+                                showNotifcations ? (
+                                    <div
+                                        className={
+                                            userPanelSCSS.notficationContainer
+                                        }
+                                    >
+                                        <NotificationsNoneIcon />
+                                        <div
+                                            className={
+                                                userPanelSCSS.awaitingRequestCount
+                                            }
+                                        >
+                                            {requests.length > 99
+                                                ? "99+"
+                                                : requests.length}
+                                        </div>
+                                    </div>
+                                ) : null
+                            }
                             style={
                                 activeBtn === "Handle Requests"
                                     ? {
