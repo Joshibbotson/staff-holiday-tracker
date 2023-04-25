@@ -63,7 +63,7 @@ export const RequestsProvider: React.FC<any> = ({ children }) => {
             };
             fetchRequests();
         }
-    }, []);
+    }, [user]);
 
     const value: RequestContextType = {
         requests: userRequests,

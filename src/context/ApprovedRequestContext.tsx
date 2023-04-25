@@ -47,20 +47,22 @@ export const ApprovedReqsProvider: React.FC<any> = ({ children }) => {
         const endMonth = new Date(Date.UTC(year, month - 1, 1));
         //adjust end date to be last millisecond of the previous day
         endMonth.setTime(endMonth.getTime() - 1);
+        if (user) {
+            const q = query(collection(db, "approvedRequests"));
 
-        const q = query(collection(db, "approvedRequests"));
-
-        const unsubscribe = onSnapshot(q, snapshot => {
-            const requests: IncomingRequestsType[] = [];
-            snapshot.forEach(doc => {
-                const data = doc.data() as IncomingRequestsType;
-                data.uid = doc.id;
-                requests.push(data);
+            const unsubscribe = onSnapshot(q, snapshot => {
+                const requests: IncomingRequestsType[] = [];
+                snapshot.forEach(doc => {
+                    const data = doc.data() as IncomingRequestsType;
+                    data.uid = doc.id;
+                    requests.push(data);
+                });
+                setApprovedReqs(requests);
             });
-            setApprovedReqs(requests);
-        });
-        return () => unsubscribe();
-    }, []);
+
+            return () => unsubscribe();
+        }
+    }, [user]);
 
     useEffect(() => {
         if (user) {
@@ -78,7 +80,7 @@ export const ApprovedReqsProvider: React.FC<any> = ({ children }) => {
             };
             fetchRequests();
         }
-    }, []);
+    }, [user]);
 
     const value: ApprovedRequestContextType = {
         approvedRequests: approvedReqs,

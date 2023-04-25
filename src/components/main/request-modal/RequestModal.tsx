@@ -9,6 +9,7 @@ import { Button } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { UsersContext } from "../../../context/UsersContext";
+import { PostSubmitModal } from "./successful-submit/PostSubmitModal";
 
 interface Props {
     handleClick: () => void;
@@ -75,8 +76,6 @@ export const RequestModal = ({ handleClick }: Props) => {
         e: React.FormEvent<HTMLFormElement>,
         form: HTMLFormElement
     ) => {
-        console.log(e.currentTarget.form!);
-
         e.preventDefault();
 
         const newRequest = {
@@ -110,13 +109,7 @@ export const RequestModal = ({ handleClick }: Props) => {
                 }}
             >
                 {submitScreen ? (
-                    <div
-                        className={SCSS.modalCard}
-                        onClick={handleModalCardClick}
-                    >
-                        {" "}
-                        submitted
-                    </div>
+                    <PostSubmitModal handleClick={handleClick} />
                 ) : (
                     <div
                         className={SCSS.modalCard}

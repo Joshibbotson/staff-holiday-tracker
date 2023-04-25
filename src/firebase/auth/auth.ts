@@ -77,14 +77,7 @@ export async function logInWithEmailAndPassword(
     password: string
 ) {
     try {
-        const result = await signInWithEmailAndPassword(auth, email, password);
-        const user = result.user;
-        const queryDb = query(
-            collection(db, "users"),
-            where("uid", "==", user.uid)
-        );
-        //this looks for the user
-        const docs = await getDocs(queryDb);
+        await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
         console.log(error);
     }

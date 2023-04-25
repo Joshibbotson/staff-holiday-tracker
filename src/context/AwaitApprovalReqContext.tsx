@@ -65,7 +65,7 @@ export const AwaitApprovReqProvider: React.FC<any> = ({ children }) => {
             };
             fetchRequests();
         }
-    }, []);
+    }, [user]);
 
     const value: AwaitApprovReqContextType = {
         requests: requestsForApproval,

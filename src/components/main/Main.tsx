@@ -23,19 +23,13 @@ function Main() {
     const { showCalendar, showRequests, showHandleRequests } =
         useContext(MainPageContext);
 
-    const [user, loading, error] = useAuthState(auth);
     const [approvedRequestsState, setApprovedRequestsState] = useState<
         ApprovedRequestsType[] | undefined
     >(undefined);
-    const [requests, setRequests] = useState<
-        IncomingRequestsType[] | undefined
-    >(undefined);
-    const [users, setUsers] = useState<UserType[] | undefined>(undefined);
     const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         if (approvedRequests) {
-            console.log(approvedRequests);
             setApprovedRequestsState(approvedRequests);
         }
     }, [approvedRequests]);
