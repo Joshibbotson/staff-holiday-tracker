@@ -238,10 +238,19 @@ export async function addRequest(request: OutgoingRequestData): Promise<void> {
     }
 }
 
-export async function editRequest(request: OutgoingRequestData): Promise<void> {
+export async function editRequest(
+    reqId: string,
+    newDateStart: Date,
+    newDateEnd: Date,
+    newTotalDays: number
+): Promise<void> {
     try {
-        const requestsCollection = collection(db, "requests");
-        await addDoc(requestsCollection, request);
+        const reqRef = doc(db, "requests", reqId);
+        await updateDoc(reqRef, {
+            dateStart: newDateStart,
+            dateEnd: newDateEnd,
+            totalDays: newTotalDays,
+        });
     } catch (error) {
         console.log(error);
         throw new Error("Failed to add request to database");
