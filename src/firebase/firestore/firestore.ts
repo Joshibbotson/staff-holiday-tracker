@@ -20,6 +20,7 @@ import { ApprovedRequestsType } from "../../types/ApprovedRequests.type";
 import { IncomingRequestsType } from "../../types/IncomingRequests.type";
 import { OutgoingRequestData } from "../../types/OutgoingRequestData.type";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
+import { EditRequestType } from "../../types/EditRequest.type";
 
 // //firebase emulator//
 // const db = getFirestore();
@@ -238,10 +239,16 @@ export async function addRequest(request: OutgoingRequestData): Promise<void> {
     }
 }
 
-export async function editRequest(request: OutgoingRequestData): Promise<void> {
+export async function editRequest(
+    updatedRequest: EditRequestType
+): Promise<void> {
     try {
-        const requestsCollection = collection(db, "requests");
-        await addDoc(requestsCollection, request);
+        const reqRef = doc(db, "requests", updatedRequest.uid);
+        await updateDoc(reqRef, {
+            dateStart: updatedRequest.newDateStart,
+            dateEnd: updatedRequest.newDateEnd,
+            totalDays: updatedRequest.newTotalDays,
+        });
     } catch (error) {
         console.log(error);
         throw new Error("Failed to add request to database");

@@ -8,11 +8,11 @@ import { ApprovedRequestContext } from "../../context/ApprovedRequestContext";
 import Calendar from "./calendar/CreateCalendar";
 import { SelectedMonthContext } from "../../context/SelectedMonth";
 import { SelectedYearContext } from "../../context/SelectedYear";
-import { MonthBtns } from "./month-btns/MonthBtns";
-import { YearBtns } from "./years-btns/YearBtns";
+import { MonthBtns } from "./calendar/month-btns/MonthBtns";
+import { YearBtns } from "./calendar/years-btns/YearBtns";
 import SCSS from "./main.module.scss";
-import RequestModal from "./request-modal/RequestModal";
-import Requests from "./requests/Requests";
+import RequestModal from "../request-modal/RequestModal";
+import Requests from "../requests/Requests";
 import { MainPageContext } from "../../context/MainPageContext";
 import HandleRequests from "./admin/HandleRequests";
 

@@ -16,8 +16,9 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DoneIcon from "@mui/icons-material/Done";
 import { IncomingRequestsType } from "../../../types";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
+import EditRequestModal from "../../edit-request-modal/EditRequestModal";
 
 export interface DialogModalProps {
     open: boolean;
@@ -28,6 +29,7 @@ export interface DialogModalProps {
 export default function DialogModal(props: DialogModalProps) {
     const { onClose, open, request } = props;
     const { user } = useContext(CurrentUserContext);
+    const [showEditModal, setShowEditModal] = useState(false);
 
     const handleClose = (name: string) => {
         onClose(name);
@@ -37,6 +39,7 @@ export default function DialogModal(props: DialogModalProps) {
         onClose(key);
         if (key === "edit") {
             console.log("edit");
+            updateShowEditModal();
         } else if (key === "Cancel Request") {
             console.log("cancel request");
             handleDelete(request.uid);
@@ -54,6 +57,10 @@ export default function DialogModal(props: DialogModalProps) {
         }
     };
 
+    const updateShowEditModal = () => {
+        setShowEditModal(!showEditModal);
+    };
+
     const handleDelete = async (uid: string) => {
         try {
             await deleteRequest(uid);
@@ -64,72 +71,81 @@ export default function DialogModal(props: DialogModalProps) {
     };
 
     return (
-        <Dialog
-            onClose={handleClose}
-            open={open}
-            style={{ position: "absolute", right: 0 }}
-        >
-            <List sx={{ pt: 0 }}>
-                {user[0].admin && user[0].email !== request.requestedByEmail ? (
+        <>
+            {showEditModal ? (
+                <EditRequestModal
+                    updateShowEditModal={updateShowEditModal}
+                    request={request}
+                />
+            ) : null}
+            <Dialog
+                onClose={handleClose}
+                open={open}
+                style={{ position: "absolute", right: 0 }}
+            >
+                <List sx={{ pt: 0 }}>
+                    {user[0].admin &&
+                    user[0].email !== request.requestedByEmail ? (
+                        <ListItem disableGutters>
+                            <ListItemButton
+                                onClick={() => handleApproval(request)}
+                                key={"Approve Request"}
+                            >
+                                <ListItemAvatar>
+                                    <Avatar
+                                        sx={{
+                                            bgcolor: green[100],
+                                            color: green[600],
+                                        }}
+                                    >
+                                        <DoneIcon />
+                                    </Avatar>
+                                </ListItemAvatar>
+                                <ListItemText primary={"Approve Request"} />
+                            </ListItemButton>
+                        </ListItem>
+                    ) : (
+                        ""
+                    )}
+
                     <ListItem disableGutters>
                         <ListItemButton
-                            onClick={() => handleApproval(request)}
-                            key={"Approve Request"}
+                            onClick={() => handleListItemClick("edit")}
+                            key={"edit"}
                         >
                             <ListItemAvatar>
                                 <Avatar
                                     sx={{
-                                        bgcolor: green[100],
-                                        color: green[600],
+                                        bgcolor: blue[100],
+                                        color: blue[600],
                                     }}
                                 >
-                                    <DoneIcon />
+                                    <AddIcon />
                                 </Avatar>
                             </ListItemAvatar>
-                            <ListItemText primary={"Approve Request"} />
+                            <ListItemText primary={"edit"} />
                         </ListItemButton>
                     </ListItem>
-                ) : (
-                    ""
-                )}
-
-                <ListItem disableGutters>
-                    <ListItemButton
-                        onClick={() => handleListItemClick("edit")}
-                        key={"edit"}
-                    >
-                        <ListItemAvatar>
-                            <Avatar
-                                sx={{
-                                    bgcolor: blue[100],
-                                    color: blue[600],
-                                }}
-                            >
-                                <AddIcon />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={"edit"} />
-                    </ListItemButton>
-                </ListItem>
-                <ListItem disableGutters>
-                    <ListItemButton
-                        onClick={() => handleDelete(request.uid)}
-                        key={"Cancel Request"}
-                    >
-                        <ListItemAvatar>
-                            <Avatar
-                                sx={{
-                                    bgcolor: red[100],
-                                    color: red[600],
-                                }}
-                            >
-                                <RemoveIcon />
-                            </Avatar>
-                        </ListItemAvatar>
-                        <ListItemText primary={"Cancel Request"} />
-                    </ListItemButton>
-                </ListItem>
-            </List>
-        </Dialog>
+                    <ListItem disableGutters>
+                        <ListItemButton
+                            onClick={() => handleDelete(request.uid)}
+                            key={"Cancel Request"}
+                        >
+                            <ListItemAvatar>
+                                <Avatar
+                                    sx={{
+                                        bgcolor: red[100],
+                                        color: red[600],
+                                    }}
+                                >
+                                    <RemoveIcon />
+                                </Avatar>
+                            </ListItemAvatar>
+                            <ListItemText primary={"Cancel Request"} />
+                        </ListItemButton>
+                    </ListItem>
+                </List>
+            </Dialog>
+        </>
     );
 }
