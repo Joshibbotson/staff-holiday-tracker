@@ -9,7 +9,7 @@ import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import RequestModal from "../main/request-modal/RequestModal";
+import RequestModal from "../request-modal/RequestModal";
 import { MainPageContext } from "../../context/MainPageContext";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { CircularProgress } from "@mui/material";

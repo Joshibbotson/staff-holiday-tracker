@@ -1,5 +1,5 @@
 import { nanoid } from "nanoid";
-import { SelectedMonthContext } from "../../../context/SelectedMonth";
+import { SelectedMonthContext } from "../../../../context/SelectedMonth";
 import { useContext } from "react";
 import SCSS from "./monthBtns.module.scss";
 
