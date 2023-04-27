@@ -294,16 +294,3 @@ export async function approveRequest(
         throw new Error("Failed approve request and delete existing request");
     }
 }
-
-// export const editUserData = async (
-//     docID: string,
-//     name: string,
-//     dueDate: string
-// ) => {
-//     try {
-//         const taskRef = doc(db, "tasks", docID)
-//         await updateDoc(taskRef, { name, dueDate, tag })
-//     } catch (err) {
-//         console.error(err)
-//     }
-// }

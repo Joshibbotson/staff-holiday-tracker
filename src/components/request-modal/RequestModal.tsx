@@ -9,7 +9,7 @@ import { Button } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { UsersContext } from "../../context/UsersContext";
-import { PostSubmitModal } from "./successful-submit/PostSubmitModal";
+import { PostSubmitModal } from "../UI/successful-submit/PostSubmitModal";
 
 interface Props {
     handleClick: () => void;
@@ -109,7 +109,10 @@ export const RequestModal = ({ handleClick }: Props) => {
                 }}
             >
                 {submitScreen ? (
-                    <PostSubmitModal handleClick={handleClick} />
+                    <PostSubmitModal
+                        variant="requestSubmit"
+                        handleClick={handleClick}
+                    />
                 ) : (
                     <div
                         className={SCSS.modalCard}

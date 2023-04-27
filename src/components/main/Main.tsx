@@ -14,7 +14,7 @@ import SCSS from "./main.module.scss";
 import RequestModal from "../request-modal/RequestModal";
 import Requests from "../requests/Requests";
 import { MainPageContext } from "../../context/MainPageContext";
-import HandleRequests from "./admin/HandleRequests";
+import HandleRequests from "./admin/handle-requests/HandleRequests";
 
 function Main() {
     const { month } = useContext(SelectedMonthContext);

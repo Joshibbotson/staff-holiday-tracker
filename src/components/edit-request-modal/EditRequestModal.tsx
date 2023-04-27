@@ -5,6 +5,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { editRequest } from "../../firebase/firestore/firestore";
 import { EditRequestType } from "../../types/EditRequest.type";
 import { IncomingRequestsType } from "../../types";
+import { PostSubmitModal } from "../UI/successful-submit/PostSubmitModal";
 
 interface EditRequestModalProps {
     updateShowEditModal: () => void;
@@ -24,6 +25,7 @@ const EditRequestModal = ({
     const [newTotalDays, setNewTotalDays] = useState<string>(
         request.totalDays.toString()
     );
+    const [submitScreen, setSubmitScreen] = useState<boolean>(false);
 
     const handleModalCardClick = (event: React.MouseEvent<HTMLDivElement>) => {
         event.stopPropagation();
@@ -54,7 +56,7 @@ const EditRequestModal = ({
             newTotalDays: Number(newTotalDays),
         };
         handleEditRequest(updatedRequest);
-        // setSubmitScreen(true);
+        setSubmitScreen(true);
     };
 
     return (
@@ -65,77 +67,90 @@ const EditRequestModal = ({
                     updateShowEditModal();
                 }}
             >
-                <div className={SCSS.modalCard} onClick={handleModalCardClick}>
-                    <button
-                        className={SCSS.modalCard__exitBtn}
-                        onClick={() => {
-                            updateShowEditModal();
-                        }}
+                {submitScreen ? (
+                    <PostSubmitModal
+                        variant="requestEdit"
+                        handleClick={updateShowEditModal}
+                    />
+                ) : (
+                    <div
+                        className={SCSS.modalCard}
+                        onClick={handleModalCardClick}
                     >
-                        <ClearIcon />
-                    </button>
-                    <h3>Edit Request</h3>
-                    <form
-                        onSubmit={e => {
-                            handleSubmit(e, e.currentTarget.form!);
-                        }}
-                    >
-                        <div className={SCSS.wrapper}>
-                            <label
-                                className={SCSS.dateLabel}
-                                htmlFor="dateStart"
-                            >
-                                New start date:
-                            </label>
-
-                            <input
-                                required
-                                name="dateStart"
-                                type="date"
-                                value={newDateStart}
-                                onChange={e => {
-                                    setNewDateStart(e.target.value);
-                                }}
-                            />
-                        </div>
-                        <div className={SCSS.wrapper}>
-                            <label className={SCSS.dateLabel} htmlFor="dateEnd">
-                                New end date:
-                            </label>
-
-                            <input
-                                required
-                                type="date"
-                                value={newDateEnd}
-                                onChange={e => {
-                                    setNewDateEnd(e.target.value);
-                                }}
-                                name="dateEnd"
-                            />
-                        </div>
-                        <TextField
-                            label="Total days:"
-                            variant="outlined"
-                            type="number"
-                            aria-readonly={true}
-                            value={newTotalDays}
-                            onChange={e => setNewTotalDays(e.target.value)}
-                            inputProps={{
-                                inputMode: "numeric",
-                                pattern: "[0-9]*",
+                        <button
+                            className={SCSS.modalCard__exitBtn}
+                            onClick={() => {
+                                updateShowEditModal();
                             }}
-                        />
-                        <Button
-                            aria-required={true}
-                            variant="contained"
-                            color="primary"
-                            size="small"
-                            type="submit"
                         >
-                            Submit Edited Request
-                        </Button>{" "}
-                    </form>
-                </div>
+                            <ClearIcon />
+                        </button>
+                        <h3>Edit Request</h3>
+                        <form
+                            onSubmit={e => {
+                                handleSubmit(e, e.currentTarget.form!);
+                            }}
+                        >
+                            <div className={SCSS.wrapper}>
+                                <label
+                                    className={SCSS.dateLabel}
+                                    htmlFor="dateStart"
+                                >
+                                    New start date:
+                                </label>
+
+                                <input
+                                    required
+                                    name="dateStart"
+                                    type="date"
+                                    value={newDateStart}
+                                    onChange={e => {
+                                        setNewDateStart(e.target.value);
+                                    }}
+                                />
+                            </div>
+                            <div className={SCSS.wrapper}>
+                                <label
+                                    className={SCSS.dateLabel}
+                                    htmlFor="dateEnd"
+                                >
+                                    New end date:
+                                </label>
+
+                                <input
+                                    required
+                                    type="date"
+                                    value={newDateEnd}
+                                    onChange={e => {
+                                        setNewDateEnd(e.target.value);
+                                    }}
+                                    name="dateEnd"
+                                />
+                            </div>
+                            <TextField
+                                label="Total days:"
+                                variant="outlined"
+                                type="number"
+                                aria-readonly={true}
+                                value={newTotalDays}
+                                onChange={e => setNewTotalDays(e.target.value)}
+                                inputProps={{
+                                    inputMode: "numeric",
+                                    pattern: "[0-9]*",
+                                }}
+                            />
+                            <Button
+                                aria-required={true}
+                                variant="contained"
+                                color="primary"
+                                size="small"
+                                type="submit"
+                            >
+                                Submit Edited Request
+                            </Button>{" "}
+                        </form>
+                    </div>
+                )}
             </div>
         </>
     );
