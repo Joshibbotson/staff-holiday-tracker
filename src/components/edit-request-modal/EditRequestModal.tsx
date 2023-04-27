@@ -3,7 +3,7 @@ import SCSS from "./editRequestModal.module.scss";
 import { useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { editRequest } from "../../firebase/firestore/firestore";
-import { EditRequest } from "../../types/EditRequest.type";
+import { EditRequestType } from "../../types/EditRequest.type";
 import { IncomingRequestsType } from "../../types";
 
 interface EditRequestModalProps {
@@ -15,32 +15,22 @@ const EditRequestModal = ({
     updateShowEditModal,
     request,
 }: EditRequestModalProps) => {
-    const [newDateStart, setNewDateStart] = useState<string>("");
-    const [newDateEnd, setNewDateEnd] = useState<string>("");
-    const [newTotalDays, setNewTotalDays] = useState<string>("");
+    const [newDateStart, setNewDateStart] = useState<string>(
+        request.dateStart.toDate().toISOString().substring(0, 10)
+    );
+    const [newDateEnd, setNewDateEnd] = useState<string>(
+        request.dateEnd.toDate().toISOString().substring(0, 10)
+    );
+    const [newTotalDays, setNewTotalDays] = useState<string>(
+        request.totalDays.toString()
+    );
 
     const handleModalCardClick = (event: React.MouseEvent<HTMLDivElement>) => {
         event.stopPropagation();
     };
 
-    const handleSubmit = (
-        e: React.FormEvent<HTMLFormElement>,
-        form: HTMLFormElement
-    ) => {
-        e.preventDefault();
-
-        // const updatedRequest = {
-        //     uid:
-        //     dateStart: new Date(newDateStart),
-        //     dateEnd: new Date(newDateEnd),
-        //     totalDays: Number(newTotalDays),
-
-        // handleAddRequest(updatedRequest);
-        // setSubmitScreen(true);
-    };
-
-    const handleAddRequest = async (
-        updatedRequest: EditRequest
+    const handleEditRequest = async (
+        updatedRequest: EditRequestType
     ): Promise<void> => {
         try {
             await editRequest(updatedRequest);
@@ -50,6 +40,23 @@ const EditRequestModal = ({
             console.log("Failed to add new request");
         }
     };
+
+    const handleSubmit = (
+        e: React.FormEvent<HTMLFormElement>,
+        form: HTMLFormElement
+    ) => {
+        e.preventDefault();
+
+        const updatedRequest: EditRequestType = {
+            uid: request.uid,
+            newDateStart: new Date(newDateStart),
+            newDateEnd: new Date(newDateEnd),
+            newTotalDays: Number(newTotalDays),
+        };
+        handleEditRequest(updatedRequest);
+        // setSubmitScreen(true);
+    };
+
     return (
         <>
             <div

@@ -20,7 +20,7 @@ import { ApprovedRequestsType } from "../../types/ApprovedRequests.type";
 import { IncomingRequestsType } from "../../types/IncomingRequests.type";
 import { OutgoingRequestData } from "../../types/OutgoingRequestData.type";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
-import { EditRequest } from "../../types/EditRequest.type";
+import { EditRequestType } from "../../types/EditRequest.type";
 
 // //firebase emulator//
 // const db = getFirestore();
@@ -239,7 +239,9 @@ export async function addRequest(request: OutgoingRequestData): Promise<void> {
     }
 }
 
-export async function editRequest(updatedRequest: EditRequest): Promise<void> {
+export async function editRequest(
+    updatedRequest: EditRequestType
+): Promise<void> {
     try {
         const reqRef = doc(db, "requests", updatedRequest.uid);
         await updateDoc(reqRef, {

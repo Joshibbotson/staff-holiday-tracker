@@ -1,4 +1,4 @@
-export interface EditRequest {
+export interface EditRequestType {
     uid: string;
     newDateStart: Date;
     newDateEnd: Date;
