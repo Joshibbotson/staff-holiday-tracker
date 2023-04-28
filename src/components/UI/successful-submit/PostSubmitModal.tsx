@@ -1,6 +1,8 @@
 import SCSS from "./postSubmitModal.module.scss";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import EditCalendarOutlinedIcon from "@mui/icons-material/EditCalendarOutlined";
+import StarBorderOutlinedIcon from "@mui/icons-material/StarBorderOutlined";
+import StarOutlinedIcon from "@mui/icons-material/StarOutlined";
 import { Button } from "@mui/material";
 interface PostSubmitModalProps {
     variant: "requestSubmit" | "requestEdit";
@@ -14,10 +16,46 @@ export const PostSubmitModal = ({
     function getIcon() {
         if (variant === "requestSubmit") {
             return (
-                <CheckCircleOutlineOutlinedIcon
-                    fontSize="inherit"
-                    className={SCSS.modalCard__tickIcon}
-                />
+                <>
+                    <div className={SCSS.modalCard__ImageContainer}>
+                        <div className={SCSS.modalCard__circle1}></div>
+                        <StarBorderOutlinedIcon
+                            fontSize="inherit"
+                            color="primary"
+                            className={SCSS.modalCard__starIcon1}
+                        />
+                        <StarOutlinedIcon
+                            fontSize="inherit"
+                            color="primary"
+                            className={SCSS.modalCard__starIcon2}
+                        />
+                        <div className={SCSS.modalCard__hollowCircle1}></div>
+
+                        <StarBorderOutlinedIcon
+                            fontSize="inherit"
+                            color="primary"
+                            className={SCSS.modalCard__starIcon3}
+                        />
+                        <div className={SCSS.modalCard__hollowCircle2}></div>
+
+                        <StarOutlinedIcon
+                            fontSize="inherit"
+                            color="primary"
+                            className={SCSS.modalCard__starIcon4}
+                        />
+                        <StarOutlinedIcon
+                            fontSize="inherit"
+                            color="primary"
+                            className={SCSS.modalCard__starIcon5}
+                        />
+                        <div className={SCSS.modalCard__circle2}></div>
+
+                        <CheckCircleOutlineOutlinedIcon
+                            fontSize="inherit"
+                            className={SCSS.modalCard__tickIcon}
+                        />
+                    </div>
+                </>
             );
         } else if (variant === "requestEdit") {
             return (

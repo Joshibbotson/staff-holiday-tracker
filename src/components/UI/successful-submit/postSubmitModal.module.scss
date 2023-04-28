@@ -2,8 +2,8 @@ $Turqoise: rgb(4, 165, 148);
 $Purple: rgb(84, 102, 160);
 
 .modalCard {
-    max-width: 30rem;
-    height: 30rem;
+    max-width: 40rem;
+    height: 35rem;
     top: 20svh;
     left: 0;
     bottom: 20svh;
@@ -23,11 +23,95 @@ $Purple: rgb(84, 102, 160);
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 3rem;
+    gap: 1rem;
 
+    .modalCard__ImageContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: 20rem;
+        height: 15rem;
+
+        position: relative;
+    }
     .modalCard__tickIcon {
         font-size: 13rem;
         color: $Turqoise;
+    }
+
+    .modalCard__starIcon1 {
+        position: absolute;
+        font-size: 2rem;
+        top: -0.7rem;
+        left: 12rem;
+        color: rgb(217, 107, 96);
+    }
+    .modalCard__starIcon2 {
+        position: absolute;
+        color: $Turqoise;
+        font-size: 1.3rem;
+        top: 2rem;
+        left: 13rem;
+        rotate: (20deg);
+    }
+    .modalCard__starIcon3 {
+        position: absolute;
+        font-size: 2rem;
+        top: 0rem;
+        right: 12rem;
+        rotate: (30deg);
+    }
+    .modalCard__starIcon4 {
+        position: absolute;
+        font-size: 1.3rem;
+        top: 2rem;
+        right: 14rem;
+        rotate: (10deg);
+    }
+    .modalCard__starIcon5 {
+        position: absolute;
+        font-size: 1.3rem;
+        top: -1rem;
+        right: 10rem;
+        rotate: (85deg);
+        color: rgb(217, 107, 96);
+    }
+    .modalCard__circle1 {
+        width: 1rem;
+        height: 1rem;
+        background-color: rgb(217, 107, 96);
+        position: absolute;
+        border-radius: 50%;
+        top: 0.5rem;
+        right: 15rem;
+    }
+    .modalCard__circle2 {
+        width: 1rem;
+        height: 1rem;
+        background-color: rgb(161, 174, 204);
+        position: absolute;
+        border-radius: 50%;
+        top: 1rem;
+        left: 14.5rem;
+    }
+    .modalCard__hollowCircle1 {
+        width: 1rem;
+        height: 1rem;
+        border: 1px solid rgb(161, 174, 204);
+        position: absolute;
+        border-radius: 50%;
+        top: 0.2rem;
+        right: 8.5rem;
+    }
+    .modalCard__hollowCircle2 {
+        width: 0.7rem;
+        height: 0.7rem;
+        border: 1px solid $Turqoise;
+        position: absolute;
+        border-radius: 50%;
+        top: 2rem;
+        right: 16rem;
     }
 
     .modalCard__textContainer {

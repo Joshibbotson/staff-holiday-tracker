@@ -4,6 +4,7 @@ import { useContext, useState, useEffect } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
+import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import Button from "@mui/material/Button";
 import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
@@ -122,47 +123,69 @@ const UserPanel = () => {
                         Requests
                     </Button>
                     {admin ? (
-                        <Button
-                            variant="text"
-                            color="inherit"
-                            size="small"
-                            onClick={() => {
-                                updateShowHandleRequests();
-                                setActiveBtn("Handle Requests");
-                                setShowNotifcations(false);
-                            }}
-                            startIcon={<SupervisorAccountIcon />}
-                            endIcon={
-                                showNotifcations ? (
-                                    <div
-                                        className={
-                                            userPanelSCSS.notficationContainer
-                                        }
-                                    >
-                                        <NotificationsNoneIcon />
+                        <>
+                            <Button
+                                variant="text"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    updateShowHandleRequests();
+                                    setActiveBtn("Handle Requests");
+                                    setShowNotifcations(false);
+                                }}
+                                startIcon={<FormatListBulletedOutlinedIcon />}
+                                endIcon={
+                                    showNotifcations ? (
                                         <div
                                             className={
-                                                userPanelSCSS.awaitingRequestCount
+                                                userPanelSCSS.notficationContainer
                                             }
                                         >
-                                            {requests.length > 99
-                                                ? "99+"
-                                                : requests.length}
+                                            <NotificationsNoneIcon />
+                                            <div
+                                                className={
+                                                    userPanelSCSS.awaitingRequestCount
+                                                }
+                                            >
+                                                {requests.length > 99
+                                                    ? "99+"
+                                                    : requests.length}
+                                            </div>
                                         </div>
-                                    </div>
-                                ) : null
-                            }
-                            style={
-                                activeBtn === "Handle Requests"
-                                    ? {
-                                          backgroundColor:
-                                              "rgba(255, 255, 255, 0.253)",
-                                      }
-                                    : {}
-                            }
-                        >
-                            Handle Requests
-                        </Button>
+                                    ) : null
+                                }
+                                style={
+                                    activeBtn === "Handle Requests"
+                                        ? {
+                                              backgroundColor:
+                                                  "rgba(255, 255, 255, 0.253)",
+                                          }
+                                        : {}
+                                }
+                            >
+                                Handle Requests
+                            </Button>
+                            <Button
+                                variant="text"
+                                color="inherit"
+                                size="small"
+                                onClick={() => {
+                                    updateShowRequests();
+                                    setActiveBtn("Users");
+                                }}
+                                startIcon={<SupervisorAccountIcon />}
+                                style={
+                                    activeBtn === "Users"
+                                        ? {
+                                              backgroundColor:
+                                                  "rgba(255, 255, 255, 0.253)",
+                                          }
+                                        : {}
+                                }
+                            >
+                                Users
+                            </Button>
+                        </>
                     ) : (
                         ""
                     )}
