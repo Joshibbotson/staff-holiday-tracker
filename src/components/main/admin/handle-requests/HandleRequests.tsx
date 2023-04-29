@@ -1,5 +1,4 @@
 import SCSS from "./handleRequests.module.scss";
-import { RequestContext } from "../../../../context/RequestContext";
 import { useContext, useEffect, useState } from "react";
 import dateConvert from "../../../../util-functions/dateConvert";
 import {
@@ -14,7 +13,7 @@ import { ApprovedRequestContext } from "../../../../context/ApprovedRequestConte
 import FilterListIcon from "@mui/icons-material/FilterList";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-import React from "react";
+
 import { CurrentUserContext } from "../../../../context/CurrentUserContext";
 import { AwaitApprovalReqContext } from "../../../../context/AwaitApprovalReqContext";
 
@@ -32,7 +31,7 @@ const HandleRequests = () => {
         ...requests,
         ...userApprovedRequests,
     ]);
-    const [currentFilters, setCurrentFilters] = React.useState<string[]>([]);
+    const [currentFilters, setCurrentFilters] = useState<string[]>([]);
 
     const filters = ["Approved", "Awaiting approval"];
 

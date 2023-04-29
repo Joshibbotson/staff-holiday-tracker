@@ -1,0 +1,22 @@
+.header {
+    height: 6.4rem;
+    background-color: rgb(0, 150, 136);
+}
+
+.mainGrid {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: 30% 70%;
+
+    .mainGrid__userList {
+        border: 1px solid red;
+        border-radius: 20px;
+
+        margin: 1rem;
+    }
+    .mainGrid__userProfile {
+        border: 1px solid black;
+        border-radius: 20px;
+        margin: 1rem;
+    }
+}

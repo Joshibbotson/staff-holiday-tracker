@@ -28,8 +28,12 @@ const UserPanel = () => {
     function handleClick() {
         setShowModal(!showModal);
     }
-    const { updateShowCalendar, updateShowRequests, updateShowHandleRequests } =
-        useContext(MainPageContext);
+    const {
+        updateShowCalendar,
+        updateShowRequests,
+        updateShowHandleRequests,
+        updateShowUsers,
+    } = useContext(MainPageContext);
 
     useEffect(() => {
         if (user[0]) {
@@ -170,7 +174,7 @@ const UserPanel = () => {
                                 color="inherit"
                                 size="small"
                                 onClick={() => {
-                                    updateShowRequests();
+                                    updateShowUsers();
                                     setActiveBtn("Users");
                                 }}
                                 startIcon={<SupervisorAccountIcon />}

@@ -11,6 +11,8 @@ type MainPageContextType = {
     updateShowRequests: () => void;
     showHandleRequests: boolean;
     updateShowHandleRequests: () => void;
+    showUsers: boolean;
+    updateShowUsers: () => void;
 };
 export const MainPageContext = createContext<MainPageContextType>({
     showCalendar: true,
@@ -19,6 +21,8 @@ export const MainPageContext = createContext<MainPageContextType>({
     updateShowRequests: () => {},
     showHandleRequests: false,
     updateShowHandleRequests: () => {},
+    showUsers: false,
+    updateShowUsers: () => {},
 });
 
 export const MainPageProvider: React.FC<MainPageProps> = ({ children }) => {
@@ -26,21 +30,32 @@ export const MainPageProvider: React.FC<MainPageProps> = ({ children }) => {
     const [showRequests, setShowRequests] = useState<boolean>(false);
     const [showHandleRequests, setShowHandleRequests] =
         useState<boolean>(false);
+    const [showUsers, setShowUsers] = useState<boolean>(true);
 
     const updateShowCalendar = () => {
         setShowCalender(true);
         setShowRequests(false);
         setShowHandleRequests(false);
+        setShowUsers(false);
     };
 
     const updateShowRequests = () => {
         setShowRequests(true);
         setShowCalender(false);
         setShowHandleRequests(false);
+        setShowUsers(false);
     };
 
     const updateShowHandleRequests = () => {
         setShowHandleRequests(true);
+        setShowRequests(false);
+        setShowCalender(false);
+        setShowUsers(false);
+    };
+
+    const updateShowUsers = () => {
+        setShowUsers(true);
+        setShowHandleRequests(false);
         setShowRequests(false);
         setShowCalender(false);
     };
@@ -52,6 +67,8 @@ export const MainPageProvider: React.FC<MainPageProps> = ({ children }) => {
         updateShowRequests: updateShowRequests,
         showHandleRequests: showHandleRequests,
         updateShowHandleRequests: updateShowHandleRequests,
+        showUsers: showUsers,
+        updateShowUsers: updateShowUsers,
     };
     return (
         <MainPageContext.Provider value={value}>

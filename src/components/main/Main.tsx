@@ -15,12 +15,13 @@ import RequestModal from "../request-modal/RequestModal";
 import Requests from "../requests/Requests";
 import { MainPageContext } from "../../context/MainPageContext";
 import HandleRequests from "./admin/handle-requests/HandleRequests";
+import { HandleUsers } from "./admin/users/HandleUsers";
 
 function Main() {
     const { month } = useContext(SelectedMonthContext);
     const { year } = useContext(SelectedYearContext);
     const { approvedRequests } = useContext(ApprovedRequestContext);
-    const { showCalendar, showRequests, showHandleRequests } =
+    const { showCalendar, showRequests, showHandleRequests, showUsers } =
         useContext(MainPageContext);
 
     const [approvedRequestsState, setApprovedRequestsState] = useState<
@@ -39,7 +40,6 @@ function Main() {
     }
 
     const holidays = approvedRequests.map(req => {
-        console.log(req);
         return {
             name: req.requestedByEmail,
             start: new Date(req.dateStart.toDate().toDateString()),
@@ -63,9 +63,11 @@ function Main() {
                     </>
                 ) : showRequests ? (
                     <Requests />
-                ) : (
+                ) : showHandleRequests ? (
                     <HandleRequests />
-                )}
+                ) : showUsers ? (
+                    <HandleUsers />
+                ) : null}
             </main>
             {showModal ? <RequestModal handleClick={handleClick} /> : ""}
         </>
