@@ -9,7 +9,15 @@ export const HandleUsers = () => {
             <div className={SCSS.mainGrid}>
                 <div className={SCSS.mainGrid__userList}>
                     {users.map(user => {
-                        return <li>{user.name}</li>;
+                        return (
+                            <div>
+                                <div className="mainGrid__userList__profilePic"></div>
+                                <div className="mainGrid_userList__textContainer">
+                                    <div>{user.name}</div>
+                                    <div>{user.email}</div>
+                                </div>
+                            </div>
+                        );
                     })}
                 </div>
                 <div className={SCSS.mainGrid__userProfile}></div>
