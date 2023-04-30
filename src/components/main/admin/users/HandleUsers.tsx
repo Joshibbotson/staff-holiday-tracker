@@ -1,6 +1,8 @@
 import { UsersContext } from "../../../../context/UsersContext";
 import SCSS from "./handleusers.module.scss";
 import { useContext, useState } from "react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+
 export const HandleUsers = () => {
     const { users } = useContext(UsersContext);
     return (
@@ -10,11 +12,13 @@ export const HandleUsers = () => {
                 <div className={SCSS.mainGrid__userList}>
                     {users.map(user => {
                         return (
-                            <div>
-                                <div className="mainGrid__userList__profilePic"></div>
-                                <div className="mainGrid_userList__textContainer">
-                                    <div>{user.name}</div>
-                                    <div>{user.email}</div>
+                            <div className={SCSS.mainGrid__userTab}>
+                                <div className={SCSS.userTab__profilePic}>
+                                    <AccountCircleIcon fontSize="inherit" />
+                                </div>
+                                <div className={SCSS.userTab__textContainer}>
+                                    <h4>{user.name}</h4>
+                                    <p>{user.email}</p>
                                 </div>
                             </div>
                         );
