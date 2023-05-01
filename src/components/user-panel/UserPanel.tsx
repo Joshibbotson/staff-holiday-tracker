@@ -124,7 +124,7 @@ const UserPanel = () => {
                                 : {}
                         }
                     >
-                        Requests
+                        My Requests
                     </Button>
                     {admin ? (
                         <>
