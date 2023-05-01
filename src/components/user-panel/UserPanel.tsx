@@ -11,11 +11,20 @@ import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import RequestModal from "../request-modal/RequestModal";
+import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { MainPageContext } from "../../context/MainPageContext";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { CircularProgress } from "@mui/material";
-
 import { AwaitApprovalReqContext } from "../../context/AwaitApprovalReqContext";
+import { storage } from "../../firebase/firebase";
+import {
+    StorageReference,
+    getDownloadURL,
+    listAll,
+    ref,
+    uploadBytes,
+} from "firebase/storage";
+import { updateUserProfilePic } from "../../firebase/firestore/firestore";
 
 const UserPanel = () => {
     const [showUserPanel, setShowUserPanel] = useState<boolean>(true);
@@ -25,6 +34,8 @@ const UserPanel = () => {
     const [admin, setAdmin] = useState(false);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showNotifcations, setShowNotifcations] = useState<boolean>(true);
+    const [imageUpload, setImageUpload] = useState<FileList | null>(null);
+    const [userImage, setUserImage] = useState<string | null>(null);
     function handleClick() {
         setShowModal(!showModal);
     }
@@ -35,8 +46,47 @@ const UserPanel = () => {
         updateShowUsers,
     } = useContext(MainPageContext);
 
+    //upload image
+    const uploadImage = async () => {
+        if (!imageUpload) {
+            return;
+        }
+        const imageRef = ref(
+            storage,
+            `profilePictures/${imageUpload[0].name + user[0].uid}`
+        );
+
+        try {
+            uploadBytes(imageRef, imageUpload[0]);
+            updateUserProfilePic(
+                user[0],
+                `profilePictures/${imageUpload[0].name + user[0].uid}`
+            );
+            alert("image uploaded!");
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    //check conditional user data
     useEffect(() => {
         if (user[0]) {
+            if (user[0].profilePic.length > 0) {
+                const imageRef: StorageReference = ref(
+                    storage,
+                    "profilePictures/"
+                );
+                listAll(imageRef).then(response => {
+                    response.items.forEach(item => {
+                        if (item.fullPath.includes(user[0].profilePic)) {
+                            getDownloadURL(item).then(url => {
+                                console.log(url);
+                                return setUserImage(url);
+                            });
+                        }
+                    });
+                });
+            }
             if (user[0].admin === true) {
                 setAdmin(true);
             }
@@ -44,10 +94,18 @@ const UserPanel = () => {
     }, [user]);
 
     useEffect(() => {
+        console.log(userImage);
+    }, [userImage]);
+
+    useEffect(() => {
         requests.length > 0
             ? setShowNotifcations(true)
             : setShowNotifcations(false);
     }, [requests]);
+
+    useEffect(() => {
+        uploadImage();
+    }, [imageUpload]);
 
     return (
         <>
@@ -55,7 +113,32 @@ const UserPanel = () => {
                 <div className={userPanelSCSS.topContainer}>
                     <div className={userPanelSCSS.profileContainer}>
                         <div className={userPanelSCSS.profileImg}>
-                            <AccountCircleIcon />
+                            <div
+                                className={
+                                    userPanelSCSS.profileImg__photoIconWrapper
+                                }
+                            >
+                                <input
+                                    type="file"
+                                    onChange={e => {
+                                        setImageUpload(e.target.files);
+                                    }}
+                                />
+                                <AddAPhotoIcon
+                                    className={
+                                        userPanelSCSS.profileImg__addPhotoIcon
+                                    }
+                                    color="primary"
+                                />
+                            </div>
+                            {userImage ? (
+                                <img
+                                    src={userImage}
+                                    className={userPanelSCSS.img}
+                                />
+                            ) : (
+                                <AccountCircleIcon />
+                            )}
                         </div>
                         <h2>{user[0] ? user[0].name : <CircularProgress />}</h2>
                     </div>

@@ -1,6 +1,6 @@
 import SCSS from "./handleRequests.module.scss";
 import { useContext, useEffect, useState } from "react";
-import dateConvert from "../../../../util-functions/dateConvert";
+import dateConvert from "../../../util-functions/dateConvert";
 import {
     Checkbox,
     FormControl,
@@ -8,14 +8,14 @@ import {
     ListItemText,
     OutlinedInput,
 } from "@mui/material";
-import EditPopUp from "../../../UI/simple-dialog/EditPopUp";
-import { ApprovedRequestContext } from "../../../../context/ApprovedRequestContext";
+import EditPopUp from "../../UI/simple-dialog/EditPopUp";
+import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
-import { CurrentUserContext } from "../../../../context/CurrentUserContext";
-import { AwaitApprovalReqContext } from "../../../../context/AwaitApprovalReqContext";
+import { CurrentUserContext } from "../../../context/CurrentUserContext";
+import { AwaitApprovalReqContext } from "../../../context/AwaitApprovalReqContext";
 
 const HandleRequests = () => {
     const { user } = useContext(CurrentUserContext);

@@ -2,10 +2,10 @@ import { TextField, Button } from "@mui/material";
 import SCSS from "./editRequestModal.module.scss";
 import { useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
-import { editRequest } from "../../firebase/firestore/firestore";
-import { EditRequestType } from "../../types/EditRequest.type";
-import { IncomingRequestsType } from "../../types";
-import { PostSubmitModal } from "../UI/successful-submit/PostSubmitModal";
+import { editRequest } from "../../../firebase/firestore/firestore";
+import { EditRequestType } from "../../../types/EditRequest.type";
+import { IncomingRequestsType } from "../../../types";
+import { PostSubmitModal } from "../successful-submit/PostSubmitModal";
 
 interface EditRequestModalProps {
     updateShowEditModal: () => void;

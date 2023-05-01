@@ -8,4 +8,5 @@ export interface UserType {
     remainingHolidays: number;
     takenHolidays: number;
     flexTime: number;
+    profilePic: string;
 }

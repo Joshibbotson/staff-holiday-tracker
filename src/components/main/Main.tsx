@@ -14,8 +14,8 @@ import SCSS from "./main.module.scss";
 import RequestModal from "../request-modal/RequestModal";
 import Requests from "../requests/Requests";
 import { MainPageContext } from "../../context/MainPageContext";
-import HandleRequests from "./admin/handle-requests/HandleRequests";
-import { HandleUsers } from "./admin/users/HandleUsers";
+import HandleRequests from "../admin/handle-requests/HandleRequests";
+import { HandleUsers } from "../admin/users/HandleUsers";
 
 function Main() {
     const { month } = useContext(SelectedMonthContext);
@@ -23,7 +23,6 @@ function Main() {
     const { approvedRequests } = useContext(ApprovedRequestContext);
     const { showCalendar, showRequests, showHandleRequests, showUsers } =
         useContext(MainPageContext);
-
     const [approvedRequestsState, setApprovedRequestsState] = useState<
         ApprovedRequestsType[] | undefined
     >(undefined);
