@@ -109,10 +109,12 @@ const UserPanel = () => {
                                 />
                             </div>
                             {userImage ? (
-                                <img
-                                    src={userImage}
-                                    className={userPanelSCSS.img}
-                                />
+                                <div
+                                    className={userPanelSCSS.userImage}
+                                    style={{
+                                        backgroundImage: `url(${userImage})`,
+                                    }}
+                                ></div>
                             ) : (
                                 <AccountCircleIcon />
                             )}
