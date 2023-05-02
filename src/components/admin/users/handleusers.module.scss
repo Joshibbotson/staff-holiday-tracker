@@ -44,18 +44,28 @@
     display: flex;
     flex-direction: column;
     background-color: rgb(239, 236, 236);
+    padding-bottom: 2rem;
 
     .mainGrid__userList {
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
         border-radius: 20px;
+        padding-left: 1rem;
+        padding-right: 1rem;
         margin: 1rem;
         margin-right: 0;
         overflow: hidden;
         overflow-y: auto;
         box-shadow: 0px 0px 10px grey;
         background-color: rgb(244, 244, 244);
+        height: 90vh;
+
+        .mainGrid__header {
+            padding: 1rem;
+            border-bottom: 1px solid rgb(197, 197, 197);
+            margin-bottom: 0.5rem;
+        }
 
         .mainGrid__selectedUserTab {
             display: flex;
@@ -64,12 +74,15 @@
             color: white;
             width: 100%;
             overflow-x: auto;
+            overflow-y: hidden;
+            border-bottom: 1px solid rgb(1, 115, 104);
             padding: 0.3rem;
             padding-top: 1rem;
             padding-bottom: 1rem;
             align-content: center;
             gap: 1rem;
             cursor: pointer;
+            border-radius: 10px;
 
             .userTab__profilePic {
                 display: flex;
@@ -97,12 +110,15 @@
             align-items: center;
             width: 100%;
             overflow-x: auto;
+            overflow-y: hidden;
             padding: 0.3rem;
             padding-top: 1rem;
             padding-bottom: 1rem;
             align-content: center;
             gap: 1rem;
             cursor: pointer;
+            border-radius: 10px;
+            border-bottom: 1px solid rgb(209, 209, 209);
 
             .userTab__profilePic {
                 display: flex;
@@ -139,7 +155,7 @@
         box-shadow: 0px 0px 10px grey;
         border-radius: 20px;
         margin: 1rem;
-        height: 40rem;
+        height: 100%;
         background-color: rgb(244, 244, 244);
 
         .userProfile__topContainer {

@@ -21,6 +21,7 @@ import { IncomingRequestsType } from "../../types/IncomingRequests.type";
 import { OutgoingRequestData } from "../../types/OutgoingRequestData.type";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { EditRequestType } from "../../types/EditRequest.type";
+import { user } from "firebase-functions/v1/auth";
 
 // //firebase emulator//
 // const db = getFirestore();
@@ -36,6 +37,7 @@ export const updateUserData = async (
     remainingHolidays: number,
     takenHolidays: number,
     flexTime: number,
+    profilePic: string,
     nationalHolidays: string = "UK",
     admin: boolean = false,
     superAdmin: boolean = false
@@ -51,8 +53,25 @@ export const updateUserData = async (
             flexTime,
             admin: false,
             superAdmin: false,
+            profilePic: "",
         });
         await updateDoc(docRef, { docID: docRef.id });
+    } catch (err) {
+        console.log(err);
+    }
+};
+
+export const updateUserProfilePic = async (
+    user: UserType,
+    profilePicLocation: string
+) => {
+    try {
+        const targetUser = await getUserDataViaEmail(user.email);
+
+        const userRef = doc(db, "users", targetUser[0].docID);
+        await updateDoc(userRef, {
+            profilePic: profilePicLocation,
+        });
     } catch (err) {
         console.log(err);
     }
@@ -76,6 +95,7 @@ export async function getUserData(userUID: string) {
             takenHolidays: doc.data().takenHolidays,
             flexTime: doc.data().flexTime,
             docID: doc.data().docID,
+            profilePic: doc.data().profilePic,
         }));
         return currentUserData;
     } catch (error) {
@@ -102,6 +122,7 @@ export async function getUserDataViaEmail(userEmail: string) {
             takenHolidays: doc.data().takenHolidays,
             flexTime: doc.data().flexTime,
             docID: doc.data().docID,
+            profilePic: doc.data().profilePic,
         }));
         return currentUserData;
     } catch (error) {
@@ -141,6 +162,7 @@ export async function listUsers(
             remainingHolidays: doc.data().remainingHolidays,
             takenHolidays: doc.data().takenHolidays,
             flexTime: doc.data().flexTime,
+            profilePic: doc.data().profilePic,
         }));
         return userData;
     } catch (error) {

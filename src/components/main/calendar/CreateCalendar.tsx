@@ -56,7 +56,6 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
         if (dayIndex === 0 || dayIndex === 6) {
             return;
         } else {
-            console.log(date);
             let nameArr: Array<string> = [];
             holidays!.forEach(h => {
                 if (
@@ -86,6 +85,8 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
             return SCSS.calendar__nextMonth;
         } else if (isWeekend(date.getDay())) {
             return SCSS.calendar__weekend;
+        } else if (date.toDateString() === new Date().toDateString()) {
+            return SCSS.calendar__today;
         } else {
             return SCSS.calendar__day;
         }

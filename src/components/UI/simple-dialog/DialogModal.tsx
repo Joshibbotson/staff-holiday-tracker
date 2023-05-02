@@ -18,7 +18,7 @@ import DoneIcon from "@mui/icons-material/Done";
 import { IncomingRequestsType } from "../../../types";
 import { useContext, useState } from "react";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
-import EditRequestModal from "../../edit-request-modal/EditRequestModal";
+import EditRequestModal from "../edit-request-modal/EditRequestModal";
 
 export interface DialogModalProps {
     open: boolean;

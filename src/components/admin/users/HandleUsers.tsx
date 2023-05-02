@@ -1,11 +1,10 @@
-import { UsersContext } from "../../../../context/UsersContext";
+import { UsersContext } from "../../../context/UsersContext";
 import SCSS from "./handleusers.module.scss";
 import { useContext, useEffect, useState } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
-import { UserType } from "../../../../types";
-import { sl } from "date-fns/locale";
+import { UserType } from "../../../types";
 
 export const HandleUsers = () => {
     const { users } = useContext(UsersContext);
@@ -31,6 +30,7 @@ export const HandleUsers = () => {
                     <input
                         type="text"
                         name="search"
+                        placeholder="Search users..."
                         value={searchValue}
                         onChange={e => {
                             return setSearchValue(e.target.value.toLowerCase());
@@ -41,6 +41,10 @@ export const HandleUsers = () => {
             </div>
             <div className={SCSS.mainGrid}>
                 <div className={SCSS.mainGrid__userList}>
+                    <div className={SCSS.mainGrid__header}>
+                        <h4>Name</h4>
+                    </div>
+
                     {filteredUsers.map(user => {
                         return (
                             <div
