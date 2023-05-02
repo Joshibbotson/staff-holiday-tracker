@@ -57,6 +57,12 @@ td {
     background-color: rgb(221, 221, 221);
     color: rgb(141, 140, 140);
 }
+
+.calendar__today {
+    background-color: rgba(38, 166, 153, 0.353);
+    color: black;
+    border-radius: 10px;
+}
 @media only screen and (min-width: 768px) {
     .calendar-container {
         width: 768px;

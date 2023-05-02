@@ -22,9 +22,8 @@ import {
     getDownloadURL,
     listAll,
     ref,
-    uploadBytes,
 } from "firebase/storage";
-import { updateUserProfilePic } from "../../firebase/firestore/firestore";
+import { uploadImage } from "../../firebase/firestorage/firestorage";
 
 const UserPanel = () => {
     const [showUserPanel, setShowUserPanel] = useState<boolean>(true);
@@ -45,28 +44,6 @@ const UserPanel = () => {
         updateShowHandleRequests,
         updateShowUsers,
     } = useContext(MainPageContext);
-
-    //upload image
-    const uploadImage = async () => {
-        if (!imageUpload) {
-            return;
-        }
-        const imageRef = ref(
-            storage,
-            `profilePictures/${imageUpload[0].name + user[0].uid}`
-        );
-
-        try {
-            uploadBytes(imageRef, imageUpload[0]);
-            updateUserProfilePic(
-                user[0],
-                `profilePictures/${imageUpload[0].name + user[0].uid}`
-            );
-            alert("image uploaded!");
-        } catch (err) {
-            console.log(err);
-        }
-    };
 
     //check conditional user data
     useEffect(() => {
@@ -104,7 +81,7 @@ const UserPanel = () => {
     }, [requests]);
 
     useEffect(() => {
-        uploadImage();
+        uploadImage(imageUpload, user);
     }, [imageUpload]);
 
     return (
