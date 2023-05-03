@@ -1,15 +1,15 @@
 import SCSS from "./requestModal.module.scss";
-import { addRequest } from "../../firebase/firestore/firestore";
-import { OutgoingRequestData } from "../../types/OutgoingRequestData.type";
+import { addRequest } from "../../../firebase/firestore/firestore";
+import { OutgoingRequestData } from "../../../types/OutgoingRequestData.type";
 import { useEffect, useState } from "react";
-import { CurrentUserContext } from "../../context/CurrentUserContext";
+import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import { useContext } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Button } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { UsersContext } from "../../context/UsersContext";
-import { PostSubmitModal } from "../UI/successful-submit/PostSubmitModal";
+import { UsersContext } from "../../../context/UsersContext";
+import { PostSubmitModal } from "../successful-submit/PostSubmitModal";
 
 interface Props {
     handleClick: () => void;
@@ -30,6 +30,13 @@ export const RequestModal = ({ handleClick }: Props) => {
 
     useEffect(() => {
         if (users) {
+            if (user[0].admin) {
+                return setAdminUsers(
+                    users
+                        .filter(u => u.admin && user[0].name !== u.name)
+                        .map(user => ({ value: user.email, label: user.name }))
+                );
+            }
             setAdminUsers(
                 users
                     .filter(user => user.admin)

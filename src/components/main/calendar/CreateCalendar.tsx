@@ -94,16 +94,26 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
 
     return (
         <div className={SCSS.calendar}>
-            <table className={SCSS.calender__table}>
+            <table className={SCSS.calendar__table} aria-label="calendar">
                 <thead>
                     <tr>
-                        <th className={SCSS.calendar__titleWeekend}>SUN</th>
-                        <th>MON</th>
-                        <th>TUE</th>
-                        <th>WED</th>
-                        <th>THU</th>
-                        <th>FRI</th>
-                        <th className={SCSS.calendar__titleWeekend}>SAT</th>
+                        <th
+                            className={SCSS.calendar__titleWeekend}
+                            scope="colgroup"
+                        >
+                            SUN
+                        </th>
+                        <th scope="col">MON</th>
+                        <th scope="col">TUE</th>
+                        <th scope="col">WED</th>
+                        <th scope="col">THU</th>
+                        <th scope="col">FRI</th>
+                        <th
+                            className={SCSS.calendar__titleWeekend}
+                            scope="colgroup"
+                        >
+                            SAT
+                        </th>
                     </tr>
                 </thead>
                 <tbody>
@@ -118,6 +128,11 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
                                             key={weekIndex * 7 + dayIndex}
                                             className={getClassName(date)}
                                             onClick={() => handleClick()}
+                                            tabIndex={0}
+                                            aria-label={`${date.toLocaleDateString()} - ${getNameForHoliday(
+                                                date,
+                                                dayIndex
+                                            )}`}
                                         >
                                             <HolidayTab
                                                 day={date.getDate()}
@@ -132,6 +147,8 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
                                             key={weekIndex * 7 + dayIndex}
                                             className={getClassName(date)}
                                             onClick={() => handleClick()}
+                                            tabIndex={0}
+                                            aria-label={date.toLocaleDateString()}
                                         >
                                             <HolidayTab
                                                 day={date.getDate()}
