@@ -5,14 +5,58 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { UserType } from "../../../types";
+import {
+    StorageReference,
+    ref,
+    listAll,
+    getDownloadURL,
+} from "firebase/storage";
+import { storage } from "../../../firebase/firebase";
+
+interface FetchedUserType {
+    uid: string;
+    name: string;
+    email: string;
+    admin: boolean;
+    superAdmin: boolean;
+    nationalHolidays: number;
+    remainingHolidays: number;
+    takenHolidays: number;
+    flexTime: number;
+    profilePic: string;
+    profilePicDownloadURL: string;
+}
 
 export const HandleUsers = () => {
     const { users } = useContext(UsersContext);
+    const [fetchedUsers, setFetchedUsers] = useState<FetchedUserType[] | null>(
+        null
+    );
     const [searchValue, setSearchValue] = useState<string>("");
     const [filteredUsers, setFilteredUsers] = useState<UserType[]>(users);
     const [selectedUser, setSelectedUser] = useState<UserType | undefined>(
         undefined
     );
+
+    useEffect(() => {
+        const imageRef: StorageReference = ref(storage, "profilePictures/");
+        setFetchedUsers(
+            users.map(u => {
+                if (u.profilePic.length > 0) {
+                    listAll(imageRef).then(response => {
+                        response.items.forEach(item => {
+                            if (item.fullPath.includes(u.profilePic)) {
+                                getDownloadURL(item).then(url => {
+                                    return (u.profilePicDownloadURL = url);
+                                });
+                            }
+                        });
+                    });
+                }
+                return u;
+            })
+        );
+    }, [users]);
 
     useEffect(() => {
         setFilteredUsers(
@@ -21,6 +65,23 @@ export const HandleUsers = () => {
             })
         );
     }, [searchValue]);
+
+    function getProfilePic(user: FetchedUserType, SCSSClass: string) {
+        return user.profilePicDownloadURL ? (
+            <div className={SCSSClass}>
+                <div
+                    className={SCSS.userImage}
+                    style={{
+                        backgroundImage: `url(${user.profilePicDownloadURL})`,
+                    }}
+                ></div>
+            </div>
+        ) : (
+            <div className={SCSS.userTab__profilePic}>
+                <AccountCircleIcon fontSize="inherit" />
+            </div>
+        );
+    }
 
     return (
         <>
@@ -45,7 +106,7 @@ export const HandleUsers = () => {
                         <h4>Name</h4>
                     </div>
 
-                    {filteredUsers.map(user => {
+                    {fetchedUsers?.map(user => {
                         return (
                             <div
                                 className={
@@ -58,9 +119,8 @@ export const HandleUsers = () => {
                                     setSelectedUser(user);
                                 }}
                             >
-                                <div className={SCSS.userTab__profilePic}>
-                                    <AccountCircleIcon fontSize="inherit" />
-                                </div>
+                                {getProfilePic(user, SCSS.userTab__profilePic)}
+
                                 <div className={SCSS.userTab__textContainer}>
                                     <h4>{user.name}</h4>
                                     <p>{user.email}</p>
@@ -74,9 +134,13 @@ export const HandleUsers = () => {
                 </div>
                 <div className={SCSS.mainGrid__userProfile}>
                     <div className={SCSS.userProfile__topContainer}>
-                        <div className={SCSS.topContainer__profilePic}>
-                            <AccountCircleIcon fontSize="inherit" />
-                        </div>
+                        {selectedUser
+                            ? getProfilePic(
+                                  selectedUser,
+                                  SCSS.topContainer__profilePic
+                              )
+                            : ""}
+
                         <div className={SCSS.topContainer__name}>
                             {selectedUser ? selectedUser.name : "name"}
                         </div>
