@@ -26,6 +26,11 @@ export const YearBtns = () => {
                         onClick={() => {
                             handleClick(parseInt(y));
                         }}
+                        onKeyDown={e => {
+                            if (e.key === "Enter") {
+                                handleClick(parseInt(y));
+                            }
+                        }}
                         className={
                             parseInt(y) === year ? SCSS.selectedYearBtn : ""
                         }

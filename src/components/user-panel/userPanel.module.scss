@@ -28,15 +28,17 @@
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                width: 10rem;
-                height: 10rem;
+                width: 8rem;
+                height: 8rem;
                 border-radius: 50%;
                 overflow: hidden;
                 margin-bottom: 1rem;
-                //Need to figure out a solution for ensuring the image is the correct size///
-                .img {
-                    width: 10rem;
-                    // margin-top: 5rem;
+
+                .userImage {
+                    background-size: cover;
+                    background-position: center;
+                    width: 8rem;
+                    height: 8rem;
                 }
 
                 * {

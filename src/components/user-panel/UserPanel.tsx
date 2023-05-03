@@ -10,7 +10,7 @@ import ContentPasteIcon from "@mui/icons-material/ContentPaste";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
-import RequestModal from "../request-modal/RequestModal";
+import RequestModal from "../UI/request-modal/RequestModal";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { MainPageContext } from "../../context/MainPageContext";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
@@ -109,10 +109,12 @@ const UserPanel = () => {
                                 />
                             </div>
                             {userImage ? (
-                                <img
-                                    src={userImage}
-                                    className={userPanelSCSS.img}
-                                />
+                                <div
+                                    className={userPanelSCSS.userImage}
+                                    style={{
+                                        backgroundImage: `url(${userImage})`,
+                                    }}
+                                ></div>
                             ) : (
                                 <AccountCircleIcon />
                             )}

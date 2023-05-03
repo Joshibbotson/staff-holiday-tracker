@@ -61,7 +61,9 @@ td {
 .calendar__today {
     background-color: rgba(38, 166, 153, 0.353);
     color: black;
-    border-radius: 10px;
+}
+td:hover.calendar__today:hover {
+    background-color: rgba(38, 166, 153, 0.659);
 }
 @media only screen and (min-width: 768px) {
     .calendar-container {
