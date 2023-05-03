@@ -128,6 +128,11 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
                                             key={weekIndex * 7 + dayIndex}
                                             className={getClassName(date)}
                                             onClick={() => handleClick()}
+                                            onKeyDown={e => {
+                                                if (e.key === "Enter") {
+                                                    handleClick();
+                                                }
+                                            }}
                                             tabIndex={0}
                                             aria-label={`${date.toLocaleDateString()} - ${getNameForHoliday(
                                                 date,
@@ -147,6 +152,11 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
                                             key={weekIndex * 7 + dayIndex}
                                             className={getClassName(date)}
                                             onClick={() => handleClick()}
+                                            onKeyDown={e => {
+                                                if (e.key === "Enter") {
+                                                    handleClick();
+                                                }
+                                            }}
                                             tabIndex={0}
                                             aria-label={date.toLocaleDateString()}
                                         >

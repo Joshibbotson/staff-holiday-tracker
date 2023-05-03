@@ -34,6 +34,12 @@ export const MonthBtns = () => {
                         onClick={() => {
                             handleClick(i);
                         }}
+                        onKeyDown={e => {
+                            if (e.key === "Enter") {
+                                handleClick(i);
+                                blur();
+                            }
+                        }}
                         className={i === month ? SCSS.selectedMonth : ""}
                     >
                         {m}

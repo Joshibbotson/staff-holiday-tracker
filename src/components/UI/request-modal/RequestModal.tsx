@@ -158,7 +158,11 @@ export const RequestModal = ({ handleClick }: Props) => {
                                     setApprover(newValue ? newValue.value : "")
                                 }
                                 renderInput={params => (
-                                    <TextField {...params} label="Approver:" />
+                                    <TextField
+                                        {...params}
+                                        label="Approver:"
+                                        autoFocus={true}
+                                    />
                                 )}
                             />
                             <div className={SCSS.wrapper}>
