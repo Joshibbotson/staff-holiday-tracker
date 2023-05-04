@@ -5,13 +5,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { UserType } from "../../../types";
-import {
-    StorageReference,
-    ref,
-    listAll,
-    getDownloadURL,
-} from "firebase/storage";
-import { storage } from "../../../firebase/firebase";
+import { CurrentUserContext } from "../../../context/CurrentUserContext";
 
 interface FetchedUserType {
     uid: string;
@@ -28,42 +22,26 @@ interface FetchedUserType {
 }
 
 export const HandleUsers = () => {
+    const { user } = useContext(CurrentUserContext);
     const { users } = useContext(UsersContext);
-    const [fetchedUsers, setFetchedUsers] = useState<FetchedUserType[] | null>(
-        null
-    );
     const [searchValue, setSearchValue] = useState<string>("");
-    const [filteredUsers, setFilteredUsers] = useState<UserType[]>(users);
-    const [selectedUser, setSelectedUser] = useState<UserType | undefined>(
-        undefined
-    );
+    const [filteredUsers, setFilteredUsers] = useState<UserType[]>();
+    const [selectedUser, setSelectedUser] = useState<
+        FetchedUserType | undefined
+    >(undefined);
 
     useEffect(() => {
-        const imageRef: StorageReference = ref(storage, "profilePictures/");
-        setFetchedUsers(
-            users.map(u => {
-                if (u.profilePic.length > 0) {
-                    listAll(imageRef).then(response => {
-                        response.items.forEach(item => {
-                            if (item.fullPath.includes(u.profilePic)) {
-                                getDownloadURL(item).then(url => {
-                                    return (u.profilePicDownloadURL = url);
-                                });
-                            }
-                        });
-                    });
-                }
-                return u;
-            })
-        );
-    }, [users]);
-
-    useEffect(() => {
-        setFilteredUsers(
-            users.filter(user => {
-                return user.name.toLowerCase().includes(searchValue);
-            })
-        );
+        if (users) {
+            setFilteredUsers(
+                users
+                    .filter(u => {
+                        return u.email !== user[0].email;
+                    })
+                    .filter(user => {
+                        return user.name.toLowerCase().includes(searchValue);
+                    })
+            );
+        }
     }, [searchValue]);
 
     function getProfilePic(user: FetchedUserType, SCSSClass: string) {
@@ -106,31 +84,40 @@ export const HandleUsers = () => {
                         <h4>Name</h4>
                     </div>
 
-                    {fetchedUsers?.map(user => {
-                        return (
-                            <div
-                                className={
-                                    user === selectedUser
-                                        ? SCSS.mainGrid__selectedUserTab
-                                        : SCSS.mainGrid__userTab
-                                }
-                                key={user.uid}
-                                onClick={() => {
-                                    setSelectedUser(user);
-                                }}
-                            >
-                                {getProfilePic(user, SCSS.userTab__profilePic)}
+                    {users
+                        ? filteredUsers?.map(user => {
+                              return (
+                                  <div
+                                      className={
+                                          user === selectedUser
+                                              ? SCSS.mainGrid__selectedUserTab
+                                              : SCSS.mainGrid__userTab
+                                      }
+                                      key={user.uid}
+                                      onClick={() => {
+                                          setSelectedUser(user);
+                                      }}
+                                  >
+                                      {getProfilePic(
+                                          user,
+                                          SCSS.userTab__profilePic
+                                      )}
 
-                                <div className={SCSS.userTab__textContainer}>
-                                    <h4>{user.name}</h4>
-                                    <p>{user.email}</p>
-                                </div>
-                                <ChevronRightIcon
-                                    className={SCSS.userTab__chevronRight}
-                                />
-                            </div>
-                        );
-                    })}
+                                      <div
+                                          className={
+                                              SCSS.userTab__textContainer
+                                          }
+                                      >
+                                          <h4>{user.name}</h4>
+                                          <p>{user.email}</p>
+                                      </div>
+                                      <ChevronRightIcon
+                                          className={SCSS.userTab__chevronRight}
+                                      />
+                                  </div>
+                              );
+                          })
+                        : ""}
                 </div>
                 <div className={SCSS.mainGrid__userProfile}>
                     <div className={SCSS.userProfile__topContainer}>

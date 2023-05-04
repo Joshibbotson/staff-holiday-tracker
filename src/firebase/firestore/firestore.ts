@@ -63,13 +63,16 @@ export const updateUserData = async (
 
 export const updateUserProfilePic = async (
     user: UserType,
-    profilePicLocation: string
+    profilePicLocation: string,
+    profilePicDownloadURL: string = ""
 ) => {
     try {
         const targetUser = await getUserDataViaEmail(user.email);
 
         const userRef = doc(db, "users", targetUser[0].docID);
+
         await updateDoc(userRef, {
+            profilePicDownloadURL: profilePicDownloadURL,
             profilePic: profilePicLocation,
         });
     } catch (err) {
@@ -96,6 +99,7 @@ export async function getUserData(userUID: string) {
             flexTime: doc.data().flexTime,
             docID: doc.data().docID,
             profilePic: doc.data().profilePic,
+            profilePicDownloadURL: doc.data().profilePicDownloadURL,
         }));
         return currentUserData;
     } catch (error) {
@@ -146,7 +150,7 @@ export async function listUsers(
         if (superAdmin) {
             queryDb = query(
                 collection(db, "users"),
-                where("superSdmin", "==", "true")
+                where("superAdmin", "==", "true")
             );
         } else {
             queryDb = query(collection(db, "users"));
@@ -163,6 +167,7 @@ export async function listUsers(
             takenHolidays: doc.data().takenHolidays,
             flexTime: doc.data().flexTime,
             profilePic: doc.data().profilePic,
+            profilePicDownloadURL: doc.data().profilePicDownloadURL,
         }));
         return userData;
     } catch (error) {
