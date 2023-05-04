@@ -57,7 +57,6 @@ const UserPanel = () => {
                     response.items.forEach(item => {
                         if (item.fullPath.includes(user[0].profilePic)) {
                             getDownloadURL(item).then(url => {
-                                console.log(url);
                                 return setUserImage(url);
                             });
                         }

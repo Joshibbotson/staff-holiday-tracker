@@ -5,22 +5,61 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { UserType } from "../../../types";
+import { CurrentUserContext } from "../../../context/CurrentUserContext";
+
+interface FetchedUserType {
+    uid: string;
+    name: string;
+    email: string;
+    admin: boolean;
+    superAdmin: boolean;
+    nationalHolidays: number;
+    remainingHolidays: number;
+    takenHolidays: number;
+    flexTime: number;
+    profilePic: string;
+    profilePicDownloadURL: string;
+}
 
 export const HandleUsers = () => {
+    const { user } = useContext(CurrentUserContext);
     const { users } = useContext(UsersContext);
     const [searchValue, setSearchValue] = useState<string>("");
-    const [filteredUsers, setFilteredUsers] = useState<UserType[]>(users);
-    const [selectedUser, setSelectedUser] = useState<UserType | undefined>(
-        undefined
-    );
+    const [filteredUsers, setFilteredUsers] = useState<UserType[]>();
+    const [selectedUser, setSelectedUser] = useState<
+        FetchedUserType | undefined
+    >(undefined);
 
     useEffect(() => {
-        setFilteredUsers(
-            users.filter(user => {
-                return user.name.toLowerCase().includes(searchValue);
-            })
-        );
+        if (users) {
+            setFilteredUsers(
+                users
+                    .filter(u => {
+                        return u.email !== user[0].email;
+                    })
+                    .filter(user => {
+                        return user.name.toLowerCase().includes(searchValue);
+                    })
+            );
+        }
     }, [searchValue]);
+
+    function getProfilePic(user: FetchedUserType, SCSSClass: string) {
+        return user.profilePicDownloadURL ? (
+            <div className={SCSSClass}>
+                <div
+                    className={SCSS.userImage}
+                    style={{
+                        backgroundImage: `url(${user.profilePicDownloadURL})`,
+                    }}
+                ></div>
+            </div>
+        ) : (
+            <div className={SCSS.userTab__profilePic}>
+                <AccountCircleIcon fontSize="inherit" />
+            </div>
+        );
+    }
 
     return (
         <>
@@ -45,38 +84,50 @@ export const HandleUsers = () => {
                         <h4>Name</h4>
                     </div>
 
-                    {filteredUsers.map(user => {
-                        return (
-                            <div
-                                className={
-                                    user === selectedUser
-                                        ? SCSS.mainGrid__selectedUserTab
-                                        : SCSS.mainGrid__userTab
-                                }
-                                key={user.uid}
-                                onClick={() => {
-                                    setSelectedUser(user);
-                                }}
-                            >
-                                <div className={SCSS.userTab__profilePic}>
-                                    <AccountCircleIcon fontSize="inherit" />
-                                </div>
-                                <div className={SCSS.userTab__textContainer}>
-                                    <h4>{user.name}</h4>
-                                    <p>{user.email}</p>
-                                </div>
-                                <ChevronRightIcon
-                                    className={SCSS.userTab__chevronRight}
-                                />
-                            </div>
-                        );
-                    })}
+                    {users
+                        ? filteredUsers?.map(user => {
+                              return (
+                                  <div
+                                      className={
+                                          user === selectedUser
+                                              ? SCSS.mainGrid__selectedUserTab
+                                              : SCSS.mainGrid__userTab
+                                      }
+                                      key={user.uid}
+                                      onClick={() => {
+                                          setSelectedUser(user);
+                                      }}
+                                  >
+                                      {getProfilePic(
+                                          user,
+                                          SCSS.userTab__profilePic
+                                      )}
+
+                                      <div
+                                          className={
+                                              SCSS.userTab__textContainer
+                                          }
+                                      >
+                                          <h4>{user.name}</h4>
+                                          <p>{user.email}</p>
+                                      </div>
+                                      <ChevronRightIcon
+                                          className={SCSS.userTab__chevronRight}
+                                      />
+                                  </div>
+                              );
+                          })
+                        : ""}
                 </div>
                 <div className={SCSS.mainGrid__userProfile}>
                     <div className={SCSS.userProfile__topContainer}>
-                        <div className={SCSS.topContainer__profilePic}>
-                            <AccountCircleIcon fontSize="inherit" />
-                        </div>
+                        {selectedUser
+                            ? getProfilePic(
+                                  selectedUser,
+                                  SCSS.topContainer__profilePic
+                              )
+                            : ""}
+
                         <div className={SCSS.topContainer__name}>
                             {selectedUser ? selectedUser.name : "name"}
                         </div>
