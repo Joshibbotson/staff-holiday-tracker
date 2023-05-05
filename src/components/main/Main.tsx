@@ -1,6 +1,6 @@
 import { auth } from "../../firebase/auth/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect, useRef } from "react";
 import { ApprovedRequestsType } from "../../types/ApprovedRequests.type";
 import { IncomingRequestsType } from "../../types/IncomingRequests.type";
 import { UserType } from "../../types/UserType.type";
@@ -27,6 +27,7 @@ function Main() {
         ApprovedRequestsType[] | undefined
     >(undefined);
     const [showModal, setShowModal] = useState(false);
+    const dateStart = useRef<Date>();
 
     useEffect(() => {
         if (approvedRequests) {
@@ -37,6 +38,7 @@ function Main() {
     function handleClick() {
         setShowModal(!showModal);
     }
+    function getStartDate(date: Date) {}
 
     const holidays = approvedRequests.map(req => {
         return {
