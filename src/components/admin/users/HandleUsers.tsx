@@ -6,6 +6,8 @@ import SearchIcon from "@mui/icons-material/Search";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { UserType } from "../../../types";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
+import CircularProgressWithLabel from "../../UI/circularRange/circularRange";
+import CircularSlider from "@fseehawer/react-circular-slider";
 
 interface FetchedUserType {
     uid: string;
@@ -121,12 +123,16 @@ export const HandleUsers = () => {
                 </div>
                 <div className={SCSS.mainGrid__userProfile}>
                     <div className={SCSS.userProfile__topContainer}>
-                        {selectedUser
-                            ? getProfilePic(
-                                  selectedUser,
-                                  SCSS.topContainer__profilePic
-                              )
-                            : ""}
+                        {selectedUser ? (
+                            getProfilePic(
+                                selectedUser,
+                                SCSS.topContainer__profilePic
+                            )
+                        ) : (
+                            <div className={SCSS.userTab__profilePic}>
+                                <AccountCircleIcon fontSize="inherit" />
+                            </div>
+                        )}
 
                         <div className={SCSS.topContainer__name}>
                             {selectedUser ? selectedUser.name : "name"}
@@ -138,31 +144,143 @@ export const HandleUsers = () => {
                         </div>
                     </div>
                     <div className={SCSS.userProfile__statsContainer}>
+                        <h1>Holiday and absence:</h1>
+
                         <div className={SCSS.statsContainer__holidaytime}>
-                            <h1>Holiday and absence:</h1>
-                            <p>
-                                Remaining Holidays:{" "}
-                                {selectedUser
-                                    ? selectedUser.remainingHolidays
-                                    : 0}
-                            </p>
-                            <p>
-                                Taken Holidays:{" "}
-                                {selectedUser ? selectedUser.takenHolidays : 0}
-                            </p>
-                            <p>
-                                Flextime:{" "}
-                                {selectedUser ? selectedUser.flexTime : 0}
-                            </p>
+                            <div className={SCSS.holidayTime__container}>
+                                {selectedUser ? (
+                                    <CircularSlider
+                                        labelColor="#005a58"
+                                        label="remaining
+                                        holidays"
+                                        knobColor="#005a58"
+                                        hideKnob={true}
+                                        progressColorFrom="#00bfbd"
+                                        progressColorTo="#009c9a"
+                                        knobDraggable={false}
+                                        max={25}
+                                        min={0}
+                                        width={200}
+                                        progressSize={25}
+                                        trackColor="#eeeeee"
+                                        trackSize={25}
+                                        dataIndex={
+                                            selectedUser.remainingHolidays
+                                        }
+                                        labelFontSize="0.9rem"
+                                    />
+                                ) : (
+                                    <CircularSlider
+                                        labelColor="#005a58"
+                                        label="remaining
+                                    holidays"
+                                        knobColor="#005a58"
+                                        hideKnob={true}
+                                        progressColorFrom="#00bfbd"
+                                        progressColorTo="#009c9a"
+                                        knobDraggable={false}
+                                        max={25}
+                                        min={0}
+                                        width={200}
+                                        progressSize={25}
+                                        trackColor="#eeeeee"
+                                        trackSize={20}
+                                        dataIndex={0}
+                                        labelFontSize="0.9rem"
+                                    />
+                                )}
+                            </div>
+                            <div className={SCSS.holidayTime__container}>
+                                {selectedUser ? (
+                                    <CircularSlider
+                                        labelColor="black"
+                                        label="Taken
+                                    Holidays"
+                                        knobColor="red"
+                                        hideKnob={true}
+                                        progressColorFrom="red"
+                                        progressColorTo="red"
+                                        knobDraggable={false}
+                                        max={25}
+                                        min={0}
+                                        width={200}
+                                        progressSize={25}
+                                        trackColor="#eeeeee"
+                                        trackSize={25}
+                                        dataIndex={selectedUser.takenHolidays}
+                                        labelFontSize="0.9rem"
+                                    />
+                                ) : (
+                                    <CircularSlider
+                                        labelColor="#005a58"
+                                        label="Taken Holidays"
+                                        knobColor="#005a58"
+                                        hideKnob={true}
+                                        progressColorFrom="#00bfbd"
+                                        progressColorTo="#009c9a"
+                                        knobDraggable={false}
+                                        max={25}
+                                        min={0}
+                                        width={200}
+                                        progressSize={25}
+                                        trackColor="#eeeeee"
+                                        trackSize={25}
+                                        dataIndex={0}
+                                        labelFontSize="0.9rem"
+                                    />
+                                )}
+                            </div>
+                            <div className={SCSS.holidayTime__container}>
+                                {selectedUser ? (
+                                    <CircularSlider
+                                        labelColor="black"
+                                        label="Taken
+                                Holidays"
+                                        knobColor="red"
+                                        hideKnob={true}
+                                        progressColorFrom="red"
+                                        progressColorTo="red"
+                                        knobDraggable={false}
+                                        max={25}
+                                        min={0}
+                                        width={200}
+                                        progressSize={25}
+                                        trackColor="#eeeeee"
+                                        trackSize={25}
+                                        dataIndex={selectedUser.flexTime}
+                                        labelFontSize="0.9rem"
+                                    />
+                                ) : (
+                                    <CircularSlider
+                                        labelColor="#005a58"
+                                        label=""
+                                        knobColor="#005a58"
+                                        hideKnob={true}
+                                        progressColorFrom="#00bfbd"
+                                        progressColorTo="#009c9a"
+                                        knobDraggable={false}
+                                        max={25}
+                                        min={0}
+                                        width={100}
+                                        progressSize={25}
+                                        trackColor="#eeeeee"
+                                        trackSize={25}
+                                        dataIndex={0}
+                                        labelFontSize="0.9rem"
+                                    />
+                                )}
+                            </div>{" "}
                         </div>
-                        <div className={SCSS.statsContainer__holidaytime}>
+                        <div className={SCSS.statsContainer__additionalInfo}>
                             <h1>Additional Info:</h1>
-                            <p>
-                                National Holidays:{" "}
-                                {selectedUser
-                                    ? selectedUser.nationalHolidays
-                                    : "-"}
-                            </p>
+                            <div>
+                                <h4>National Holidays: </h4>
+                                <p>
+                                    {selectedUser
+                                        ? selectedUser.nationalHolidays
+                                        : "-"}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
