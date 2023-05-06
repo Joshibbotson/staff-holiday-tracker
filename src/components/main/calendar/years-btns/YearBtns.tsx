@@ -1,10 +1,10 @@
-import { nanoid } from "nanoid";
-import { SelectedYearContext } from "../../../../context/SelectedYear";
-import { useContext } from "react";
 import SCSS from "./yearBtns.module.scss";
 
-export const YearBtns = () => {
-    const { year, updateYear } = useContext(SelectedYearContext);
+type Props = {
+    year: number;
+    updateYear: (arg0: number) => void;
+};
+export const YearBtns = ({ year, updateYear }: Props) => {
     console.log(year);
     const pastCurrFutureYear = [
         (new Date().getFullYear() - 1).toString(),
@@ -12,23 +12,18 @@ export const YearBtns = () => {
         (new Date().getFullYear() + 1).toString(),
     ];
 
-    function handleClick(newYear: number) {
-        updateYear(newYear);
-    }
-
     return (
         <div className={SCSS.btnBar}>
             {pastCurrFutureYear.map(y => {
-                console.log(year);
                 return (
                     <button
                         key={y}
                         onClick={() => {
-                            handleClick(parseInt(y));
+                            updateYear(parseInt(y));
                         }}
                         onKeyDown={e => {
                             if (e.key === "Enter") {
-                                handleClick(parseInt(y));
+                                updateYear(parseInt(y));
                             }
                         }}
                         className={

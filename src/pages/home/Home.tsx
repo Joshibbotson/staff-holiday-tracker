@@ -9,8 +9,6 @@ import UsersProvider from "../../context/UsersContext";
 import CurrentUserProvider from "../../context/CurrentUserContext";
 import ApprovedReqsProvider from "../../context/ApprovedRequestContext";
 import RequestsProvider from "../../context/RequestContext";
-import { SelectedMonthProvider } from "../../context/SelectedMonth";
-import { SelectedYearProvider } from "../../context/SelectedYear";
 import { MainPageProvider } from "../../context/MainPageContext";
 import AwaitApprovReqProvider from "../../context/AwaitApprovalReqContext";
 
@@ -27,24 +25,20 @@ const Home = () => {
     return (
         <>
             <div className={homeSCSS.homeContainer}>
-                <SelectedYearProvider>
-                    <SelectedMonthProvider>
-                        <ApprovedReqsProvider>
-                            <AwaitApprovReqProvider>
-                                <RequestsProvider>
-                                    <CurrentUserProvider>
-                                        <UsersProvider>
-                                            <MainPageProvider>
-                                                <UserPanel />
-                                                <Main />
-                                            </MainPageProvider>
-                                        </UsersProvider>
-                                    </CurrentUserProvider>
-                                </RequestsProvider>
-                            </AwaitApprovReqProvider>
-                        </ApprovedReqsProvider>
-                    </SelectedMonthProvider>
-                </SelectedYearProvider>
+                <ApprovedReqsProvider>
+                    <AwaitApprovReqProvider>
+                        <RequestsProvider>
+                            <CurrentUserProvider>
+                                <UsersProvider>
+                                    <MainPageProvider>
+                                        <UserPanel />
+                                        <Main />
+                                    </MainPageProvider>
+                                </UsersProvider>
+                            </CurrentUserProvider>
+                        </RequestsProvider>
+                    </AwaitApprovReqProvider>
+                </ApprovedReqsProvider>
             </div>
         </>
     );

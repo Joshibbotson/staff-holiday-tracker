@@ -1,10 +1,12 @@
 import { nanoid } from "nanoid";
-import { SelectedMonthContext } from "../../../../context/SelectedMonth";
-import { useContext } from "react";
+
 import SCSS from "./monthBtns.module.scss";
 
-export const MonthBtns = () => {
-    const { month, updateMonth } = useContext(SelectedMonthContext);
+type Props = {
+    month: number;
+    updateMonth: (arg0: number) => void;
+};
+export const MonthBtns = ({ month, updateMonth }: Props) => {
     console.log(month);
 
     const monthsArr = [
@@ -21,10 +23,7 @@ export const MonthBtns = () => {
         "Nov",
         "Dec",
     ];
-    function handleClick(newMonth: number) {
-        console.log(newMonth);
-        updateMonth(newMonth);
-    }
+
     return (
         <div className={SCSS.btnBar}>
             {monthsArr.map((m, i) => {
@@ -32,11 +31,11 @@ export const MonthBtns = () => {
                     <button
                         key={nanoid()}
                         onClick={() => {
-                            handleClick(i);
+                            updateMonth(i);
                         }}
                         onKeyDown={e => {
                             if (e.key === "Enter") {
-                                handleClick(i);
+                                updateMonth(i);
                                 blur();
                             }
                         }}

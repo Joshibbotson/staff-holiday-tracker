@@ -3,17 +3,7 @@ import { listApprovedRequests } from "../firebase/firestore/firestore";
 import { ApprovedRequestsType, IncomingRequestsType } from "../types";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase/auth/auth";
-import {
-    onSnapshot,
-    collection,
-    query,
-    where,
-    or,
-    and,
-    orderBy,
-} from "firebase/firestore";
-import { SelectedMonthContext } from "./SelectedMonth";
-import { SelectedYearContext } from "./SelectedYear";
+import { onSnapshot, collection, query } from "firebase/firestore";
 
 type ApprovedRequestContextType = {
     approvedRequests: ApprovedRequestsType[];
@@ -37,16 +27,9 @@ export const ApprovedReqsProvider: React.FC<any> = ({ children }) => {
     );
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
-    const { month } = useContext(SelectedMonthContext);
-    const { year } = useContext(SelectedYearContext);
 
     //Ensure approvedUserRequests is updated if requests collection changes//
-    // will need adjusting to only show current month and year requests
     useEffect(() => {
-        const startMonth = new Date(Date.UTC(year, month - 1, 1));
-        const endMonth = new Date(Date.UTC(year, month - 1, 1));
-        //adjust end date to be last millisecond of the previous day
-        endMonth.setTime(endMonth.getTime() - 1);
         if (user) {
             const q = query(collection(db, "approvedRequests"));
 
@@ -69,7 +52,7 @@ export const ApprovedReqsProvider: React.FC<any> = ({ children }) => {
             const fetchRequests = async () => {
                 setLoading(true);
                 try {
-                    const data = await listApprovedRequests(month, year);
+                    const data = await listApprovedRequests();
                     setApprovedReqs(data);
                     setLoading(false);
                 } catch (error) {

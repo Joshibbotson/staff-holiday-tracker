@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import SCSS from "./calendar.module.scss";
-import HolidayTab from "../../UI/holiday-tab/HolidayTab";
+import HolidayTab from "../../../UI/holiday-tab/HolidayTab";
 
 type Holiday = {
     name: string;
@@ -15,7 +15,7 @@ type Props = {
     handleClick: () => void;
 };
 
-const Calendar = ({ month, year, holidays, handleClick }: Props) => {
+const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
     const [days, setDays] = useState<Date[]>([]);
     const [prevMonthDays, setPrevMonthDays] = useState<Date[]>([]);
     const [nextMonthDays, setNextMonthDays] = useState<Date[]>([]);
@@ -175,4 +175,4 @@ const Calendar = ({ month, year, holidays, handleClick }: Props) => {
     );
 };
 
-export default Calendar;
+export default CreateCalendar;

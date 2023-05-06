@@ -1,15 +1,7 @@
-import { auth } from "../../firebase/auth/auth";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { useContext, useState, useEffect, useRef } from "react";
 import { ApprovedRequestsType } from "../../types/ApprovedRequests.type";
-import { IncomingRequestsType } from "../../types/IncomingRequests.type";
-import { UserType } from "../../types/UserType.type";
 import { ApprovedRequestContext } from "../../context/ApprovedRequestContext";
-import Calendar from "./calendar/CreateCalendar";
-import { SelectedMonthContext } from "../../context/SelectedMonth";
-import { SelectedYearContext } from "../../context/SelectedYear";
-import { MonthBtns } from "./calendar/month-btns/MonthBtns";
-import { YearBtns } from "./calendar/years-btns/YearBtns";
+import Calendar from "./calendar/Calendar";
 import SCSS from "./main.module.scss";
 import RequestModal from "../UI/request-modal/RequestModal";
 import Requests from "./requests/Requests";
@@ -18,8 +10,6 @@ import HandleRequests from "../admin/handle-requests/HandleRequests";
 import { HandleUsers } from "../admin/users/HandleUsers";
 
 function Main() {
-    const { month } = useContext(SelectedMonthContext);
-    const { year } = useContext(SelectedYearContext);
     const { approvedRequests } = useContext(ApprovedRequestContext);
     const { showCalendar, showRequests, showHandleRequests, showUsers } =
         useContext(MainPageContext);
@@ -53,11 +43,7 @@ function Main() {
             <main className={SCSS.mainContainer}>
                 {showCalendar ? (
                     <>
-                        <YearBtns />
-                        <MonthBtns />
                         <Calendar
-                            month={month}
-                            year={year}
                             holidays={holidays}
                             handleClick={handleClick}
                         />

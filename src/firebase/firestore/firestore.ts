@@ -177,15 +177,7 @@ export async function listUsers(
 }
 
 //Will need adjusting to only show current month and year
-export async function listApprovedRequests(
-    month: number,
-    year: number
-): Promise<ApprovedRequestsType[]> {
-    const startMonth = new Date(Date.UTC(year, month - 1, 1));
-    const endMonth = new Date(Date.UTC(year, month - 1, 1));
-    //adjust end date to be last millisecond of the previous day
-    endMonth.setTime(endMonth.getTime() - 1);
-
+export async function listApprovedRequests(): Promise<ApprovedRequestsType[]> {
     try {
         const queryDb = query(collection(db, "approvedRequests"));
         const querySnapShot = await getDocs(queryDb);
