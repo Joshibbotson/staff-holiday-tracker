@@ -6,7 +6,6 @@ import SearchIcon from "@mui/icons-material/Search";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { UserType } from "../../../types";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
-import CircularProgressWithLabel from "../../UI/circularRange/circularRange";
 import CircularSlider from "@fseehawer/react-circular-slider";
 
 interface FetchedUserType {
@@ -234,12 +233,11 @@ export const HandleUsers = () => {
                                 {selectedUser ? (
                                     <CircularSlider
                                         labelColor="black"
-                                        label="Taken
-                                Holidays"
-                                        knobColor="red"
+                                        label="FlexTime"
+                                        knobColor="green"
                                         hideKnob={true}
-                                        progressColorFrom="red"
-                                        progressColorTo="red"
+                                        progressColorFrom="green"
+                                        progressColorTo="green"
                                         knobDraggable={false}
                                         max={25}
                                         min={0}
@@ -261,7 +259,7 @@ export const HandleUsers = () => {
                                         knobDraggable={false}
                                         max={25}
                                         min={0}
-                                        width={100}
+                                        width={200}
                                         progressSize={25}
                                         trackColor="#eeeeee"
                                         trackSize={25}
