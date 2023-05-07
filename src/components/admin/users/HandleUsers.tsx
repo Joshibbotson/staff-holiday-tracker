@@ -1,12 +1,15 @@
-import { UsersContext } from "../../../context/UsersContext";
 import SCSS from "./handleusers.module.scss";
 import { useContext, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUsers } from "../../../store/slices/usersSlice";
+
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { UserType } from "../../../types";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import CircularSlider from "@fseehawer/react-circular-slider";
+import { AppDispatch } from "../../../store/store";
 
 interface FetchedUserType {
     uid: string;
@@ -24,7 +27,8 @@ interface FetchedUserType {
 
 export const HandleUsers = () => {
     const { user } = useContext(CurrentUserContext);
-    const { users } = useContext(UsersContext);
+    const { users } = useSelector((state: any) => state.users);
+    const dispatch = useDispatch<AppDispatch>();
     const [searchValue, setSearchValue] = useState<string>("");
     const [filteredUsers, setFilteredUsers] = useState<UserType[]>();
     const [selectedUser, setSelectedUser] = useState<
@@ -32,18 +36,22 @@ export const HandleUsers = () => {
     >(undefined);
 
     useEffect(() => {
+        dispatch(fetchUsers());
+    }, [dispatch]);
+
+    useEffect(() => {
         if (users) {
             setFilteredUsers(
                 users
-                    .filter(u => {
+                    .filter((u: { email: string }) => {
                         return u.email !== user[0].email;
                     })
-                    .filter(user => {
+                    .filter((user: { name: string }) => {
                         return user.name.toLowerCase().includes(searchValue);
                     })
             );
         }
-    }, [searchValue]);
+    }, [searchValue, users]);
 
     function getProfilePic(user: FetchedUserType, SCSSClass: string) {
         return user.profilePicDownloadURL ? (
@@ -233,11 +241,12 @@ export const HandleUsers = () => {
                                 {selectedUser ? (
                                     <CircularSlider
                                         labelColor="black"
-                                        label="FlexTime"
-                                        knobColor="green"
+                                        label="Taken
+                                Holidays"
+                                        knobColor="red"
                                         hideKnob={true}
-                                        progressColorFrom="green"
-                                        progressColorTo="green"
+                                        progressColorFrom="red"
+                                        progressColorTo="red"
                                         knobDraggable={false}
                                         max={25}
                                         min={0}
@@ -259,7 +268,7 @@ export const HandleUsers = () => {
                                         knobDraggable={false}
                                         max={25}
                                         min={0}
-                                        width={200}
+                                        width={100}
                                         progressSize={25}
                                         trackColor="#eeeeee"
                                         trackSize={25}

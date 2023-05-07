@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import Main from "../../components/main/Main";
 import UserPanel from "../../components/user-panel/UserPanel";
 import homeSCSS from "./home.module.scss";
-import UsersProvider from "../../context/UsersContext";
 import CurrentUserProvider from "../../context/CurrentUserContext";
 import ApprovedReqsProvider from "../../context/ApprovedRequestContext";
 import RequestsProvider from "../../context/RequestContext";
@@ -29,12 +28,10 @@ const Home = () => {
                     <AwaitApprovReqProvider>
                         <RequestsProvider>
                             <CurrentUserProvider>
-                                <UsersProvider>
-                                    <MainPageProvider>
-                                        <UserPanel />
-                                        <Main />
-                                    </MainPageProvider>
-                                </UsersProvider>
+                                <MainPageProvider>
+                                    <UserPanel />
+                                    <Main />
+                                </MainPageProvider>
                             </CurrentUserProvider>
                         </RequestsProvider>
                     </AwaitApprovReqProvider>

@@ -15,6 +15,8 @@
         "@fseehawer/react-circular-slider": "^2.5.16",
         "@mui/icons-material": "^5.11.16",
         "@mui/material": "^5.11.14",
+        "@reduxjs/toolkit": "^1.9.5",
+        "@types/react-redux": "^7.1.25",
         "date-fns": "^2.29.3",
         "firebase": "^9.18.0",
         "firebase-admin": "^11.5.0",
@@ -25,6 +27,7 @@
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-firebase-hooks": "^5.1.1",
+        "react-redux": "^8.0.5",
         "react-router-dom": "^6.9.0",
         "react-select": "^5.7.2",
         "react-toastify": "^9.1.1"

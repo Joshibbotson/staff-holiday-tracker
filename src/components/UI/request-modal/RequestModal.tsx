@@ -2,22 +2,23 @@ import SCSS from "./requestModal.module.scss";
 import { addRequest } from "../../../firebase/firestore/firestore";
 import { OutgoingRequestData } from "../../../types/OutgoingRequestData.type";
 import { useEffect, useState } from "react";
-import { CurrentUserContext } from "../../../context/CurrentUserContext";
-import { useContext } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Button } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { UsersContext } from "../../../context/UsersContext";
 import { PostSubmitModal } from "../successful-submit/PostSubmitModal";
+import { AppDispatch } from "../../../store/store";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchUsers } from "../../../store/slices/usersSlice";
 
 interface Props {
     handleClick: () => void;
 }
 
 export const RequestModal = ({ handleClick }: Props) => {
-    const { user } = useContext(CurrentUserContext);
-    const { users } = useContext(UsersContext);
+    const { user } = useSelector((state: any) => state.user);
+    const { users } = useSelector((state: any) => state.users);
+    const dispatch = useDispatch<AppDispatch>();
     const [adminUsers, setAdminUsers] = useState<
         { value: string; label: string }[]
     >([]);
@@ -29,18 +30,31 @@ export const RequestModal = ({ handleClick }: Props) => {
     const [submitScreen, setSubmitScreen] = useState<boolean>(false);
 
     useEffect(() => {
+        dispatch(fetchUsers());
+    }, [dispatch]);
+
+    useEffect(() => {
         if (users) {
             if (user[0].admin) {
                 return setAdminUsers(
                     users
-                        .filter(u => u.admin && user[0].name !== u.name)
-                        .map(user => ({ value: user.email, label: user.name }))
+                        .filter(
+                            (u: { admin: any; name: string }) =>
+                                u.admin && user[0].name !== u.name
+                        )
+                        .map((user: { email: any; name: any }) => ({
+                            value: user.email,
+                            label: user.name,
+                        }))
                 );
             }
             setAdminUsers(
                 users
-                    .filter(user => user.admin)
-                    .map(user => ({ value: user.email, label: user.name }))
+                    .filter((user: { admin: any }) => user.admin)
+                    .map((user: { email: any; name: any }) => ({
+                        value: user.email,
+                        label: user.name,
+                    }))
             );
         }
     }, [users]);
