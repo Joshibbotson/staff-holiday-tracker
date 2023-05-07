@@ -5,8 +5,19 @@
     flex-wrap: wrap;
     background-color: rgb(0, 150, 136);
 
-    .selectedYearBtn {
+    .selectedYear {
         color: white;
+    }
+    .currentYear {
+        text-underline-offset: 6px;
+        text-decoration: rgba(255, 255, 255, 0.594) underline;
+        text-decoration-thickness: 2px;
+    }
+
+    .selectedYear.currentYear {
+        text-decoration: white underline;
+        text-underline-offset: 6px;
+        text-decoration-thickness: 2px;
     }
 
     button {

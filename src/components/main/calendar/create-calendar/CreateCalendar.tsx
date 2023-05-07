@@ -83,10 +83,10 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
             return SCSS.calendar__prevMonth;
         } else if (nextMonthDays.includes(date)) {
             return SCSS.calendar__nextMonth;
-        } else if (isWeekend(date.getDay())) {
-            return SCSS.calendar__weekend;
         } else if (date.toDateString() === new Date().toDateString()) {
             return SCSS.calendar__today;
+        } else if (isWeekend(date.getDay())) {
+            return SCSS.calendar__weekend;
         } else {
             return SCSS.calendar__day;
         }

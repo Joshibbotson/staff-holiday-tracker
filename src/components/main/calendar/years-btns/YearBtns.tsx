@@ -12,6 +12,21 @@ export const YearBtns = ({ year, updateYear }: Props) => {
         (new Date().getFullYear() + 1).toString(),
     ];
 
+    function getClassName(selectedYear: number) {
+        if (
+            selectedYear === year &&
+            selectedYear === new Date().getFullYear()
+        ) {
+            return `${SCSS.selectedYear} ${SCSS.currentYear}`;
+        }
+        if (selectedYear === year) {
+            return SCSS.selectedYear;
+        }
+        if (selectedYear === new Date().getFullYear()) {
+            return SCSS.currentYear;
+        }
+    }
+
     return (
         <div className={SCSS.btnBar}>
             {pastCurrFutureYear.map(y => {
@@ -26,9 +41,7 @@ export const YearBtns = ({ year, updateYear }: Props) => {
                                 updateYear(parseInt(y));
                             }
                         }}
-                        className={
-                            parseInt(y) === year ? SCSS.selectedYearBtn : ""
-                        }
+                        className={getClassName(parseInt(y))}
                     >
                         {y}
                     </button>

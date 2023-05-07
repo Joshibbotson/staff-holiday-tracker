@@ -24,6 +24,21 @@ export const MonthBtns = ({ month, updateMonth }: Props) => {
         "Dec",
     ];
 
+    function getClassName(selectedMonth: number) {
+        if (
+            selectedMonth === month &&
+            selectedMonth === new Date().getMonth()
+        ) {
+            return `${SCSS.selectedMonth} ${SCSS.currentMonth}`;
+        }
+        if (selectedMonth === month) {
+            return SCSS.selectedMonth;
+        }
+        if (selectedMonth === new Date().getMonth()) {
+            return SCSS.currentMonth;
+        }
+    }
+
     return (
         <div className={SCSS.btnBar}>
             {monthsArr.map((m, i) => {
@@ -39,7 +54,7 @@ export const MonthBtns = ({ month, updateMonth }: Props) => {
                                 blur();
                             }
                         }}
-                        className={i === month ? SCSS.selectedMonth : ""}
+                        className={getClassName(i)}
                     >
                         {m}
                     </button>
