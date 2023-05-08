@@ -26,14 +26,14 @@ const Home = () => {
             <div className={homeSCSS.homeContainer}>
                 <CurrentUserProvider>
                     <MainPageProvider>
-                        <UserPanel />
-                        <ApprovedReqsProvider>
-                            <AwaitApprovReqProvider>
+                        <AwaitApprovReqProvider>
+                            <UserPanel />
+                            <ApprovedReqsProvider>
                                 <RequestsProvider>
                                     <Main />
                                 </RequestsProvider>
-                            </AwaitApprovReqProvider>
-                        </ApprovedReqsProvider>
+                            </ApprovedReqsProvider>
+                        </AwaitApprovReqProvider>
                     </MainPageProvider>
                 </CurrentUserProvider>
             </div>

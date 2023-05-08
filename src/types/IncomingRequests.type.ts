@@ -7,4 +7,5 @@ export interface IncomingRequestsType {
     dateStart: Timestamp;
     requestedByEmail: string;
     totalDays: number;
+    typeOfLeave: string;
 }

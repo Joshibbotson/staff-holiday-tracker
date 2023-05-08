@@ -21,6 +21,9 @@
         overflow-x: hidden;
 
         p {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             padding-left: 0.5rem;
             font-size: 1rem;
             width: 100%;
@@ -30,6 +33,16 @@
             padding-top: 0.3rem;
             padding-bottom: 0.3rem;
             border-radius: 4px;
+        }
+        .symbolContainer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 1.7rem;
+            height: 1rem;
+            padding: 0.6rem;
+            border-radius: 4px;
+            margin-right: 0.3rem;
         }
     }
 }

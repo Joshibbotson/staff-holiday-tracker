@@ -188,6 +188,7 @@ export async function listApprovedRequests(): Promise<ApprovedRequestsType[]> {
             dateEnd: doc.data().dateEnd,
             requestedByEmail: doc.data().requestedByEmail,
             totalDays: doc.data().totalDays,
+            typeOfLeave: doc.data().typeOfLeave,
         }));
 
         return approvedReqData;
@@ -213,6 +214,7 @@ export async function listRequests(
             dateEnd: doc.data().dateEnd,
             requestedByEmail: doc.data().requestedByEmail,
             totalDays: doc.data().totalDays,
+            typeOfLeave: doc.data().typeOfLeave,
         }));
         return reqData;
     } catch (error) {
@@ -237,6 +239,7 @@ export async function listRequestsForApproval(
             dateEnd: doc.data().dateEnd,
             requestedByEmail: doc.data().requestedByEmail,
             totalDays: doc.data().totalDays,
+            typeOfLeave: doc.data().typeOfLeave,
         }));
         return reqData;
     } catch (error) {
@@ -296,6 +299,7 @@ export async function approveRequest(
             dateEnd: request.dateEnd,
             requestedByEmail: request.requestedByEmail,
             totalDays: request.totalDays,
+            typeOfLeave: request.typeOfLeave,
         });
         //remove un needed request
         await deleteDoc(requestDocRef);

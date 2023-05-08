@@ -6,6 +6,7 @@ type Holiday = {
     name: string;
     start: Date;
     end: Date;
+    typeOfLeave: string;
 };
 
 type Props = {
@@ -66,6 +67,27 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
                 }
             });
             return nameArr;
+        }
+    };
+    const getHolidayUserInfo = (date: Date, dayIndex: number) => {
+        interface HolidayInfo {
+            name: string;
+            typeOfLeave: string;
+        }
+
+        if (dayIndex === 0 || dayIndex === 6) {
+            return;
+        } else {
+            let arr: Array<HolidayInfo> = [];
+            holidays!.forEach(h => {
+                if (
+                    date.getDate() >= h.start.getDate() &&
+                    date.getDate() <= h.end.getDate()
+                ) {
+                    arr.push({ name: h.name, typeOfLeave: h.typeOfLeave });
+                }
+            });
+            return arr;
         }
     };
 
@@ -141,7 +163,7 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
                                         >
                                             <HolidayTab
                                                 day={date.getDate()}
-                                                name={getNameForHoliday(
+                                                info={getHolidayUserInfo(
                                                     date,
                                                     dayIndex
                                                 )}
@@ -162,7 +184,7 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
                                         >
                                             <HolidayTab
                                                 day={date.getDate()}
-                                                name={undefined}
+                                                info={undefined}
                                             />
                                         </td>
                                     )

@@ -2,26 +2,100 @@ import { useEffect, useState } from "react";
 import SCSS from "./holidayTab.module.scss";
 import { nanoid } from "nanoid";
 import getName from "../../../util-functions/getName";
-interface HolidayTabProps {
-    day: any;
-    name: Array<string> | undefined;
+
+interface Info {
+    name: string;
+    typeOfLeave: string;
 }
 
-const HolidayTab = ({ day, name }: HolidayTabProps) => {
-    //need a use effect or this will not change between calendar renders
-    const [loadedNames, setLoadedNames] = useState(name?.slice(0, 2));
+interface HolidayTabProps {
+    day: number;
+    info: Array<Info> | undefined;
+}
 
+const HolidayTab = ({ day, info }: HolidayTabProps) => {
+    //need a use effect or this will not change between calendar renders
+
+    const [loadedHolidays, setLoadedHolidays] = useState(info);
     useEffect(() => {
-        setLoadedNames(name?.slice(0, 2));
-    }, [name]);
+        setLoadedHolidays(info);
+    }, [info]);
+
+    function getSymbol(type: string) {
+        if (type === "Sick leave") {
+            return (
+                <div
+                    className={SCSS.symbolContainer}
+                    style={{ backgroundColor: "rgb(226, 45, 45)" }}
+                >
+                    <h4>S</h4>
+                </div>
+            );
+        }
+        if (type === "Annual leave") {
+            return (
+                <div
+                    className={SCSS.symbolContainer}
+                    style={{ backgroundColor: "rgb(3, 113, 22)" }}
+                >
+                    <h4>A</h4>
+                </div>
+            );
+        }
+        if (type === "Unpaid absence") {
+            return (
+                <div
+                    className={SCSS.symbolContainer}
+                    style={{ backgroundColor: "rgb(67, 67, 67)" }}
+                >
+                    <h4>U</h4>
+                </div>
+            );
+        }
+        if (type === "Maternity leave") {
+            return (
+                <div
+                    className={SCSS.symbolContainer}
+                    style={{ backgroundColor: "rgb(71, 16, 181)" }}
+                >
+                    <h4>M</h4>
+                </div>
+            );
+        }
+        if (type === "Paternity leave") {
+            return (
+                <div
+                    className={SCSS.symbolContainer}
+                    style={{ backgroundColor: "rgb(0, 110, 174)" }}
+                >
+                    <h4>P</h4>
+                </div>
+            );
+        }
+        if (type === "Bereavement leave") {
+            return (
+                <div
+                    className={SCSS.symbolContainer}
+                    style={{ backgroundColor: "rgb(0, 0, 0)" }}
+                >
+                    <h4>B</h4>
+                </div>
+            );
+        }
+    }
     return (
         <div className={SCSS.container}>
             <div className={SCSS.container__day}>{day}</div>
 
-            {loadedNames ? (
+            {loadedHolidays ? (
                 <div className={SCSS.container__nameContainer}>
-                    {loadedNames!.map(n => {
-                        return <p key={nanoid()}>{getName(n)}</p>;
+                    {loadedHolidays!.map(n => {
+                        return (
+                            <p key={nanoid()}>
+                                {n.name ? getName(n.name) : ""}
+                                {getSymbol(n.typeOfLeave)}
+                            </p>
+                        );
                     })}
                 </div>
             ) : (

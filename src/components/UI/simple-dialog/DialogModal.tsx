@@ -35,6 +35,19 @@ export default function DialogModal(props: DialogModalProps) {
         onClose(name);
     };
 
+    const handleListItemClick = (key: string) => {
+        onClose(key);
+        if (key === "edit") {
+            console.log("edit");
+            updateShowEditModal();
+        } else if (key === "Cancel Request") {
+            console.log("cancel request");
+            handleDelete(request.uid);
+        } else if (key === "Approve Request") {
+            handleApproval(request);
+        }
+    };
+
     const handleApproval = async (request: IncomingRequestsType) => {
         try {
             await approveRequest(request);
@@ -45,6 +58,7 @@ export default function DialogModal(props: DialogModalProps) {
     };
 
     const updateShowEditModal = () => {
+        onClose("Edit");
         setShowEditModal(!showEditModal);
     };
 
