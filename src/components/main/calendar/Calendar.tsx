@@ -7,6 +7,7 @@ type Holiday = {
     name: string;
     start: Date;
     end: Date;
+    typeOfLeave: string;
 };
 
 type Props = {

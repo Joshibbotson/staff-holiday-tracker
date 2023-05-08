@@ -1,4 +1,4 @@
-import { TextField, Button } from "@mui/material";
+import { TextField, Button, Autocomplete } from "@mui/material";
 import SCSS from "./editRequestModal.module.scss";
 import { useState } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -25,6 +25,15 @@ const EditRequestModal = ({
     const [newTotalDays, setNewTotalDays] = useState<string>(
         request.totalDays.toString()
     );
+    const [type, setType] = useState<string>(request.typeOfLeave.toString());
+    const typeOptions = [
+        { value: "Annual leave", label: "Annual Leave" },
+        { value: "Sick leave", label: "Sick leave" },
+        { value: "Unpaid absence", label: "Unpaid absence" },
+        { value: "Maternity leave", label: "Maternity Leave" },
+        { value: "Paternity leave", label: "Paternity Leave" },
+        { value: "Bereavement leave", label: "Bereavement Leave" },
+    ];
     const [submitScreen, setSubmitScreen] = useState<boolean>(false);
 
     const handleModalCardClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -138,6 +147,30 @@ const EditRequestModal = ({
                                     inputMode: "numeric",
                                     pattern: "[0-9]*",
                                 }}
+                            />
+                            <Autocomplete
+                                disablePortal
+                                options={typeOptions}
+                                sx={{ width: "100%" }}
+                                autoSelect={true}
+                                autoHighlight={true}
+                                isOptionEqualToValue={(option, value) =>
+                                    option.value === value.value
+                                }
+                                onChange={(
+                                    event: any,
+                                    newValue: {
+                                        value: string;
+                                        label: string;
+                                    } | null
+                                ) => setType(newValue ? newValue.value : "")}
+                                renderInput={params => (
+                                    <TextField
+                                        {...params}
+                                        label="Type:"
+                                        autoFocus={true}
+                                    />
+                                )}
                             />
                             <Button
                                 aria-required={true}

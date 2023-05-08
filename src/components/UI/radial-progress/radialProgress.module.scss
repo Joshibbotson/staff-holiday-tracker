@@ -1,0 +1,46 @@
+.radialProgressContainer {
+    position: relative;
+    width: 3rem;
+    aspect-ratio: 1 / 1;
+
+    .radialProgressCircle {
+        transform: rotate(-90deg);
+        height: 100%;
+        width: 100%;
+        pointer-events: none;
+    }
+
+    .radialProgressBackground {
+        fill: none;
+        stroke: lightblue;
+        stroke-width: 4px;
+    }
+
+    .radialProgress {
+        fill: none;
+        stroke: blue;
+        stroke-linecap: round;
+        stroke-dasharray: 100 100;
+        stroke-width: 4px;
+        transition: stroke-dashoffset 300ms ease-ease-in-out,
+            opacity 300ms ease-ease-in-out, stroke 300ms ease-ease-in-out;
+        will-change: transform;
+    }
+
+    .progressText {
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 5rem;
+        color: lightblue;
+        font-size: 12px;
+
+        p {
+            margin-bottom: 14px;
+        }
+    }
+}

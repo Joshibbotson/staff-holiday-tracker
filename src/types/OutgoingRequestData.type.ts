@@ -4,4 +4,5 @@ export interface OutgoingRequestData {
     dateStart: Date;
     dateEnd: Date;
     totalDays: number;
+    typeOfLeave: string;
 }

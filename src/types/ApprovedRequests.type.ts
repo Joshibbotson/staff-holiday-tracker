@@ -7,4 +7,5 @@ export interface ApprovedRequestsType {
     dateStart: Timestamp;
     requestedByEmail: string;
     totalDays: number;
+    typeOfLeave: string;
 }

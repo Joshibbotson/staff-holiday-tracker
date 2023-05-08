@@ -126,7 +126,7 @@ const Requests = () => {
                                 </FormControl>
                             </th>
                             <th
-                                colSpan={4}
+                                colSpan={5}
                                 className={SCSS.requestTable__title}
                             >
                                 Requests
@@ -138,6 +138,7 @@ const Requests = () => {
                             <th colSpan={1}>Date Start</th>
                             <th colSpan={1}>Date End</th>
                             <th colSpan={1}>Total days</th>
+                            <th colSpan={1}>Type</th>
                             <th colSpan={1}></th>
                         </tr>
                     </thead>

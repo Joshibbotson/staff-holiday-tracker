@@ -35,6 +35,7 @@ function Main() {
             name: req.requestedByEmail,
             start: new Date(req.dateStart.toDate().toDateString()),
             end: new Date(req.dateEnd.toDate().toDateString()),
+            typeOfLeave: req.typeOfLeave,
         };
     });
 
