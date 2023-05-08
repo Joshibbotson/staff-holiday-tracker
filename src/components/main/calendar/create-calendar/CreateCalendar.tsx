@@ -53,22 +53,6 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
         return holiday ? true : false;
     };
 
-    const getNameForHoliday = (date: Date, dayIndex: number) => {
-        if (dayIndex === 0 || dayIndex === 6) {
-            return;
-        } else {
-            let nameArr: Array<string> = [];
-            holidays!.forEach(h => {
-                if (
-                    date.getDate() >= h.start.getDate() &&
-                    date.getDate() <= h.end.getDate()
-                ) {
-                    nameArr.push(h.name);
-                }
-            });
-            return nameArr;
-        }
-    };
     const getHolidayUserInfo = (date: Date, dayIndex: number) => {
         interface HolidayInfo {
             name: string;
@@ -80,9 +64,12 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
         } else {
             let arr: Array<HolidayInfo> = [];
             holidays!.forEach(h => {
+                const startTimestamp = h.start.getTime();
+                const endTimestamp = h.end.getTime();
+                const currentTimestamp = date.getTime();
                 if (
-                    date.getDate() >= h.start.getDate() &&
-                    date.getDate() <= h.end.getDate()
+                    currentTimestamp >= startTimestamp &&
+                    currentTimestamp <= endTimestamp
                 ) {
                     arr.push({ name: h.name, typeOfLeave: h.typeOfLeave });
                 }
@@ -156,7 +143,7 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
                                                 }
                                             }}
                                             tabIndex={0}
-                                            aria-label={`${date.toLocaleDateString()} - ${getNameForHoliday(
+                                            aria-label={`${date.toLocaleDateString()} - ${getHolidayUserInfo(
                                                 date,
                                                 dayIndex
                                             )}`}

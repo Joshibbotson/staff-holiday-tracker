@@ -91,10 +91,13 @@ const HolidayTab = ({ day, info }: HolidayTabProps) => {
                 <div className={SCSS.container__nameContainer}>
                     {loadedHolidays!.map(n => {
                         return (
-                            <p key={nanoid()}>
+                            <div
+                                key={nanoid()}
+                                className={SCSS.nameContainer__tab}
+                            >
                                 {n.name ? getName(n.name) : ""}
                                 {getSymbol(n.typeOfLeave)}
-                            </p>
+                            </div>
                         );
                     })}
                 </div>

@@ -23,6 +23,8 @@ function Login() {
         }
     }, [user, loading]);
 
+    useEffect;
+
     async function handleLogin(email: string, password: string) {
         try {
             await logInWithEmailAndPassword(email, password);
@@ -44,6 +46,11 @@ function Login() {
                         onChange={e => {
                             setEmail(e.target.value);
                         }}
+                        onKeyDown={e => {
+                            if (e.code === "Enter") {
+                                handleLogin(email, password);
+                            }
+                        }}
                         placeholder="Email Address"
                     />
                     <input
@@ -53,6 +60,11 @@ function Login() {
                         defaultValue={password}
                         onChange={e => {
                             setPassword(e.target.value);
+                        }}
+                        onKeyDown={e => {
+                            if (e.code === "Enter") {
+                                handleLogin(email, password);
+                            }
                         }}
                     />
                     <button

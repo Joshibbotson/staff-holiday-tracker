@@ -10,6 +10,7 @@ import { UserType } from "../../../types";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import CircularSlider from "@fseehawer/react-circular-slider";
 import { AppDispatch } from "../../../store/store";
+import RadialProgress from "../../UI/radial-progress/RadialProgress";
 
 interface FetchedUserType {
     uid: string;
@@ -156,25 +157,29 @@ export const HandleUsers = () => {
                         <div className={SCSS.statsContainer__holidaytime}>
                             <div className={SCSS.holidayTime__container}>
                                 {selectedUser ? (
-                                    <CircularSlider
-                                        labelColor="#005a58"
-                                        label="remaining
-                                        holidays"
-                                        knobColor="#005a58"
-                                        hideKnob={true}
-                                        progressColorFrom="#00bfbd"
-                                        progressColorTo="#009c9a"
-                                        knobDraggable={false}
-                                        max={25}
-                                        min={0}
-                                        width={200}
-                                        progressSize={25}
-                                        trackColor="#eeeeee"
-                                        trackSize={25}
-                                        dataIndex={
-                                            selectedUser.remainingHolidays
-                                        }
-                                        labelFontSize="0.9rem"
+                                    // <CircularSlider
+                                    //     labelColor="#005a58"
+                                    //     label="remaining
+                                    //     holidays"
+                                    //     knobColor="#005a58"
+                                    //     hideKnob={true}
+                                    //     progressColorFrom="#00bfbd"
+                                    //     progressColorTo="#009c9a"
+                                    //     knobDraggable={false}
+                                    //     max={25}
+                                    //     min={0}
+                                    //     width={200}
+                                    //     progressSize={25}
+                                    //     trackColor="#eeeeee"
+                                    //     trackSize={25}
+                                    //     dataIndex={
+                                    //         selectedUser.remainingHolidays
+                                    //     }
+                                    //     labelFontSize="0.9rem"
+                                    // />
+
+                                    <RadialProgress
+                                        step={selectedUser.remainingHolidays}
                                     />
                                 ) : (
                                     <CircularSlider
