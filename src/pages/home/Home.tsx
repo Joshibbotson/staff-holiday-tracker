@@ -12,7 +12,7 @@ import { MainPageProvider } from "../../context/MainPageContext";
 import AwaitApprovReqProvider from "../../context/AwaitApprovalReqContext";
 
 const Home = () => {
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,18 +24,18 @@ const Home = () => {
     return (
         <>
             <div className={homeSCSS.homeContainer}>
-                <ApprovedReqsProvider>
-                    <AwaitApprovReqProvider>
-                        <RequestsProvider>
-                            <CurrentUserProvider>
-                                <MainPageProvider>
-                                    <UserPanel />
+                <CurrentUserProvider>
+                    <MainPageProvider>
+                        <UserPanel />
+                        <ApprovedReqsProvider>
+                            <AwaitApprovReqProvider>
+                                <RequestsProvider>
                                     <Main />
-                                </MainPageProvider>
-                            </CurrentUserProvider>
-                        </RequestsProvider>
-                    </AwaitApprovReqProvider>
-                </ApprovedReqsProvider>
+                                </RequestsProvider>
+                            </AwaitApprovReqProvider>
+                        </ApprovedReqsProvider>
+                    </MainPageProvider>
+                </CurrentUserProvider>
             </div>
         </>
     );

@@ -2,6 +2,8 @@ import SCSS from "./requestModal.module.scss";
 import { addRequest } from "../../../firebase/firestore/firestore";
 import { OutgoingRequestData } from "../../../types/OutgoingRequestData.type";
 import { useEffect, useState } from "react";
+import { CurrentUserContext } from "../../../context/CurrentUserContext";
+import { useContext } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Button } from "@mui/material";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -16,7 +18,7 @@ interface Props {
 }
 
 export const RequestModal = ({ handleClick }: Props) => {
-    const { user } = useSelector((state: any) => state.user);
+    const { user } = useContext(CurrentUserContext);
     const { users } = useSelector((state: any) => state.users);
     const dispatch = useDispatch<AppDispatch>();
     const [adminUsers, setAdminUsers] = useState<
