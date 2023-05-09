@@ -6,7 +6,7 @@ import {
     signInWithGoogle,
     registerWithEmailAndPassword,
 } from "../../firebase/auth/auth";
-import { updateUserData } from "../../firebase/firestore/firestore";
+import { updateUserDocID } from "../../firebase/firestore/firestore";
 import registerSCSS from "./register.module.scss";
 
 function Register() {
@@ -21,7 +21,7 @@ function Register() {
     };
     useEffect(() => {
         if (user) {
-            updateUserData(user?.uid, name, email, 25, 0, 0, "UK");
+            updateUserDocID(user?.uid, name, email, 25, 25, 0, 0, "", "UK");
             navigate("/");
         }
     }, [user, loading]);
@@ -38,6 +38,11 @@ function Register() {
                     value={name}
                     onChange={e => setName(e.target.value)}
                     placeholder="Full Name"
+                    onKeyDown={e => {
+                        if (e.key === "Enter") {
+                            return register();
+                        }
+                    }}
                 />
                 <input
                     type="text"
@@ -45,6 +50,11 @@ function Register() {
                     value={email}
                     onChange={e => setEmail(e.target.value)}
                     placeholder="E-mail Address"
+                    onKeyDown={e => {
+                        if (e.key === "Enter") {
+                            return register();
+                        }
+                    }}
                 />
                 <input
                     type="password"
@@ -52,10 +62,20 @@ function Register() {
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     placeholder="Password"
+                    onKeyDown={e => {
+                        if (e.key === "Enter") {
+                            return register();
+                        }
+                    }}
                 />
                 <button
                     className={registerSCSS.register__btn}
                     onClick={register}
+                    onKeyDown={e => {
+                        if (e.key === "Enter") {
+                            return register();
+                        }
+                    }}
                 >
                     Register
                 </button>

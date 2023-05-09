@@ -36,6 +36,7 @@ function Main() {
             start: new Date(req.dateStart.toDate().toDateString()),
             end: new Date(req.dateEnd.toDate().toDateString()),
             typeOfLeave: req.typeOfLeave,
+            holidayTabColour: req.holidayTabColour,
         };
     });
 

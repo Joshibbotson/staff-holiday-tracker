@@ -7,6 +7,7 @@ type Holiday = {
     start: Date;
     end: Date;
     typeOfLeave: string;
+    holidayTabColour: string;
 };
 
 type Props = {
@@ -57,6 +58,7 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
         interface HolidayInfo {
             name: string;
             typeOfLeave: string;
+            holidayTabColour: string;
         }
 
         if (dayIndex === 0 || dayIndex === 6) {
@@ -71,7 +73,11 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
                     currentTimestamp >= startTimestamp &&
                     currentTimestamp <= endTimestamp
                 ) {
-                    arr.push({ name: h.name, typeOfLeave: h.typeOfLeave });
+                    arr.push({
+                        name: h.name,
+                        typeOfLeave: h.typeOfLeave,
+                        holidayTabColour: h.holidayTabColour,
+                    });
                 }
             });
             return arr;
