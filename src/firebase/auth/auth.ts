@@ -89,26 +89,24 @@ export async function registerWithEmailAndPassword(
     password: string
 ) {
     try {
-        const result = await createUserWithEmailAndPassword(
-            auth,
-            email,
-            password
-        );
-        const user = result.user;
-        await addDoc(collection(db, "users"), {
-            uid: user.uid,
-            name,
-            authProvider: "local",
-            email,
-            admin: false,
-            superAdmin: false,
-            nationalHolidays: 0,
-            remainingHolidays: 0,
-            takenHolidays: 0,
-            flexTime: 0,
-            birthday: undefined,
-            manager: "admin@hotmail.com",
-        });
+        await createUserWithEmailAndPassword(auth, email, password);
+        //99% sure this is unnecessary
+        // const user = result.user;
+        // await addDoc(collection(db, "users"), {
+        //     uid: user.uid,
+        //     name: name,
+        //     authProvider: "local",
+        //     email: email,
+        //     admin: false,
+        //     superAdmin: false,
+        //     nationalHolidays: "UK",
+        //     totalHolidays: 25,
+        //     remainingHolidays: 25,
+        //     takenHolidays: 0,
+        //     flexTime: 0,
+        //     profilePic: "",
+        //     managersEmail: "josh_ibbotson@hotmail.com",
+        // });
     } catch (error) {
         console.log(error);
         throw error;

@@ -34,11 +34,13 @@ export const updateUserData = async (
     userUID: string,
     name: string,
     email: string,
+    totalHolidays: number,
     remainingHolidays: number,
     takenHolidays: number,
     flexTime: number,
     profilePic: string,
     nationalHolidays: string = "UK",
+    managersEmail: string = "joshua_ibbotson@hotmail.com",
     admin: boolean = false,
     superAdmin: boolean = false
 ) => {
@@ -48,12 +50,15 @@ export const updateUserData = async (
             name,
             email,
             nationalHolidays,
+            totalHolidays,
             remainingHolidays,
             takenHolidays,
             flexTime,
             admin: false,
             superAdmin: false,
-            profilePic: "",
+            profilePic,
+
+            managersEmail: "joshua_ibbotson@hotmail.com",
         });
         await updateDoc(docRef, { docID: docRef.id });
     } catch (err) {
@@ -94,12 +99,14 @@ export async function getUserData(userUID: string) {
             admin: doc.data().admin,
             superAdmin: doc.data().superAdmin,
             nationalHolidays: doc.data().nationalHolidays,
+            totalHolidays: doc.data().totalHolidays,
             remainingHolidays: doc.data().remainingHolidays,
             takenHolidays: doc.data().takenHolidays,
             flexTime: doc.data().flexTime,
             docID: doc.data().docID,
             profilePic: doc.data().profilePic,
             profilePicDownloadURL: doc.data().profilePicDownloadURL,
+            managersEmail: doc.data().managerEmail,
         }));
         return currentUserData;
     } catch (error) {
@@ -121,12 +128,14 @@ export async function getUserDataViaEmail(userEmail: string) {
             email: doc.data().email,
             admin: doc.data().admin,
             superAdmin: doc.data().superAdmin,
+            totalHolidays: doc.data().totalHolidays,
             nationalHolidays: doc.data().nationalHolidays,
             remainingHolidays: doc.data().remainingHolidays,
             takenHolidays: doc.data().takenHolidays,
             flexTime: doc.data().flexTime,
             docID: doc.data().docID,
             profilePic: doc.data().profilePic,
+            managersEmail: doc.data().managerEmail,
         }));
         return currentUserData;
     } catch (error) {
@@ -163,11 +172,13 @@ export async function listUsers(
             admin: doc.data().admin,
             superAdmin: doc.data().superAdmin,
             nationalHolidays: doc.data().nationalHolidays,
+            totalHolidays: doc.data().totalHolidays,
             remainingHolidays: doc.data().remainingHolidays,
             takenHolidays: doc.data().takenHolidays,
             flexTime: doc.data().flexTime,
             profilePic: doc.data().profilePic,
             profilePicDownloadURL: doc.data().profilePicDownloadURL,
+            managersEmail: doc.data().managerEmail,
         }));
         return userData;
     } catch (error) {
@@ -312,6 +323,7 @@ export async function approveRequest(
             remainingHolidays: user[0].remainingHolidays - request.totalDays,
             takenHolidays: user[0].takenHolidays + request.totalDays,
         });
+        console.log("updated");
     } catch (error) {
         console.log(error);
         throw new Error("Failed approve request and delete existing request");
