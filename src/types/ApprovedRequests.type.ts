@@ -8,4 +8,5 @@ export interface ApprovedRequestsType {
     requestedByEmail: string;
     totalDays: number;
     typeOfLeave: string;
+    holidayTabColour: string;
 }

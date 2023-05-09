@@ -6,7 +6,7 @@ import {
     signInWithGoogle,
     registerWithEmailAndPassword,
 } from "../../firebase/auth/auth";
-import { updateUserData } from "../../firebase/firestore/firestore";
+import { updateUserDocID } from "../../firebase/firestore/firestore";
 import registerSCSS from "./register.module.scss";
 
 function Register() {
@@ -21,7 +21,7 @@ function Register() {
     };
     useEffect(() => {
         if (user) {
-            updateUserData(user?.uid, name, email, 25, 25, 0, 0, "", "UK");
+            updateUserDocID(user?.uid, name, email, 25, 25, 0, 0, "", "UK");
             navigate("/");
         }
     }, [user, loading]);

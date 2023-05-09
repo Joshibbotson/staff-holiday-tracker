@@ -22,6 +22,7 @@ import { OutgoingRequestData } from "../../types/OutgoingRequestData.type";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { EditRequestType } from "../../types/EditRequest.type";
 import { user } from "firebase-functions/v1/auth";
+import randomColour from "../../util-functions/randomColour";
 
 // //firebase emulator//
 // const db = getFirestore();
@@ -30,7 +31,7 @@ import { user } from "firebase-functions/v1/auth";
 
 // export const currentUserUID: string = auth.currentUser!.uid;
 
-export const updateUserData = async (
+export const updateUserDocID = async (
     userUID: string,
     name: string,
     email: string,
@@ -42,7 +43,8 @@ export const updateUserData = async (
     nationalHolidays: string = "UK",
     managersEmail: string = "joshua_ibbotson@hotmail.com",
     admin: boolean = false,
-    superAdmin: boolean = false
+    superAdmin: boolean = false,
+    holidayTabColour: string = randomColour()
 ) => {
     try {
         const docRef = await addDoc(collection(db, "users"), {
@@ -54,11 +56,11 @@ export const updateUserData = async (
             remainingHolidays,
             takenHolidays,
             flexTime,
-            admin: false,
-            superAdmin: false,
+            admin: admin,
+            superAdmin: superAdmin,
             profilePic,
-
-            managersEmail: "joshua_ibbotson@hotmail.com",
+            managersEmail: managersEmail,
+            holidayTabColour,
         });
         await updateDoc(docRef, { docID: docRef.id });
     } catch (err) {
@@ -107,6 +109,7 @@ export async function getUserData(userUID: string) {
             profilePic: doc.data().profilePic,
             profilePicDownloadURL: doc.data().profilePicDownloadURL,
             managersEmail: doc.data().managerEmail,
+            holidayTabColour: doc.data().holidayTabColour,
         }));
         return currentUserData;
     } catch (error) {
@@ -136,6 +139,7 @@ export async function getUserDataViaEmail(userEmail: string) {
             docID: doc.data().docID,
             profilePic: doc.data().profilePic,
             managersEmail: doc.data().managerEmail,
+            holidayTabColour: doc.data().holidayTabColour,
         }));
         return currentUserData;
     } catch (error) {
@@ -179,6 +183,7 @@ export async function listUsers(
             profilePic: doc.data().profilePic,
             profilePicDownloadURL: doc.data().profilePicDownloadURL,
             managersEmail: doc.data().managerEmail,
+            holidayTabColour: doc.data().holidayTabColour,
         }));
         return userData;
     } catch (error) {
@@ -200,6 +205,7 @@ export async function listApprovedRequests(): Promise<ApprovedRequestsType[]> {
             requestedByEmail: doc.data().requestedByEmail,
             totalDays: doc.data().totalDays,
             typeOfLeave: doc.data().typeOfLeave,
+            holidayTabColour: doc.data().holidayTabColour,
         }));
 
         return approvedReqData;
@@ -226,6 +232,7 @@ export async function listRequests(
             requestedByEmail: doc.data().requestedByEmail,
             totalDays: doc.data().totalDays,
             typeOfLeave: doc.data().typeOfLeave,
+            holidayTabColour: doc.data().holidayTabColour,
         }));
         return reqData;
     } catch (error) {
@@ -251,6 +258,7 @@ export async function listRequestsForApproval(
             requestedByEmail: doc.data().requestedByEmail,
             totalDays: doc.data().totalDays,
             typeOfLeave: doc.data().typeOfLeave,
+            holidayTabColour: doc.data().holidayTabColour,
         }));
         return reqData;
     } catch (error) {
@@ -311,6 +319,7 @@ export async function approveRequest(
             requestedByEmail: request.requestedByEmail,
             totalDays: request.totalDays,
             typeOfLeave: request.typeOfLeave,
+            holidayTabColour: request.holidayTabColour,
         });
         //remove un needed request
         await deleteDoc(requestDocRef);

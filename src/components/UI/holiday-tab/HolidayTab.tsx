@@ -6,6 +6,7 @@ import getName from "../../../util-functions/getName";
 interface Info {
     name: string;
     typeOfLeave: string;
+    holidayTabColour: string;
 }
 
 interface HolidayTabProps {
@@ -94,6 +95,7 @@ const HolidayTab = ({ day, info }: HolidayTabProps) => {
                             <div
                                 key={nanoid()}
                                 className={SCSS.nameContainer__tab}
+                                style={{ backgroundColor: n.holidayTabColour }}
                             >
                                 {n.name ? getName(n.name) : ""}
                                 {getSymbol(n.typeOfLeave)}

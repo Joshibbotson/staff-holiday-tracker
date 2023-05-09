@@ -5,4 +5,5 @@ export interface OutgoingRequestData {
     dateEnd: Date;
     totalDays: number;
     typeOfLeave: string;
+    holidayTabColour: string;
 }

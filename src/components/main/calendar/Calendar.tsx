@@ -8,6 +8,7 @@ type Holiday = {
     start: Date;
     end: Date;
     typeOfLeave: string;
+    holidayTabColour: string;
 };
 
 type Props = {

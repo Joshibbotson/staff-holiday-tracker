@@ -117,6 +117,7 @@ export const RequestModal = ({ handleClick }: Props) => {
             dateEnd: new Date(dateEnd),
             totalDays: Number(totalDays),
             typeOfLeave: type,
+            holidayTabColour: user[0].holidayTabColour,
         };
         handleAddRequest(newRequest);
         setSubmitScreen(true);

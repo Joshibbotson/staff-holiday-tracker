@@ -12,4 +12,5 @@ export interface UserType {
     profilePic: string;
     profilePicDownloadURL: string;
     managersEmail: string;
+    holidayTabColour: string;
 }
