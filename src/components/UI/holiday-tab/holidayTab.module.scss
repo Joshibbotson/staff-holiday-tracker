@@ -30,8 +30,9 @@
             height: 1.75rem;
             margin-right: 15px;
             word-wrap: break-word;
-            background-color: rgb(37, 174, 37);
+            background-color: rgba(186, 176, 202, 0.51);
             color: white;
+            font-weight: 600;
             border-radius: 4px;
         }
         .symbolContainer {
@@ -42,6 +43,7 @@
             height: 1.75rem;
             padding: 0.6rem;
             border-radius: 4px;
+            color: white;
         }
     }
 }

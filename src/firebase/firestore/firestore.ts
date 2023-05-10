@@ -22,7 +22,7 @@ import { OutgoingRequestData } from "../../types/OutgoingRequestData.type";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { EditRequestType } from "../../types/EditRequest.type";
 import { user } from "firebase-functions/v1/auth";
-import randomColour from "../../util-functions/randomColour";
+import { randomColour } from "../../util-functions/randomColour";
 
 // //firebase emulator//
 // const db = getFirestore();
