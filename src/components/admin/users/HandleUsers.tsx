@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { UserType } from "../../../types";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
-import CircularSlider from "@fseehawer/react-circular-slider";
+
 import { AppDispatch } from "../../../store/store";
 import RadialProgress from "../../UI/radial-progress/RadialProgress";
 
