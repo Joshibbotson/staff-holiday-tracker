@@ -8,7 +8,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { UserType } from "../../../types";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
-import CircularSlider from "@fseehawer/react-circular-slider";
+
 import { AppDispatch } from "../../../store/store";
 import RadialProgress from "../../UI/radial-progress/RadialProgress";
 
@@ -159,128 +159,58 @@ export const HandleUsers = () => {
                         <div className={SCSS.statsContainer__holidaytime}>
                             <div className={SCSS.holidayTime__container}>
                                 {selectedUser ? (
-                                    // <CircularSlider
-                                    //     labelColor="#005a58"
-                                    //     label="remaining
-                                    //     holidays"
-                                    //     knobColor="#005a58"
-                                    //     hideKnob={true}
-                                    //     progressColorFrom="#00bfbd"
-                                    //     progressColorTo="#009c9a"
-                                    //     knobDraggable={false}
-                                    //     max={25}
-                                    //     min={0}
-                                    //     width={200}
-                                    //     progressSize={25}
-                                    //     trackColor="#eeeeee"
-                                    //     trackSize={25}
-                                    //     dataIndex={
-                                    //         selectedUser.remainingHolidays
-                                    //     }
-                                    //     labelFontSize="0.9rem"
-                                    // />
-
                                     <RadialProgress
                                         step={selectedUser.remainingHolidays}
+                                        colour="#009c9a"
+                                        accentColour="lightblue"
+                                        label="Remaining Holidays"
+                                        totalStep={selectedUser.totalHolidays}
                                     />
                                 ) : (
-                                    <CircularSlider
-                                        labelColor="#005a58"
-                                        label="remaining
-                                    holidays"
-                                        knobColor="#005a58"
-                                        hideKnob={true}
-                                        progressColorFrom="#00bfbd"
-                                        progressColorTo="#009c9a"
-                                        knobDraggable={false}
-                                        max={25}
-                                        min={0}
-                                        width={200}
-                                        progressSize={25}
-                                        trackColor="#eeeeee"
-                                        trackSize={20}
-                                        dataIndex={0}
-                                        labelFontSize="0.9rem"
+                                    <RadialProgress
+                                        step={0}
+                                        colour="#009c9a"
+                                        accentColour="lightblue"
+                                        label="Remaining Holidays"
+                                        totalStep={0}
                                     />
                                 )}
                             </div>
                             <div className={SCSS.holidayTime__container}>
                                 {selectedUser ? (
-                                    <CircularSlider
-                                        labelColor="black"
-                                        label="Taken
-                                    Holidays"
-                                        knobColor="red"
-                                        hideKnob={true}
-                                        progressColorFrom="red"
-                                        progressColorTo="red"
-                                        knobDraggable={false}
-                                        max={25}
-                                        min={0}
-                                        width={200}
-                                        progressSize={25}
-                                        trackColor="#eeeeee"
-                                        trackSize={25}
-                                        dataIndex={selectedUser.takenHolidays}
-                                        labelFontSize="0.9rem"
-                                    />
-                                ) : (
-                                    <CircularSlider
-                                        labelColor="#005a58"
+                                    <RadialProgress
+                                        step={selectedUser.takenHolidays}
+                                        colour="#d83131"
+                                        accentColour="#e8a5a5"
                                         label="Taken Holidays"
-                                        knobColor="#005a58"
-                                        hideKnob={true}
-                                        progressColorFrom="#00bfbd"
-                                        progressColorTo="#009c9a"
-                                        knobDraggable={false}
-                                        max={25}
-                                        min={0}
-                                        width={200}
-                                        progressSize={25}
-                                        trackColor="#eeeeee"
-                                        trackSize={25}
-                                        dataIndex={0}
-                                        labelFontSize="0.9rem"
+                                        totalStep={selectedUser.totalHolidays}
+                                    />
+                                ) : (
+                                    <RadialProgress
+                                        step={0}
+                                        colour="#d83131"
+                                        accentColour="#e8a5a5"
+                                        label="Taken Holidays"
+                                        totalStep={0}
                                     />
                                 )}
                             </div>
                             <div className={SCSS.holidayTime__container}>
                                 {selectedUser ? (
-                                    <CircularSlider
-                                        labelColor="black"
-                                        label="Taken
-                                Holidays"
-                                        knobColor="red"
-                                        hideKnob={true}
-                                        progressColorFrom="red"
-                                        progressColorTo="red"
-                                        knobDraggable={false}
-                                        max={25}
-                                        min={0}
-                                        width={200}
-                                        progressSize={25}
-                                        trackColor="#eeeeee"
-                                        trackSize={25}
-                                        dataIndex={selectedUser.flexTime}
-                                        labelFontSize="0.9rem"
+                                    <RadialProgress
+                                        step={selectedUser.flexTime}
+                                        colour="#00563B"
+                                        accentColour="#ACE1AF"
+                                        label="Flex Time"
+                                        totalStep={0}
                                     />
                                 ) : (
-                                    <CircularSlider
-                                        labelColor="#005a58"
-                                        label=""
-                                        knobColor="#005a58"
-                                        hideKnob={true}
-                                        progressColorFrom="#00bfbd"
-                                        progressColorTo="#009c9a"
-                                        knobDraggable={false}
-                                        max={25}
-                                        min={0}
-                                        width={100}
-                                        progressSize={25}
-                                        trackColor="#eeeeee"
-                                        trackSize={25}
-                                        dataIndex={0}
-                                        labelFontSize="0.9rem"
+                                    <RadialProgress
+                                        step={0}
+                                        colour="#00563B"
+                                        accentColour="#ACE1AF"
+                                        label="Flex Time"
+                                        totalStep={0}
                                     />
                                 )}
                             </div>{" "}
