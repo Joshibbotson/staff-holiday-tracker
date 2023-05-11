@@ -235,12 +235,13 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
+            align-items: center;
             padding: 1rem;
             gap: 2rem;
 
             .statsContainer__holidaytime {
-                display: grid;
-                grid-template-columns: 33% 33% 33%;
+                display: flex;
+
                 gap: 1rem;
 
                 .holidayTime__container {

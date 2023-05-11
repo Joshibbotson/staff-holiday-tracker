@@ -1,7 +1,7 @@
 .radialProgressContainer {
     position: relative;
-    width: 10rem;
-    height: 10rem;
+    max-width: 15rem;
+    max-width: 15rem;
     aspect-ratio: 1 / 1;
 
     .radialProgressCircle {
@@ -14,7 +14,7 @@
     .radialProgressBackground {
         fill: none;
         stroke: lightblue;
-        stroke-width: 10px;
+        stroke-width: 4px;
     }
 
     .radialProgress {
@@ -22,13 +22,16 @@
         stroke: blue;
         stroke-linecap: round;
         stroke-dasharray: 100 100;
-        stroke-width: 10px;
+        stroke-width: 4px;
         transition: stroke-dashoffset 300ms ease-ease-in-out,
             opacity 300ms ease-ease-in-out, stroke 300ms ease-ease-in-out;
         will-change: transform;
     }
 
     .progressText {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
         position: absolute;
         top: 0;
         left: 0;
@@ -36,12 +39,19 @@
         justify-content: center;
         align-items: center;
         width: 100%;
-        height: 10rem;
+        height: 100%;
         color: lightblue;
         font-size: 12px;
 
+        h4 {
+            text-align: center;
+            font-size: 0.8rem;
+        }
         p {
-            margin-bottom: 14px;
+            font-size: 1rem;
+            font-weight: 800;
+
+            text-align: center;
         }
     }
 }
