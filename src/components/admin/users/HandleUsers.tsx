@@ -2,13 +2,12 @@ import SCSS from "./handleusers.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUsers } from "../../../store/slices/usersSlice";
-
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { UserType } from "../../../types";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
-
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { AppDispatch } from "../../../store/store";
 import RadialProgress from "../../UI/radial-progress/RadialProgress";
 
@@ -154,8 +153,6 @@ export const HandleUsers = () => {
                         </div>
                     </div>
                     <div className={SCSS.userProfile__statsContainer}>
-                        <h1>Holiday and absence:</h1>
-
                         <div className={SCSS.statsContainer__holidaytime}>
                             <div className={SCSS.holidayTime__container}>
                                 {selectedUser ? (
@@ -215,15 +212,63 @@ export const HandleUsers = () => {
                                 )}
                             </div>{" "}
                         </div>
+                        <h3>Edit {selectedUser?.name}'s details</h3>
+
                         <div className={SCSS.statsContainer__additionalInfo}>
-                            <h1>Additional Info:</h1>
-                            <div>
-                                <h4>National Holidays: </h4>
-                                <p>
-                                    {selectedUser
-                                        ? selectedUser.nationalHolidays
-                                        : "-"}
-                                </p>
+                            <div className={SCSS.additionalInfo__tab}>
+                                <EditOutlinedIcon className={SCSS.editIcon} />
+                                {selectedUser ? (
+                                    <div className={SCSS.tab_circle}>
+                                        {selectedUser.totalHolidays}
+                                    </div>
+                                ) : (
+                                    "-"
+                                )}{" "}
+                                <p>Total holidays</p>
+                            </div>
+                            <div className={SCSS.additionalInfo__tab}>
+                                <EditOutlinedIcon className={SCSS.editIcon} />
+                                {selectedUser ? (
+                                    <div className={SCSS.tab_circle}>
+                                        {selectedUser.remainingHolidays}
+                                    </div>
+                                ) : (
+                                    "-"
+                                )}{" "}
+                                <p>Remaining holidays</p>
+                            </div>
+                            <div className={SCSS.additionalInfo__tab}>
+                                <EditOutlinedIcon className={SCSS.editIcon} />
+                                {selectedUser ? (
+                                    <div className={SCSS.tab_circle}>
+                                        {selectedUser.takenHolidays}
+                                    </div>
+                                ) : (
+                                    "-"
+                                )}{" "}
+                                <p>Taken holidays</p>
+                            </div>
+                            <div className={SCSS.additionalInfo__tab}>
+                                <EditOutlinedIcon className={SCSS.editIcon} />
+                                {selectedUser ? (
+                                    <div className={SCSS.tab_circle}>
+                                        {selectedUser.flexTime}
+                                    </div>
+                                ) : (
+                                    "-"
+                                )}{" "}
+                                <p>Accrued Flex Time</p>
+                            </div>
+                            <div className={SCSS.additionalInfo__tabNH}>
+                                <EditOutlinedIcon className={SCSS.editIcon} />
+                                {selectedUser ? (
+                                    <div className={SCSS.tab_circle}>
+                                        {selectedUser.nationalHolidays}
+                                    </div>
+                                ) : (
+                                    "-"
+                                )}{" "}
+                                <p>National holidays</p>
                             </div>
                         </div>
                     </div>
