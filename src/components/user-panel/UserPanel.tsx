@@ -47,7 +47,15 @@ const UserPanel = () => {
 
     //check conditional user data
     useEffect(() => {
+        console.log(user);
+
         if (user[0]) {
+            if (user[0].admin === true) {
+                setAdmin(true);
+            }
+            if (user[0].profilePicDownloadURL.length > 0) {
+                return setUserImage(user[0].profilePicDownloadURL);
+            }
             if (user[0].profilePic.length > 0) {
                 const imageRef: StorageReference = ref(
                     storage,
@@ -63,15 +71,8 @@ const UserPanel = () => {
                     });
                 });
             }
-            if (user[0].admin === true) {
-                setAdmin(true);
-            }
         }
     }, [user]);
-
-    useEffect(() => {
-        console.log(userImage);
-    }, [userImage]);
 
     useEffect(() => {
         requests.length > 0
@@ -80,6 +81,15 @@ const UserPanel = () => {
     }, [requests]);
 
     useEffect(() => {
+        const maxSizeInBytes = 1000 * 1024; // 1000kb (1MB)
+
+        if (imageUpload) {
+            if (imageUpload![0].size > maxSizeInBytes) {
+                alert("Image size exceeds the maximum limit of 1MB.");
+                return;
+            }
+        }
+
         uploadImage(imageUpload, user);
     }, [imageUpload]);
 

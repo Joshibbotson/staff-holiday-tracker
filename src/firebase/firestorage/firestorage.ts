@@ -1,5 +1,6 @@
 import {
     StorageReference,
+    deleteObject,
     getDownloadURL,
     listAll,
     ref,
@@ -16,20 +17,33 @@ export const uploadImage = async (
     if (!imageUpload) {
         return;
     }
-    const imageRef = ref(
-        storage,
-        `profilePictures/${imageUpload[0].name + user[0].uid}`
-    );
+
+    const userProfilePicLocation = `profilePictures/${
+        imageUpload[0].name + user[0].uid
+    }`;
+
+    // Check if the user has an existing profile picture
+    if (user[0].profilePic) {
+        // Delete the existing profile picture
+        const existingImageRef = ref(storage, user[0].profilePic);
+        try {
+            await deleteObject(existingImageRef);
+            console.log("Existing image deleted!");
+        } catch (err) {
+            console.log("Error deleting existing image:", err);
+        }
+    }
+
+    const imageRef = ref(storage, userProfilePicLocation);
 
     try {
         await uploadBytes(imageRef, imageUpload[0]);
-
         updateUserProfilePic(
             user[0],
-            `profilePictures/${imageUpload[0].name + user[0].uid}`,
-            await getUrl(`profilePictures/${imageUpload[0].name + user[0].uid}`)
+            userProfilePicLocation,
+            await getUrl(userProfilePicLocation)
         );
-        alert("image uploaded!");
+        alert("Image uploaded!");
     } catch (err) {
         console.log(err);
     }
