@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import SCSS from "./calendar.module.scss";
+import SCSS from "./createCalendar.module.scss";
 import HolidayTab from "../../../UI/holiday-tab/HolidayTab";
 
 type Holiday = {
@@ -108,85 +108,87 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
     };
 
     return (
-        <div className={SCSS.calendar}>
-            <table className={SCSS.calendar__table} aria-label="calendar">
-                <thead>
-                    <tr>
-                        <th
-                            className={SCSS.calendar__titleWeekend}
-                            scope="colgroup"
-                        >
-                            SUN
-                        </th>
-                        <th scope="col">MON</th>
-                        <th scope="col">TUE</th>
-                        <th scope="col">WED</th>
-                        <th scope="col">THU</th>
-                        <th scope="col">FRI</th>
-                        <th
-                            className={SCSS.calendar__titleWeekend}
-                            scope="colgroup"
-                        >
-                            SAT
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {/* creates 6 table rows */}
-                    {[0, 1, 2, 3, 4, 5].map(weekIndex => (
-                        <tr key={weekIndex}>
-                            {days
-                                .slice(weekIndex * 7, weekIndex * 7 + 7)
-                                .map((date, dayIndex) =>
-                                    getHolidayColor(date) ? (
-                                        <td
-                                            key={weekIndex * 7 + dayIndex}
-                                            className={getClassName(date)}
-                                            onClick={() => handleClick()}
-                                            onKeyDown={e => {
-                                                if (e.key === "Enter") {
-                                                    handleClick();
-                                                }
-                                            }}
-                                            tabIndex={0}
-                                            aria-label={`${date.toLocaleDateString()} - ${getHolidayUserInfo(
-                                                date,
-                                                dayIndex
-                                            )}`}
-                                        >
-                                            <HolidayTab
-                                                day={date.getDate()}
-                                                info={getHolidayUserInfo(
+        <>
+            <div className={SCSS.calendar}>
+                <table className={SCSS.calendar__table} aria-label="calendar">
+                    <thead>
+                        <tr>
+                            <th
+                                className={SCSS.calendar__titleWeekend}
+                                scope="colgroup"
+                            >
+                                SUN
+                            </th>
+                            <th scope="col">MON</th>
+                            <th scope="col">TUE</th>
+                            <th scope="col">WED</th>
+                            <th scope="col">THU</th>
+                            <th scope="col">FRI</th>
+                            <th
+                                className={SCSS.calendar__titleWeekend}
+                                scope="colgroup"
+                            >
+                                SAT
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {/* creates 6 table rows */}
+                        {[0, 1, 2, 3, 4, 5].map(weekIndex => (
+                            <tr key={weekIndex}>
+                                {days
+                                    .slice(weekIndex * 7, weekIndex * 7 + 7)
+                                    .map((date, dayIndex) =>
+                                        getHolidayColor(date) ? (
+                                            <td
+                                                key={weekIndex * 7 + dayIndex}
+                                                className={getClassName(date)}
+                                                onClick={() => handleClick()}
+                                                onKeyDown={e => {
+                                                    if (e.key === "Enter") {
+                                                        handleClick();
+                                                    }
+                                                }}
+                                                tabIndex={0}
+                                                aria-label={`${date.toLocaleDateString()} - ${getHolidayUserInfo(
                                                     date,
                                                     dayIndex
-                                                )}
-                                            />
-                                        </td>
-                                    ) : (
-                                        <td
-                                            key={weekIndex * 7 + dayIndex}
-                                            className={getClassName(date)}
-                                            onClick={() => handleClick()}
-                                            onKeyDown={e => {
-                                                if (e.key === "Enter") {
-                                                    handleClick();
-                                                }
-                                            }}
-                                            tabIndex={0}
-                                            aria-label={date.toLocaleDateString()}
-                                        >
-                                            <HolidayTab
-                                                day={date.getDate()}
-                                                info={undefined}
-                                            />
-                                        </td>
-                                    )
-                                )}
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
-        </div>
+                                                )}`}
+                                            >
+                                                <HolidayTab
+                                                    day={date.getDate()}
+                                                    info={getHolidayUserInfo(
+                                                        date,
+                                                        dayIndex
+                                                    )}
+                                                />
+                                            </td>
+                                        ) : (
+                                            <td
+                                                key={weekIndex * 7 + dayIndex}
+                                                className={getClassName(date)}
+                                                onClick={() => handleClick()}
+                                                onKeyDown={e => {
+                                                    if (e.key === "Enter") {
+                                                        handleClick();
+                                                    }
+                                                }}
+                                                tabIndex={0}
+                                                aria-label={date.toLocaleDateString()}
+                                            >
+                                                <HolidayTab
+                                                    day={date.getDate()}
+                                                    info={undefined}
+                                                />
+                                            </td>
+                                        )
+                                    )}
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 };
 

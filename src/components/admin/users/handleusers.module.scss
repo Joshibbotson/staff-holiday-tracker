@@ -184,6 +184,8 @@
         margin: 1rem;
         max-height: 90vh;
         background-color: rgb(244, 244, 244);
+        overflow-y: auto;
+        overflow-x: hidden;
 
         .userProfile__topContainer {
             display: flex;
@@ -338,6 +340,7 @@
             border-radius: 20px;
             margin: 1rem;
             height: 90svh;
+            overflow-y: auto;
 
             .statsContainer__additionalInfo {
                 width: 100%;

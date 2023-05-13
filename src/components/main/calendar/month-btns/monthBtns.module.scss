@@ -1,8 +1,14 @@
 .btnBar {
     display: flex;
-    justify-content: center;
+    overflow-x: auto;
+    overflow-y: hidden;
+    justify-content: flex-start;
     align-items: center;
-    flex-wrap: wrap;
+
+    gap: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+
     background-color: rgb(38, 166, 154);
 
     .selectedMonth {
@@ -32,5 +38,15 @@
     }
     button:hover {
         color: white;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .btnBar {
+        display: flex;
+
+        justify-content: center;
+        align-items: center;
+        background-color: rgb(38, 166, 154);
     }
 }

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { YearBtns } from "./years-btns/YearBtns";
 import { MonthBtns } from "./month-btns/MonthBtns";
 import CreateCalendar from "./create-calendar/CreateCalendar";
-
+import SCSS from "./calendar.module.scss";
 type Holiday = {
     name: string;
     start: Date;
@@ -29,14 +29,18 @@ const Calendar = ({ holidays, handleClick }: Props) => {
 
     return (
         <>
-            <YearBtns year={year} updateYear={updateYear} />
-            <MonthBtns month={month} updateMonth={updateMonth} />
-            <CreateCalendar
-                month={month}
-                year={year}
-                holidays={holidays}
-                handleClick={handleClick}
-            />
+            <header>
+                <YearBtns year={year} updateYear={updateYear} />
+                <MonthBtns month={month} updateMonth={updateMonth} />
+            </header>
+            <div className={SCSS.container}>
+                <CreateCalendar
+                    month={month}
+                    year={year}
+                    holidays={holidays}
+                    handleClick={handleClick}
+                />
+            </div>
         </>
     );
 };
