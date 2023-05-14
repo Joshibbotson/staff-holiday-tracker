@@ -21,13 +21,13 @@
             height: 1.75rem;
             padding-left: 1.75rem;
             border: none;
-            width: 15rem;
+            width: 8rem;
             position: absolute;
             transition: width 250ms;
             border-radius: 7.5px;
         }
         input[type="text"]:focus {
-            width: 20rem;
+            width: 10rem;
             outline: none;
             outline-offset: -2px;
         }
@@ -193,7 +193,7 @@
         box-shadow: 0px 0px 10px rgb(217, 217, 217);
         border-radius: 20px;
         margin: 1rem;
-        max-height: 90vh;
+        height: 90svh;
         background-color: rgb(244, 244, 244);
         overflow-y: auto;
         overflow-x: hidden;
@@ -251,7 +251,7 @@
             justify-content: center;
             align-items: center;
             padding: 1rem;
-            gap: 2rem;
+            gap: 1rem;
 
             .statsContainer__holidaytime {
                 display: flex;
@@ -278,8 +278,6 @@
             display: flex;
             flex-direction: column;
             border-radius: 10px;
-
-            box-shadow: 0px 0px 4px rgb(217, 217, 217);
 
             .additionalInfo__tab,
             .additionalInfo__tabNH {
@@ -337,6 +335,15 @@
 
 @media only screen and (min-width: 768px) {
     .header {
+        .header__searchContainer {
+            input[type="text"] {
+                width: 15rem;
+            }
+            input[type="text"]:focus {
+                width: 20rem;
+            }
+        }
+
         h1 {
             color: white;
             margin-left: auto;
@@ -353,7 +360,7 @@
             border-radius: 20px;
             margin: 1rem;
             height: 88svh;
-            overflow-y: auto;
+            overflow-y: hidden;
 
             .statsContainer__additionalInfo {
                 width: 100%;
@@ -417,8 +424,10 @@
                 overflow-y: hidden;
                 border-bottom: 1px solid rgb(1, 115, 104);
                 padding: 0.3rem;
+                height: 6rem;
                 padding-top: 1rem;
                 padding-bottom: 1rem;
+                flex-grow: 0;
                 align-content: center;
                 gap: 1rem;
                 cursor: pointer;
@@ -433,7 +442,7 @@
                     width: 4rem;
                     height: 4rem;
                     border-radius: 50%;
-                    flex-shrink: 1;
+                    flex-shrink: 0;
 
                     .userImage {
                         width: 4rem;
@@ -468,6 +477,7 @@
                 overflow-x: auto;
                 overflow-y: hidden;
                 padding: 0.3rem;
+                height: 6rem;
                 padding-top: 1rem;
                 padding-bottom: 1rem;
                 align-content: center;
@@ -485,7 +495,7 @@
                     width: 4rem;
                     height: 4rem;
                     border-radius: 50%;
-                    flex-shrink: 1;
+                    flex-shrink: 0;
 
                     .userImage {
                         width: 4rem;
@@ -493,7 +503,7 @@
                         background-size: cover;
                         background-repeat: no-repeat;
                         background-position: center;
-                        flex-shrink: 1;
+                        flex-shrink: 0;
                     }
                 }
                 .userTab__textContainer {

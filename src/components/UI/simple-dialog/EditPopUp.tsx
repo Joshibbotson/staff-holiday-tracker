@@ -2,7 +2,6 @@ import { useState } from "react";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DialogModal from "./DialogModal";
 import { IncomingRequestsType } from "../../../types";
-import EditRequestModal from "../edit-request-modal/EditRequestModal";
 
 interface EditPopUpProps {
     request: IncomingRequestsType;

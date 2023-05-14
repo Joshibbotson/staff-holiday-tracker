@@ -43,7 +43,7 @@ export const updateUserDocID = async (
     flexTime: number,
     profilePic: string,
     nationalHolidays: string = "UK",
-    managersEmail: string = "joshua_ibbotson@hotmail.com",
+    managersEmail: string = "josh.ibbotson@hotmail.com",
     admin: boolean = false,
     superAdmin: boolean = false,
     holidayTabColour: string = randomColour()
@@ -171,6 +171,40 @@ export async function listUsers(
         } else {
             queryDb = query(collection(db, "users"));
         }
+        const querySnapShot = await getDocs(queryDb);
+        const userData = querySnapShot.docs.map(doc => ({
+            uid: doc.data().uid,
+            name: doc.data().name,
+            email: doc.data().email,
+            admin: doc.data().admin,
+            superAdmin: doc.data().superAdmin,
+            nationalHolidays: doc.data().nationalHolidays,
+            totalHolidays: doc.data().totalHolidays,
+            remainingHolidays: doc.data().remainingHolidays,
+            takenHolidays: doc.data().takenHolidays,
+            flexTime: doc.data().flexTime,
+            profilePic: doc.data().profilePic,
+            profilePicDownloadURL: doc.data().profilePicDownloadURL,
+            managersEmail: doc.data().managerEmail,
+            holidayTabColour: doc.data().holidayTabColour,
+        }));
+        return userData;
+    } catch (error) {
+        console.log(error);
+        toast.error("Failed to list users from database");
+
+        throw new Error("Failed to list users from database");
+    }
+}
+
+export async function listUsersUnderManager(
+    currentUserEmail: string
+): Promise<UserType[]> {
+    try {
+        let queryDb = query(
+            collection(db, "users"),
+            where("managersEmail", "==", currentUserEmail)
+        );
         const querySnapShot = await getDocs(queryDb);
         const userData = querySnapShot.docs.map(doc => ({
             uid: doc.data().uid,
@@ -337,9 +371,11 @@ export async function approveRequest(
             remainingHolidays: user[0].remainingHolidays - request.totalDays,
             takenHolidays: user[0].takenHolidays + request.totalDays,
         });
+
         console.log("updated");
     } catch (error) {
         console.log(error);
+        toast.error("Failed approval");
         throw new Error("Failed approve request and delete existing request");
     }
 }

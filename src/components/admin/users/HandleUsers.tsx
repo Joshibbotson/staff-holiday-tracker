@@ -1,14 +1,14 @@
 import SCSS from "./handleusers.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchUsers } from "../../../store/slices/usersSlice";
+import { fetchUsersUnderManager } from "../../../store/slices/usersSlice";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { UserType } from "../../../types";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import { AppDispatch } from "../../../store/store";
+import { AppDispatch, RootState } from "../../../store/store";
 import RadialProgress from "../../UI/radial-progress/RadialProgress";
 
 interface FetchedUserType {
@@ -29,7 +29,7 @@ interface FetchedUserType {
 
 export const HandleUsers = () => {
     const { user } = useContext(CurrentUserContext);
-    const { users } = useSelector((state: any) => state.users);
+    const { users } = useSelector((state: RootState) => state.users);
     const dispatch = useDispatch<AppDispatch>();
     const [searchValue, setSearchValue] = useState<string>("");
     const [filteredUsers, setFilteredUsers] = useState<UserType[]>();
@@ -38,7 +38,7 @@ export const HandleUsers = () => {
     >(undefined);
 
     useEffect(() => {
-        dispatch(fetchUsers());
+        dispatch(fetchUsersUnderManager());
     }, [dispatch]);
 
     useEffect(() => {
