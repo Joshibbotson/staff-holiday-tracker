@@ -7,6 +7,8 @@ import {
 } from "../../firebase/auth/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import loginSCSS from "./login.module.scss";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -34,67 +36,66 @@ function Login() {
     }
 
     return (
-        <>
-            <div className={loginSCSS.login}>
-                <div className={loginSCSS.graphic}></div>
-                <div className={loginSCSS.login__container}>
-                    <input
-                        type="text"
-                        name="email"
-                        className={loginSCSS.login__textBox}
-                        defaultValue={email}
-                        onChange={e => {
-                            setEmail(e.target.value);
-                        }}
-                        onKeyDown={e => {
-                            if (e.code === "Enter") {
-                                handleLogin(email, password);
-                            }
-                        }}
-                        placeholder="Email Address"
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        className={loginSCSS.login__textBox}
-                        defaultValue={password}
-                        onChange={e => {
-                            setPassword(e.target.value);
-                        }}
-                        onKeyDown={e => {
-                            if (e.code === "Enter") {
-                                handleLogin(email, password);
-                            }
-                        }}
-                    />
-                    <button
-                        className={loginSCSS.login__btn}
-                        onClick={() => {
+        <div className={loginSCSS.login}>
+            <div className={loginSCSS.graphic}></div>
+            <div className={loginSCSS.login__container}>
+                <input
+                    type="text"
+                    name="email"
+                    className={loginSCSS.login__textBox}
+                    defaultValue={email}
+                    onChange={e => {
+                        setEmail(e.target.value);
+                    }}
+                    onKeyDown={e => {
+                        if (e.code === "Enter") {
                             handleLogin(email, password);
-                        }}
-                    >
-                        Login
-                    </button>
-                    <button
-                        className={`${loginSCSS.login__btn} ${loginSCSS.login__google}`}
-                        onClick={() => {
-                            signInWithGoogle();
-                        }}
-                    >
-                        Login with Google
-                    </button>
+                        }
+                    }}
+                    placeholder="Email Address"
+                />
+                <input
+                    type="password"
+                    name="password"
+                    className={loginSCSS.login__textBox}
+                    defaultValue={password}
+                    onChange={e => {
+                        setPassword(e.target.value);
+                    }}
+                    onKeyDown={e => {
+                        if (e.code === "Enter") {
+                            handleLogin(email, password);
+                        }
+                    }}
+                />
+                <button
+                    className={loginSCSS.login__btn}
+                    onClick={() => {
+                        handleLogin(email, password);
+                    }}
+                >
+                    Login
+                </button>
+                <button
+                    className={`${loginSCSS.login__btn} ${loginSCSS.login__google}`}
+                    onClick={() => {
+                        signInWithGoogle();
+                    }}
+                >
+                    Login with Google
+                </button>
 
-                    <Link to={"/reset"}>Forgot Password?</Link>
-                    <div>
-                        Don't have an account?{" "}
-                        <Link to={"/register"}>Register here</Link>
-                    </div>
+                <Link to={"/reset"}>Forgot Password?</Link>
+                <div>
+                    Don't have an account?{" "}
+                    <Link to={"/register"}>Register here</Link>
                 </div>
-                <a href="http://www.freepik.com">
-                    Graphic Designed by slidesgo / Freepik
-                </a>
             </div>
-        </>
+            <a href="http://www.freepik.com">
+                Graphic Designed by slidesgo / Freepik
+            </a>
+            <ToastContainer />
+        </div>
     );
 }
 

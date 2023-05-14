@@ -4,6 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { auth, sendPasswordReset } from "../../firebase/auth/auth";
 import resetSCSS from "./reset.module.scss";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 function Reset() {
     const [email, setEmail] = useState("");
     const [user, loading, error] = useAuthState(auth);
@@ -34,6 +37,7 @@ function Reset() {
                     now.
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 }

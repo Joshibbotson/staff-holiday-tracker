@@ -21,8 +21,10 @@ import { IncomingRequestsType } from "../../types/IncomingRequests.type";
 import { OutgoingRequestData } from "../../types/OutgoingRequestData.type";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { EditRequestType } from "../../types/EditRequest.type";
-import { user } from "firebase-functions/v1/auth";
+
 import { randomColour } from "../../util-functions/randomColour";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // //firebase emulator//
 // const db = getFirestore();
@@ -41,7 +43,7 @@ export const updateUserDocID = async (
     flexTime: number,
     profilePic: string,
     nationalHolidays: string = "UK",
-    managersEmail: string = "joshua_ibbotson@hotmail.com",
+    managersEmail: string = "josh.ibbotson@hotmail.com",
     admin: boolean = false,
     superAdmin: boolean = false,
     holidayTabColour: string = randomColour()
@@ -114,6 +116,7 @@ export async function getUserData(userUID: string) {
         return currentUserData;
     } catch (error) {
         console.log(error);
+        toast.error("Failed to list current user from the database");
         throw new Error("Failed to list current user from database");
     }
 }
@@ -188,6 +191,42 @@ export async function listUsers(
         return userData;
     } catch (error) {
         console.log(error);
+        toast.error("Failed to list users from database");
+
+        throw new Error("Failed to list users from database");
+    }
+}
+
+export async function listUsersUnderManager(
+    currentUserEmail: string
+): Promise<UserType[]> {
+    try {
+        let queryDb = query(
+            collection(db, "users"),
+            where("managersEmail", "==", currentUserEmail)
+        );
+        const querySnapShot = await getDocs(queryDb);
+        const userData = querySnapShot.docs.map(doc => ({
+            uid: doc.data().uid,
+            name: doc.data().name,
+            email: doc.data().email,
+            admin: doc.data().admin,
+            superAdmin: doc.data().superAdmin,
+            nationalHolidays: doc.data().nationalHolidays,
+            totalHolidays: doc.data().totalHolidays,
+            remainingHolidays: doc.data().remainingHolidays,
+            takenHolidays: doc.data().takenHolidays,
+            flexTime: doc.data().flexTime,
+            profilePic: doc.data().profilePic,
+            profilePicDownloadURL: doc.data().profilePicDownloadURL,
+            managersEmail: doc.data().managerEmail,
+            holidayTabColour: doc.data().holidayTabColour,
+        }));
+        return userData;
+    } catch (error) {
+        console.log(error);
+        toast.error("Failed to list users from database");
+
         throw new Error("Failed to list users from database");
     }
 }
@@ -332,9 +371,11 @@ export async function approveRequest(
             remainingHolidays: user[0].remainingHolidays - request.totalDays,
             takenHolidays: user[0].takenHolidays + request.totalDays,
         });
+
         console.log("updated");
     } catch (error) {
         console.log(error);
+        toast.error("Failed approval");
         throw new Error("Failed approve request and delete existing request");
     }
 }

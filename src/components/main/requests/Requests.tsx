@@ -178,6 +178,7 @@ const Requests = () => {
                                         ).toDateString()}
                                     </td>
                                     <td>{req.totalDays}</td>
+                                    <td>{req.typeOfLeave}</td>
                                     {requests.includes(req) ? (
                                         <td
                                             className={
@@ -186,7 +187,9 @@ const Requests = () => {
                                         >
                                             <EditPopUp request={req} />
                                         </td>
-                                    ) : null}
+                                    ) : (
+                                        <td></td>
+                                    )}
                                 </tr>
                             );
                         })}

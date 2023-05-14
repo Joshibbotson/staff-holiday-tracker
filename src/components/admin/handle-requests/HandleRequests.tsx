@@ -13,7 +13,6 @@ import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext"
 import FilterListIcon from "@mui/icons-material/FilterList";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import { AwaitApprovalReqContext } from "../../../context/AwaitApprovalReqContext";
 
@@ -78,124 +77,112 @@ const HandleRequests = () => {
     };
 
     return (
-        <>
-            <div className={SCSS.requestTable}>
-                <table>
-                    <thead>
-                        <tr>
-                            <th colSpan={2}>
-                                <FormControl
-                                    sx={{
-                                        m: 1,
-                                        width: 400,
-                                        backgroundColor: "white",
-                                        borderRadius: "4px",
-                                    }}
+        <div className={SCSS.requestTable}>
+            <table>
+                <thead>
+                    <tr>
+                        <th colSpan={2}>
+                            <FormControl
+                                sx={{
+                                    m: 1,
+                                    width: 400,
+                                    backgroundColor: "white",
+                                    borderRadius: "4px",
+                                }}
+                            >
+                                <InputLabel>
+                                    <FilterListIcon /> Filters
+                                </InputLabel>
+                                <Select
+                                    multiple
+                                    value={currentFilters}
+                                    onChange={handleChange}
+                                    input={<OutlinedInput label="Filter" />}
+                                    renderValue={selected =>
+                                        selected.join(", ")
+                                    }
                                 >
-                                    <InputLabel>
-                                        <FilterListIcon /> Filters
-                                    </InputLabel>
-                                    <Select
-                                        multiple
-                                        value={currentFilters}
-                                        onChange={handleChange}
-                                        input={<OutlinedInput label="Filter" />}
-                                        renderValue={selected =>
-                                            selected.join(", ")
+                                    {filters.map(filter => (
+                                        <MenuItem key={filter} value={filter}>
+                                            <Checkbox
+                                                checked={
+                                                    currentFilters.indexOf(
+                                                        filter
+                                                    ) > -1
+                                                }
+                                            />
+                                            <ListItemText primary={filter} />
+                                        </MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </th>
+                        <th colSpan={5} className={SCSS.requestTable__title}>
+                            Handle Requests
+                        </th>
+                    </tr>
+
+                    <tr className={SCSS.requestTable__header}>
+                        <th colSpan={1}>Requested by</th>
+                        <th colSpan={1}>Status</th>
+                        <th colSpan={1}>Date Start</th>
+                        <th colSpan={1}>Date End</th>
+                        <th colSpan={1}>Total days</th>
+                        <th colSpan={1}>Type</th>
+                        <th colSpan={1}></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {loadedRequests.map((req, index) => {
+                        return (
+                            <tr key={index}>
+                                <td>{req.requestedByEmail}</td>
+                                {requests.includes(req) ? (
+                                    <td
+                                        className={
+                                            SCSS.requestTable__tdWaitApproval
                                         }
                                     >
-                                        {filters.map(filter => (
-                                            <MenuItem
-                                                key={filter}
-                                                value={filter}
-                                            >
-                                                <Checkbox
-                                                    checked={
-                                                        currentFilters.indexOf(
-                                                            filter
-                                                        ) > -1
-                                                    }
-                                                />
-                                                <ListItemText
-                                                    primary={filter}
-                                                />
-                                            </MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </th>
-                            <th
-                                colSpan={5}
-                                className={SCSS.requestTable__title}
-                            >
-                                Handle Requests
-                            </th>
-                        </tr>
-
-                        <tr className={SCSS.requestTable__header}>
-                            <th colSpan={1}>Requested by</th>
-                            <th colSpan={1}>Status</th>
-                            <th colSpan={1}>Date Start</th>
-                            <th colSpan={1}>Date End</th>
-                            <th colSpan={1}>Total days</th>
-                            <th colSpan={1}>Type</th>
-                            <th colSpan={1}></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {loadedRequests.map((req, index) => {
-                            return (
-                                <tr key={index}>
-                                    <td>{req.requestedByEmail}</td>
-                                    {requests.includes(req) ? (
-                                        <td
-                                            className={
-                                                SCSS.requestTable__tdWaitApproval
-                                            }
-                                        >
-                                            Waiting
-                                        </td>
-                                    ) : (
-                                        <td
-                                            className={
-                                                SCSS.requestTable__tdApproved
-                                            }
-                                        >
-                                            Approved
-                                        </td>
-                                    )}
-
-                                    <td>
-                                        {dateConvert(
-                                            req.dateStart.seconds,
-                                            req.dateStart.nanoseconds
-                                        ).toDateString()}
+                                        Waiting
                                     </td>
-                                    <td>
-                                        {dateConvert(
-                                            req.dateEnd.seconds,
-                                            req.dateEnd.nanoseconds
-                                        ).toDateString()}
+                                ) : (
+                                    <td
+                                        className={
+                                            SCSS.requestTable__tdApproved
+                                        }
+                                    >
+                                        Approved
                                     </td>
-                                    <td>{req.totalDays}</td>
-                                    <td>{req.typeOfLeave}</td>
+                                )}
 
-                                    {requests.includes(req) ? (
-                                        <td
-                                            className={
-                                                SCSS.requestTable__td__edit
-                                            }
-                                        >
-                                            <EditPopUp request={req} />
-                                        </td>
-                                    ) : null}
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </div>
-        </>
+                                <td>
+                                    {dateConvert(
+                                        req.dateStart.seconds,
+                                        req.dateStart.nanoseconds
+                                    ).toDateString()}
+                                </td>
+                                <td>
+                                    {dateConvert(
+                                        req.dateEnd.seconds,
+                                        req.dateEnd.nanoseconds
+                                    ).toDateString()}
+                                </td>
+                                <td>{req.totalDays}</td>
+                                <td>{req.typeOfLeave}</td>
+
+                                {requests.includes(req) ? (
+                                    <td className={SCSS.requestTable__td__edit}>
+                                        <EditPopUp request={req} />
+                                    </td>
+                                ) : (
+                                    <td></td>
+                                )}
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
     );
 };
 

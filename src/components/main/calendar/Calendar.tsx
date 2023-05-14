@@ -3,6 +3,13 @@ import { YearBtns } from "./years-btns/YearBtns";
 import { MonthBtns } from "./month-btns/MonthBtns";
 import CreateCalendar from "./create-calendar/CreateCalendar";
 import SCSS from "./calendar.module.scss";
+import { useSelector, useDispatch } from "react-redux";
+import {
+    updateMonth,
+    updateYear,
+} from "../../../store/slices/currentDateSlice";
+import { RootState } from "../../../store/store";
+
 type Holiday = {
     name: string;
     start: Date;
@@ -16,22 +23,25 @@ type Props = {
     handleClick: () => void;
 };
 const Calendar = ({ holidays, handleClick }: Props) => {
-    const [month, setMonth] = useState<number>(new Date().getMonth());
-    const [year, setYear] = useState<number>(new Date().getFullYear());
+    const month = useSelector(
+        (state: RootState) => state.currentDateSlice.month
+    );
+    const year = useSelector((state: RootState) => state.currentDateSlice.year);
+    const dispatch = useDispatch();
 
-    const updateYear = (newYear: number) => {
-        setYear(newYear);
+    const handleUpdaterYear = (newYear: number) => {
+        dispatch(updateYear(newYear));
     };
 
-    const updateMonth = (newMonth: number) => {
-        setMonth(newMonth);
+    const handleUpdateMonth = (newMonth: number) => {
+        dispatch(updateMonth(newMonth));
     };
 
     return (
         <>
             <header>
-                <YearBtns year={year} updateYear={updateYear} />
-                <MonthBtns month={month} updateMonth={updateMonth} />
+                <YearBtns year={year} updateYear={handleUpdaterYear} />
+                <MonthBtns month={month} updateMonth={handleUpdateMonth} />
             </header>
             <div className={SCSS.container}>
                 <CreateCalendar
