@@ -8,6 +8,8 @@ import {
 } from "../../firebase/auth/auth";
 import { updateUserDocID } from "../../firebase/firestore/firestore";
 import registerSCSS from "./register.module.scss";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Register() {
     const [email, setEmail] = useState("");
@@ -17,7 +19,7 @@ function Register() {
     const navigate = useNavigate();
     const register = () => {
         if (!name) alert("Please enter name");
-        registerWithEmailAndPassword(name, email, password);
+        registerWithEmailAndPassword(email, password);
     };
     useEffect(() => {
         if (user) {
@@ -89,6 +91,7 @@ function Register() {
                     Already have an account? <Link to="/">Login</Link> now.
                 </div>
             </div>
+            <ToastContainer />
         </div>
     );
 }

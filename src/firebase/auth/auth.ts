@@ -8,7 +8,6 @@ import {
     addDoc,
     getFirestore,
 } from "firebase/firestore";
-import { FirebaseError } from "firebase/app";
 
 import {
     getAuth,
@@ -28,7 +27,7 @@ export const auth: Auth = getAuth(app);
 
 const googleProvider = new GoogleAuthProvider();
 
-export function getErrorMessage(error: FirebaseError) {
+export function getErrorMessage(error: any): string {
     switch (error.code) {
         case "auth/user-not-found":
             return "Invalid email or password";
@@ -36,6 +35,8 @@ export function getErrorMessage(error: FirebaseError) {
             return "Invalid email or password";
         case "auth/too-many-requests":
             return "Too many unsuccessful login attempts. Please try again later.";
+        case "auth/email-already-in-use":
+            return "Email already in use";
         default:
             return "An error occurred. Please try again.";
     }
@@ -79,36 +80,22 @@ export async function logInWithEmailAndPassword(
     try {
         await signInWithEmailAndPassword(auth, email, password);
     } catch (error) {
+        toast.error(getErrorMessage(error));
+
         console.log(error);
     }
 }
 
 export async function registerWithEmailAndPassword(
-    name: string,
     email: string,
     password: string
 ) {
     try {
         await createUserWithEmailAndPassword(auth, email, password);
-        //99% sure this is unnecessary
-        // const user = result.user;
-        // await addDoc(collection(db, "users"), {
-        //     uid: user.uid,
-        //     name: name,
-        //     authProvider: "local",
-        //     email: email,
-        //     admin: false,
-        //     superAdmin: false,
-        //     nationalHolidays: "UK",
-        //     totalHolidays: 25,
-        //     remainingHolidays: 25,
-        //     takenHolidays: 0,
-        //     flexTime: 0,
-        //     profilePic: "",
-        //     managersEmail: "josh_ibbotson@hotmail.com",
-        // });
     } catch (error) {
         console.log(error);
+        toast.error(getErrorMessage(error));
+
         throw error;
     }
 }
@@ -119,6 +106,8 @@ export async function sendPasswordReset(email: string) {
         alert("Passowrd reset link sent!");
     } catch (error) {
         console.log(error);
+        toast.error(getErrorMessage(error));
+
         throw error;
     }
 }
@@ -127,6 +116,9 @@ export async function logout() {
     try {
         await signOut(auth);
     } catch (error) {
+        toast.error(getErrorMessage(error));
+        console.log(error);
+
         throw error;
     }
 }

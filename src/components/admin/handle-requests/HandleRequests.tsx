@@ -13,9 +13,10 @@ import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext"
 import FilterListIcon from "@mui/icons-material/FilterList";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
-
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import { AwaitApprovalReqContext } from "../../../context/AwaitApprovalReqContext";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const HandleRequests = () => {
     const { user } = useContext(CurrentUserContext);
@@ -188,7 +189,9 @@ const HandleRequests = () => {
                                         >
                                             <EditPopUp request={req} />
                                         </td>
-                                    ) : null}
+                                    ) : (
+                                        <td></td>
+                                    )}
                                 </tr>
                             );
                         })}

@@ -21,8 +21,10 @@ import { IncomingRequestsType } from "../../types/IncomingRequests.type";
 import { OutgoingRequestData } from "../../types/OutgoingRequestData.type";
 import { getFirestore, connectFirestoreEmulator } from "firebase/firestore";
 import { EditRequestType } from "../../types/EditRequest.type";
-import { user } from "firebase-functions/v1/auth";
+
 import { randomColour } from "../../util-functions/randomColour";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // //firebase emulator//
 // const db = getFirestore();
@@ -114,6 +116,7 @@ export async function getUserData(userUID: string) {
         return currentUserData;
     } catch (error) {
         console.log(error);
+        toast.error("Failed to list current user from the database");
         throw new Error("Failed to list current user from database");
     }
 }
@@ -188,6 +191,8 @@ export async function listUsers(
         return userData;
     } catch (error) {
         console.log(error);
+        toast.error("Failed to list users from database");
+
         throw new Error("Failed to list users from database");
     }
 }

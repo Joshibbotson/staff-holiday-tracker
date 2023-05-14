@@ -65,11 +65,13 @@
             overflow-y: scroll;
             tr {
                 height: 6rem;
+                background-color: white;
             }
         }
 
         .requestTable__td__edit {
             text-align: center;
+            background-color: white;
         }
 
         td {
