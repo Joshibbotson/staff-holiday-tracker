@@ -16,7 +16,6 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import React from "react";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
-import { useNavigate } from "react-router-dom";
 
 const Requests = () => {
     const { user } = useContext(CurrentUserContext);
