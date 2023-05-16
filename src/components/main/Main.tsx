@@ -1,4 +1,5 @@
 import { useContext, useState, useEffect, useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { ApprovedRequestsType } from "../../types/ApprovedRequests.type";
 import { ApprovedRequestContext } from "../../context/ApprovedRequestContext";
 import Calendar from "./calendar/Calendar";
@@ -8,31 +9,42 @@ import Requests from "./requests/Requests";
 import { MainPageContext } from "../../context/MainPageContext";
 import HandleRequests from "../admin/handle-requests/HandleRequests";
 import { HandleUsers } from "../admin/users/HandleUsers";
+import { fetchApprovedRequests } from "../../store/slices/approvedRequestSlice";
+import { AppDispatch, RootState } from "../../store/store";
 
 function Main() {
-    const { approvedRequests } = useContext(ApprovedRequestContext);
+    // const { approvedRequests } = useContext(ApprovedRequestContext);
+    const { approvedRequests } = useSelector(
+        (state: RootState) => state.approvedRequests
+    );
+
     const { showCalendar, showRequests, showHandleRequests, showUsers } =
         useContext(MainPageContext);
     const [approvedRequestsState, setApprovedRequestsState] = useState<
         ApprovedRequestsType[] | undefined
     >(undefined);
     const [showModal, setShowModal] = useState(false);
+    const dispatch = useDispatch<AppDispatch>();
+
     const dateStart = useRef<Date>();
+    console.log(approvedRequests);
+    // useEffect(() => {
+    //     if (approvedRequests) {
+    //         console.log(approvedRequests);
+
+    //         setApprovedRequestsState(approvedRequests);
+    //     }
+    // }, [approvedRequests]);
 
     useEffect(() => {
-        if (approvedRequests) {
-            console.log(approvedRequests);
-
-            setApprovedRequestsState(approvedRequests);
-        }
-    }, [approvedRequests]);
+        dispatch(fetchApprovedRequests());
+    }, [dispatch]);
 
     function handleClick() {
         setShowModal(!showModal);
     }
-    function getStartDate(date: Date) {}
 
-    const holidays = approvedRequests.map(req => {
+    const holidays = approvedRequests?.map(req => {
         return {
             name: req.requestedByEmail,
             start: new Date(req.dateStart.toDate().toDateString()),
