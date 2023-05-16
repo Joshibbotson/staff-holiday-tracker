@@ -21,6 +21,8 @@ function Main() {
 
     useEffect(() => {
         if (approvedRequests) {
+            console.log(approvedRequests);
+
             setApprovedRequestsState(approvedRequests);
         }
     }, [approvedRequests]);
