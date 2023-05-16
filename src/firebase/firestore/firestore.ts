@@ -231,29 +231,6 @@ export async function listUsersUnderManager(
     }
 }
 
-//Will need adjusting to only show current month and year
-export async function listApprovedRequests(): Promise<ApprovedRequestsType[]> {
-    try {
-        const queryDb = query(collection(db, "approvedRequests"));
-        const querySnapShot = await getDocs(queryDb);
-        const approvedReqData = querySnapShot.docs.map(doc => ({
-            uid: doc.data().uid,
-            approverEmail: doc.data().approverEmail,
-            dateStart: doc.data().dateStart,
-            dateEnd: doc.data().dateEnd,
-            requestedByEmail: doc.data().requestedByEmail,
-            totalDays: doc.data().totalDays,
-            typeOfLeave: doc.data().typeOfLeave,
-            holidayTabColour: doc.data().holidayTabColour,
-        }));
-
-        return approvedReqData;
-    } catch (error) {
-        console.log(error);
-        throw new Error("Failed to list approved requests from database");
-    }
-}
-
 export async function listRequests(
     email: string
 ): Promise<IncomingRequestsType[]> {

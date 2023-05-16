@@ -17,7 +17,7 @@
         "@reduxjs/toolkit": "^1.9.5",
         "@types/react-redux": "^7.1.25",
         "firebase": "^9.18.0",
-        "firebase-admin": "^11.5.0",
+        "firebase-admin": "^11.8.0",
         "firebase-functions": "^4.2.1",
         "nanoid": "^4.0.2",
         "nodemailer": "^6.9.1",
