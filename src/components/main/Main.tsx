@@ -11,12 +11,14 @@ import HandleRequests from "../admin/handle-requests/HandleRequests";
 import { HandleUsers } from "../admin/users/HandleUsers";
 import { fetchApprovedRequests } from "../../store/slices/approvedRequestSlice";
 import { AppDispatch, RootState } from "../../store/store";
+import { useFetchApprovedRequestsQuery } from "../../store/api-slices/approvedRequestApiSlice";
 
 function Main() {
     // const { approvedRequests } = useContext(ApprovedRequestContext);
-    const { approvedRequests } = useSelector(
-        (state: RootState) => state.approvedRequests
-    );
+    // const { approvedRequests } = useSelector(
+    //     (state: RootState) => state.approvedRequests
+    // );
+    const { data, error, isLoading } = useFetchApprovedRequestsQuery();
 
     const { showCalendar, showRequests, showHandleRequests, showUsers } =
         useContext(MainPageContext);
@@ -27,7 +29,7 @@ function Main() {
     const dispatch = useDispatch<AppDispatch>();
 
     const dateStart = useRef<Date>();
-    console.log(approvedRequests);
+    console.log(data);
     // useEffect(() => {
     //     if (approvedRequests) {
     //         console.log(approvedRequests);
@@ -44,11 +46,11 @@ function Main() {
         setShowModal(!showModal);
     }
 
-    const holidays = approvedRequests?.map(req => {
+    const holidays = data?.map(req => {
         return {
             name: req.requestedByEmail,
-            start: new Date(req.dateStart.toDate().toDateString()),
-            end: new Date(req.dateEnd.toDate().toDateString()),
+            start: new Date(req.dateStart * 1000),
+            end: new Date(req.dateEnd * 1000),
             typeOfLeave: req.typeOfLeave,
             holidayTabColour: req.holidayTabColour,
         };

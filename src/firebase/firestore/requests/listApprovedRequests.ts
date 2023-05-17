@@ -6,12 +6,10 @@ export async function listApprovedRequests(
     month: number,
     year: number
 ): Promise<ApprovedRequestsType[]> {
-    console.log("called");
     try {
+        console.log("calling");
         const startDate = new Date(year, month - 1, 1);
-        console.log(startDate);
         const endDate = new Date(year, month + 2, 0);
-        console.log(endDate);
         const queryDb = query(
             collection(db, "approvedRequests"),
             and(
@@ -25,8 +23,8 @@ export async function listApprovedRequests(
         const approvedReqData = querySnapShot.docs.map(doc => ({
             uid: doc.data().uid,
             approverEmail: doc.data().approverEmail,
-            dateStart: doc.data().dateStart,
-            dateEnd: doc.data().dateEnd,
+            dateStart: doc.data().dateStart.seconds,
+            dateEnd: doc.data().dateEnd.seconds,
             requestedByEmail: doc.data().requestedByEmail,
             totalDays: doc.data().totalDays,
             typeOfLeave: doc.data().typeOfLeave,

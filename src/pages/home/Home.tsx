@@ -28,11 +28,11 @@ const Home = () => {
                     <MainPageProvider>
                         <AwaitApprovReqProvider>
                             <UserPanel />
-                            <ApprovedReqsProvider>
-                                <RequestsProvider>
-                                    <Main />
-                                </RequestsProvider>
-                            </ApprovedReqsProvider>
+                            {/* <ApprovedReqsProvider> */}
+                            <RequestsProvider>
+                                <Main />
+                            </RequestsProvider>
+                            {/* </ApprovedReqsProvider> */}
                         </AwaitApprovReqProvider>
                     </MainPageProvider>
                 </CurrentUserProvider>
