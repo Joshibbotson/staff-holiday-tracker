@@ -6,7 +6,7 @@ import Main from "../../components/main/Main";
 import UserPanel from "../../components/user-panel/UserPanel";
 import homeSCSS from "./home.module.scss";
 import CurrentUserProvider from "../../context/CurrentUserContext";
-import { ApprovedReqsProvider } from "../../context/ApprovedRequestContext";
+import ApprovedReqsProvider from "../../context/ApprovedRequestContext";
 import RequestsProvider from "../../context/RequestContext";
 import { MainPageProvider } from "../../context/MainPageContext";
 import AwaitApprovReqProvider from "../../context/AwaitApprovalReqContext";
@@ -28,11 +28,11 @@ const Home = () => {
                     <MainPageProvider>
                         <AwaitApprovReqProvider>
                             <UserPanel />
-                            {/* <ApprovedReqsProvider> */}
-                            <RequestsProvider>
-                                <Main />
-                            </RequestsProvider>
-                            {/* </ApprovedReqsProvider> */}
+                            <ApprovedReqsProvider>
+                                <RequestsProvider>
+                                    <Main />
+                                </RequestsProvider>
+                            </ApprovedReqsProvider>
                         </AwaitApprovReqProvider>
                     </MainPageProvider>
                 </CurrentUserProvider>

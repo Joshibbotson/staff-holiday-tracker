@@ -14,7 +14,9 @@ import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext"
 import FilterListIcon from "@mui/icons-material/FilterList";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import React from "react";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
+import { useNavigate } from "react-router-dom";
 
 const Requests = () => {
     const { user } = useContext(CurrentUserContext);
@@ -30,7 +32,7 @@ const Requests = () => {
         ...requests,
         ...userApprovedRequests,
     ]);
-    const [currentFilters, setCurrentFilters] = useState<string[]>([]);
+    const [currentFilters, setCurrentFilters] = React.useState<string[]>([]);
 
     const filters = ["Approved", "Awaiting approval"];
 

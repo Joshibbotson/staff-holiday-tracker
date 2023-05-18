@@ -27,8 +27,8 @@ export const fetchUsersUnderManager = createAsyncThunk(
     "usersUnderManager/fetchUsersUnderManager",
     async () => {
         const currentUserEmail = auth.currentUser?.email;
-        if (currentUserEmail) {
-            const data = await listUsersUnderManager(currentUserEmail);
+        if (currentUserEmail !== null) {
+            const data = await listUsersUnderManager(currentUserEmail!);
             return data;
         }
     }

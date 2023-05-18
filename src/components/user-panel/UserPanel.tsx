@@ -53,7 +53,7 @@ const UserPanel = () => {
             if (user[0].admin === true) {
                 setAdmin(true);
             }
-            if (user[0].profilePicDownloadURL) {
+            if (user[0].profilePicDownloadURL.length > 0) {
                 return setUserImage(user[0].profilePicDownloadURL);
             }
             if (user[0].profilePic.length > 0) {
