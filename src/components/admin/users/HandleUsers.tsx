@@ -42,14 +42,14 @@ export const HandleUsers = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (users) {
+        if (users && user[0]) {
             setFilteredUsers(
                 users
-                    .filter((u: { email: string }) => {
+                    .filter(u => {
                         return u.email !== user[0].email;
                     })
-                    .filter((user: { name: string }) => {
-                        return user.name.toLowerCase().includes(searchValue);
+                    .filter(u => {
+                        return u.name.toLowerCase().includes(searchValue);
                     })
             );
         }

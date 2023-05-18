@@ -24,6 +24,7 @@ import {
     ref,
 } from "firebase/storage";
 import { uploadImage } from "../../firebase/firestorage/firestorage";
+import { Link } from "react-router-dom";
 
 const UserPanel = () => {
     const [showUserPanel, setShowUserPanel] = useState<boolean>(true);
@@ -258,7 +259,7 @@ const UserPanel = () => {
                                         : {}
                                 }
                             >
-                                Users
+                                <Link to={"/users"}>Users</Link>
                             </Button>
                         </>
                     ) : (
