@@ -2,16 +2,15 @@ import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/auth/auth";
 import { useNavigate } from "react-router-dom";
-import Main from "../../components/main/Main";
 import UserPanel from "../../components/user-panel/UserPanel";
 import SCSS from "./myRequests.module.scss";
 import CurrentUserProvider from "../../context/CurrentUserContext";
 import { ApprovedReqsProvider } from "../../context/ApprovedRequestContext";
 import RequestsProvider from "../../context/RequestContext";
-import { MainPageProvider } from "../../context/MainPageContext";
 import AwaitApprovReqProvider from "../../context/AwaitApprovalReqContext";
+import Requests from "../../components/main/requests/Requests";
 
-const Home = () => {
+const MyRequestsPage = () => {
     const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
 
@@ -25,20 +24,20 @@ const Home = () => {
         <>
             <div className={SCSS.homeContainer}>
                 <CurrentUserProvider>
-                    <MainPageProvider>
-                        <AwaitApprovReqProvider>
-                            <UserPanel />
-                            <ApprovedReqsProvider>
-                                <RequestsProvider>
-                                    <Main />
-                                </RequestsProvider>
-                            </ApprovedReqsProvider>
-                        </AwaitApprovReqProvider>
-                    </MainPageProvider>
+                    <AwaitApprovReqProvider>
+                        <UserPanel />
+                        <ApprovedReqsProvider>
+                            <RequestsProvider>
+                                <main className={SCSS.mainContainer}>
+                                    <Requests />
+                                </main>
+                            </RequestsProvider>
+                        </ApprovedReqsProvider>
+                    </AwaitApprovReqProvider>
                 </CurrentUserProvider>
             </div>
         </>
     );
 };
 
-export default Home;
+export default MyRequestsPage;

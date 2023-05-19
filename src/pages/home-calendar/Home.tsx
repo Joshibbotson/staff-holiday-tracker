@@ -11,7 +11,7 @@ import RequestsProvider from "../../context/RequestContext";
 import { MainPageProvider } from "../../context/MainPageContext";
 import AwaitApprovReqProvider from "../../context/AwaitApprovalReqContext";
 
-const Home = () => {
+const HomePage = () => {
     const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
 
@@ -41,4 +41,4 @@ const Home = () => {
     );
 };
 
-export default Home;
+export default HomePage;

@@ -196,7 +196,7 @@ const UserPanel = () => {
                                 : {}
                         }
                     >
-                        My Requests
+                        <Link to={"/myrequests"}>My Requests</Link>
                     </Button>
                     {admin ? (
                         <>
