@@ -43,14 +43,14 @@ const Calendar = ({ holidays, handleClick }: Props) => {
                 <YearBtns year={year} updateYear={handleUpdaterYear} />
                 <MonthBtns month={month} updateMonth={handleUpdateMonth} />
             </header>
-            <div className={SCSS.container}>
+            <section className={SCSS.container}>
                 <CreateCalendar
                     month={month}
                     year={year}
                     holidays={holidays}
                     handleClick={handleClick}
                 />
-            </div>
+            </section>
         </>
     );
 };

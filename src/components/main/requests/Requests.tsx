@@ -1,7 +1,7 @@
 import SCSS from "./requests.module.scss";
 import { RequestContext } from "../../../context/RequestContext";
 import { useContext, useEffect, useState } from "react";
-import dateConvert from "../../../util-functions/dateConvert";
+
 import {
     Checkbox,
     FormControl,
@@ -9,12 +9,12 @@ import {
     ListItemText,
     OutlinedInput,
 } from "@mui/material";
-import EditPopUp from "../../UI/simple-dialog/EditPopUp";
 import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext";
 import FilterListIcon from "@mui/icons-material/FilterList";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
+import RequestTableRow from "./request-table-row/requestTableRow";
 
 const Requests = () => {
     const { user } = useContext(CurrentUserContext);
@@ -144,52 +144,11 @@ const Requests = () => {
                     <tbody>
                         {loadedRequests.map((req, index) => {
                             return (
-                                <tr key={index}>
-                                    <td>{req.approverEmail}</td>
-                                    {requests.includes(req) ? (
-                                        <td
-                                            className={
-                                                SCSS.requestTable__tdWaitApproval
-                                            }
-                                        >
-                                            Waiting
-                                        </td>
-                                    ) : (
-                                        <td
-                                            className={
-                                                SCSS.requestTable__tdApproved
-                                            }
-                                        >
-                                            Approved
-                                        </td>
-                                    )}
-
-                                    <td>
-                                        {dateConvert(
-                                            req.dateStart.seconds,
-                                            req.dateStart.nanoseconds
-                                        ).toDateString()}
-                                    </td>
-                                    <td>
-                                        {dateConvert(
-                                            req.dateEnd.seconds,
-                                            req.dateEnd.nanoseconds
-                                        ).toDateString()}
-                                    </td>
-                                    <td>{req.totalDays}</td>
-                                    <td>{req.typeOfLeave}</td>
-                                    {requests.includes(req) ? (
-                                        <td
-                                            className={
-                                                SCSS.requestTable__td__edit
-                                            }
-                                        >
-                                            <EditPopUp request={req} />
-                                        </td>
-                                    ) : (
-                                        <td></td>
-                                    )}
-                                </tr>
+                                <RequestTableRow
+                                    index={index}
+                                    awaitingRequests={requests}
+                                    req={req}
+                                />
                             );
                         })}
                     </tbody>

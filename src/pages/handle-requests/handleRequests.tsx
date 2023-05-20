@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/auth/auth";
 import { useNavigate } from "react-router-dom";
-import UserPanel from "../../components/user-panel/UserPanel";
 import SCSS from "./handleRequests.module.scss";
 import { ApprovedReqsProvider } from "../../context/ApprovedRequestContext";
 import RequestsProvider from "../../context/RequestContext";
@@ -20,15 +19,15 @@ const HandleRequestsPage = () => {
     }, [user, loading]);
 
     return (
-        // <div className={SCSS.homeContainer}>
         <AwaitApprovReqProvider>
             <ApprovedReqsProvider>
                 <RequestsProvider>
-                    <HandleRequests />
+                    <main className={SCSS.mainContainer}>
+                        <HandleRequests />
+                    </main>
                 </RequestsProvider>
             </ApprovedReqsProvider>
         </AwaitApprovReqProvider>
-        // </div>
     );
 };
 

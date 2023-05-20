@@ -1,12 +1,10 @@
 import { logout } from "../../firebase/auth/auth";
-import userPanelSCSS from "./userPanel.module.scss";
+import SCSS from "./userPanel.module.scss";
 import { useContext, useState, useEffect } from "react";
-import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import RequestModal from "../UI/request-modal/RequestModal";
-import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { CircularProgress } from "@mui/material";
 import { AwaitApprovalReqContext } from "../../context/AwaitApprovalReqContext";
@@ -20,6 +18,7 @@ import {
 import { uploadImage } from "../../firebase/firestorage/firestorage";
 import AdminNavLinks from "./admin-nav-links/AdminNavLinks";
 import NavLinks from "./nav-links/NavLinks";
+import ProfilePhoto from "./profile-photo/profilePhoto";
 
 const UserPanel = () => {
     const { user } = useContext(CurrentUserContext);
@@ -28,17 +27,18 @@ const UserPanel = () => {
     const [showModal, setShowModal] = useState<boolean>(false);
     const [imageUpload, setImageUpload] = useState<FileList | null>(null);
     const [userImage, setUserImage] = useState<string | null>(null);
+
     function handleClick() {
         setShowModal(!showModal);
     }
 
-    useEffect(() => {
-        console.log(user);
+    function UpdateImageUpload(image: FileList | null) {
+        setImageUpload(image);
+    }
 
+    useEffect(() => {
         if (user[0]) {
-            if (user[0].admin === true) {
-                setAdmin(true);
-            }
+            user[0].admin ? setAdmin(true) : setAdmin(false);
             if (user[0].profilePicDownloadURL) {
                 return setUserImage(user[0].profilePicDownloadURL);
             }
@@ -62,7 +62,6 @@ const UserPanel = () => {
 
     useEffect(() => {
         const maxSizeInBytes = 1000 * 1024; // 1000kb (1MB)
-
         if (imageUpload) {
             if (imageUpload![0].size > maxSizeInBytes) {
                 alert("Image size exceeds the maximum limit of 1MB.");
@@ -75,52 +74,26 @@ const UserPanel = () => {
 
     return (
         <>
-            <div className={userPanelSCSS.userPanelContainer}>
-                <div className={userPanelSCSS.topContainer}>
-                    <div className={userPanelSCSS.profileContainer}>
-                        <div className={userPanelSCSS.profileImg}>
-                            <div
-                                className={
-                                    userPanelSCSS.profileImg__photoIconWrapper
-                                }
-                            >
-                                <input
-                                    type="file"
-                                    onChange={e => {
-                                        setImageUpload(e.target.files);
-                                    }}
-                                />
-                                <AddAPhotoIcon
-                                    className={
-                                        userPanelSCSS.profileImg__addPhotoIcon
-                                    }
-                                    color="primary"
-                                />
-                            </div>
-                            {userImage ? (
-                                <div
-                                    className={userPanelSCSS.userImage}
-                                    style={{
-                                        backgroundImage: `url(${userImage})`,
-                                    }}
-                                ></div>
-                            ) : (
-                                <AccountCircleIcon />
-                            )}
-                        </div>
+            <div className={SCSS.userPanelContainer}>
+                <div className={SCSS.userPanelContainer__topContainer}>
+                    <div className={SCSS.topContainer__profileContainer}>
+                        <ProfilePhoto
+                            userImage={userImage}
+                            updateImageUpload={UpdateImageUpload}
+                        />
                         <h2>{user[0] ? user[0].name : <CircularProgress />}</h2>
                     </div>
-                    <div className={userPanelSCSS.dashboard}>
+                    <div className={SCSS.dashboard}>
                         {user[0]
                             ? `Remaining Holidays: ${user[0].remainingHolidays}`
                             : ""}
                     </div>
-                    <div className={userPanelSCSS.calendar}>
+                    <div className={SCSS.calendar}>
                         {user[0]
                             ? `Taken Holidays: ${user[0].takenHolidays}`
                             : ""}
                     </div>
-                    <div className={userPanelSCSS.calendar}>
+                    <div className={SCSS.calendar}>
                         {user[0]
                             ? `Accrued Flexi Time: ${user[0].flexTime}`
                             : ""}
@@ -144,11 +117,7 @@ const UserPanel = () => {
                         ""
                     )}
                 </div>
-                <div className={userPanelSCSS.bottomContainer}>
-                    <div className={userPanelSCSS.settings}>settings</div>
-                    <div className={userPanelSCSS.profileSettings}>
-                        Profile Settings
-                    </div>
+                <div className={SCSS.bottomContainer}>
                     <Button
                         variant="contained"
                         color="error"

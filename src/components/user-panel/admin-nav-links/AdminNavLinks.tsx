@@ -7,6 +7,7 @@ import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 
 const AdminNavLinks = ({ requestsLength }: any) => {
+    //remove any
     const [showNotifications, setShowNotifications] = useState<boolean>(false);
 
     useEffect(() => {

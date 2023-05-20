@@ -1,0 +1,56 @@
+.profileImg {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 50%;
+    overflow: hidden;
+    margin-bottom: 1rem;
+
+    .userImage {
+        background-size: cover;
+        background-position: center;
+        width: 8rem;
+        height: 8rem;
+    }
+
+    * {
+        font-size: 7.5rem;
+        color: white;
+    }
+
+    .profileImg__photoIconWrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        width: 4rem;
+        height: 4rem;
+        background-color: black;
+        border-radius: 50%;
+        opacity: 0;
+
+        cursor: pointer;
+
+        input[type="file"] {
+            cursor: pointer;
+            position: absolute;
+            font-size: 0;
+            width: 4rem;
+            height: 4rem;
+            z-index: 3;
+            opacity: 0;
+        }
+        .profileImg__addPhotoIcon {
+            font-size: 2rem;
+            z-index: 2;
+            cursor: pointer;
+        }
+    }
+}
+
+.profileImg__photoIconWrapper:hover {
+    opacity: 0.8;
+}
