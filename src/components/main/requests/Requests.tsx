@@ -37,6 +37,7 @@ const Requests = () => {
     //Ensure Requests is re-rendered when requests change//
     useEffect(() => {
         console.log(userApprovedRequests);
+        console.log(user);
         setUserApprovedRequests(
             approvedRequests.filter(req => {
                 return req.requestedByEmail === user[0].email;

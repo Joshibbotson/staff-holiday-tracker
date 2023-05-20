@@ -4,15 +4,9 @@ import { useContext, useState, useEffect } from "react";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
-import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
 import Button from "@mui/material/Button";
-import ContentPasteIcon from "@mui/icons-material/ContentPaste";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
-import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
-import NotificationsNoneIcon from "@mui/icons-material/NotificationsNone";
 import RequestModal from "../UI/request-modal/RequestModal";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import { MainPageContext } from "../../context/MainPageContext";
 import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { CircularProgress } from "@mui/material";
 import { AwaitApprovalReqContext } from "../../context/AwaitApprovalReqContext";
@@ -24,29 +18,20 @@ import {
     ref,
 } from "firebase/storage";
 import { uploadImage } from "../../firebase/firestorage/firestorage";
-import { Link } from "react-router-dom";
+import AdminNavLinks from "./admin-nav-links/AdminNavLinks";
+import NavLinks from "./nav-links/NavLinks";
 
 const UserPanel = () => {
-    const [showUserPanel, setShowUserPanel] = useState<boolean>(true);
-    const [activeBtn, setActiveBtn] = useState<string>("Calendar");
     const { user } = useContext(CurrentUserContext);
     const { requests } = useContext(AwaitApprovalReqContext);
     const [admin, setAdmin] = useState(false);
     const [showModal, setShowModal] = useState<boolean>(false);
-    const [showNotifcations, setShowNotifcations] = useState<boolean>(true);
     const [imageUpload, setImageUpload] = useState<FileList | null>(null);
     const [userImage, setUserImage] = useState<string | null>(null);
     function handleClick() {
         setShowModal(!showModal);
     }
-    const {
-        updateShowCalendar,
-        updateShowRequests,
-        updateShowHandleRequests,
-        updateShowUsers,
-    } = useContext(MainPageContext);
 
-    //check conditional user data
     useEffect(() => {
         console.log(user);
 
@@ -74,12 +59,6 @@ const UserPanel = () => {
             }
         }
     }, [user]);
-
-    useEffect(() => {
-        requests.length > 0
-            ? setShowNotifcations(true)
-            : setShowNotifcations(false);
-    }, [requests]);
 
     useEffect(() => {
         const maxSizeInBytes = 1000 * 1024; // 1000kb (1MB)
@@ -158,110 +137,9 @@ const UserPanel = () => {
                     >
                         Make new Request
                     </Button>
-                    <Button
-                        variant="text"
-                        color="inherit"
-                        size="small"
-                        onClick={() => {
-                            updateShowCalendar();
-                            setActiveBtn("Calendar");
-                        }}
-                        startIcon={<CalendarMonthIcon />}
-                        style={
-                            activeBtn === "Calendar"
-                                ? {
-                                      backgroundColor:
-                                          "rgba(255, 255, 255, 0.253)",
-                                  }
-                                : {}
-                        }
-                    >
-                        Calendar
-                    </Button>
-                    <Button
-                        variant="text"
-                        color="inherit"
-                        size="small"
-                        onClick={() => {
-                            updateShowRequests();
-                            setActiveBtn("Requests");
-                        }}
-                        startIcon={<ContentPasteIcon />}
-                        style={
-                            activeBtn === "Requests"
-                                ? {
-                                      backgroundColor:
-                                          "rgba(255, 255, 255, 0.253)",
-                                  }
-                                : {}
-                        }
-                    >
-                        <Link to={"/myrequests"}>My Requests</Link>
-                    </Button>
+                    <NavLinks />
                     {admin ? (
-                        <>
-                            <Button
-                                variant="text"
-                                color="inherit"
-                                size="small"
-                                onClick={() => {
-                                    updateShowHandleRequests();
-                                    setActiveBtn("Handle Requests");
-                                    setShowNotifcations(false);
-                                }}
-                                startIcon={<FormatListBulletedOutlinedIcon />}
-                                endIcon={
-                                    showNotifcations ? (
-                                        <div
-                                            className={
-                                                userPanelSCSS.notficationContainer
-                                            }
-                                        >
-                                            <NotificationsNoneIcon />
-                                            <div
-                                                className={
-                                                    userPanelSCSS.awaitingRequestCount
-                                                }
-                                            >
-                                                {requests.length > 99
-                                                    ? "99+"
-                                                    : requests.length}
-                                            </div>
-                                        </div>
-                                    ) : null
-                                }
-                                style={
-                                    activeBtn === "Handle Requests"
-                                        ? {
-                                              backgroundColor:
-                                                  "rgba(255, 255, 255, 0.253)",
-                                          }
-                                        : {}
-                                }
-                            >
-                                Handle Requests
-                            </Button>
-                            <Button
-                                variant="text"
-                                color="inherit"
-                                size="small"
-                                onClick={() => {
-                                    updateShowUsers();
-                                    setActiveBtn("Users");
-                                }}
-                                startIcon={<SupervisorAccountIcon />}
-                                style={
-                                    activeBtn === "Users"
-                                        ? {
-                                              backgroundColor:
-                                                  "rgba(255, 255, 255, 0.253)",
-                                          }
-                                        : {}
-                                }
-                            >
-                                <Link to={"/users"}>Users</Link>
-                            </Button>
-                        </>
+                        <AdminNavLinks requestsLength={requests.length} />
                     ) : (
                         ""
                     )}
@@ -271,7 +149,6 @@ const UserPanel = () => {
                     <div className={userPanelSCSS.profileSettings}>
                         Profile Settings
                     </div>
-
                     <Button
                         variant="contained"
                         color="error"

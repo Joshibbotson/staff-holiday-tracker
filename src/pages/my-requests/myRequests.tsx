@@ -22,20 +22,17 @@ const MyRequestsPage = () => {
 
     return (
         <>
-            <div className={SCSS.homeContainer}>
-                <CurrentUserProvider>
-                    <AwaitApprovReqProvider>
-                        <UserPanel />
-                        <ApprovedReqsProvider>
-                            <RequestsProvider>
-                                <main className={SCSS.mainContainer}>
-                                    <Requests />
-                                </main>
-                            </RequestsProvider>
-                        </ApprovedReqsProvider>
-                    </AwaitApprovReqProvider>
-                </CurrentUserProvider>
-            </div>
+            {/* <div className={SCSS.homeContainer}> */}
+            <AwaitApprovReqProvider>
+                <ApprovedReqsProvider>
+                    <RequestsProvider>
+                        <main className={SCSS.mainContainer}>
+                            <Requests />
+                        </main>
+                    </RequestsProvider>
+                </ApprovedReqsProvider>
+            </AwaitApprovReqProvider>
+            {/* </div> */}
         </>
     );
 };

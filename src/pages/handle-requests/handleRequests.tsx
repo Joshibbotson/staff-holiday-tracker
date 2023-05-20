@@ -3,8 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/auth/auth";
 import { useNavigate } from "react-router-dom";
 import UserPanel from "../../components/user-panel/UserPanel";
-import homeSCSS from "./home.module.scss";
-import CurrentUserProvider from "../../context/CurrentUserContext";
+import SCSS from "./handleRequests.module.scss";
 import { ApprovedReqsProvider } from "../../context/ApprovedRequestContext";
 import RequestsProvider from "../../context/RequestContext";
 import AwaitApprovReqProvider from "../../context/AwaitApprovalReqContext";
@@ -21,20 +20,15 @@ const HandleRequestsPage = () => {
     }, [user, loading]);
 
     return (
-        <>
-            <div className={homeSCSS.homeContainer}>
-                <CurrentUserProvider>
-                    <AwaitApprovReqProvider>
-                        <UserPanel />
-                        <ApprovedReqsProvider>
-                            <RequestsProvider>
-                                <HandleRequests />
-                            </RequestsProvider>
-                        </ApprovedReqsProvider>
-                    </AwaitApprovReqProvider>
-                </CurrentUserProvider>
-            </div>
-        </>
+        // <div className={SCSS.homeContainer}>
+        <AwaitApprovReqProvider>
+            <ApprovedReqsProvider>
+                <RequestsProvider>
+                    <HandleRequests />
+                </RequestsProvider>
+            </ApprovedReqsProvider>
+        </AwaitApprovReqProvider>
+        // </div>
     );
 };
 
