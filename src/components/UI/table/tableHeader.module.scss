@@ -1,0 +1,26 @@
+.tableHead {
+    background-color: rgb(0, 150, 136);
+    height: 10rem;
+
+    .requestTable__title {
+        font-size: 2rem;
+        text-align: center;
+        color: white;
+    }
+
+    tr {
+        border-bottom: 2px solid rgb(170, 170, 170);
+    }
+
+    .requestTable__header {
+        background-color: white;
+        z-index: 1;
+        position: sticky;
+        top: 0;
+        color: rgb(139, 139, 139);
+        th {
+            word-wrap: break-word;
+            padding: 1rem;
+        }
+    }
+}

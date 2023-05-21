@@ -18,7 +18,7 @@ import {
 import { uploadImage } from "../../firebase/firestorage/firestorage";
 import AdminNavLinks from "./admin-nav-links/AdminNavLinks";
 import NavLinks from "./nav-links/NavLinks";
-import ProfilePhoto from "./profile-photo/profilePhoto";
+import ProfilePhoto from "./profile-photo/ProfilePhoto";
 
 const UserPanel = () => {
     const { user } = useContext(CurrentUserContext);
