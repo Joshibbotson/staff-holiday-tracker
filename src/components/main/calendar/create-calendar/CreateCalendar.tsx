@@ -132,10 +132,10 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className={SCSS.calendar__body}>
                         {/* creates 6 table rows */}
                         {[0, 1, 2, 3, 4, 5].map(weekIndex => (
-                            <tr key={weekIndex}>
+                            <tr key={weekIndex} className={SCSS.calendar__row}>
                                 {days
                                     .slice(weekIndex * 7, weekIndex * 7 + 7)
                                     .map((date, dayIndex) =>

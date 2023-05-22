@@ -15,6 +15,8 @@ import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import { AwaitApprovalReqContext } from "../../../context/AwaitApprovalReqContext";
+import TableHeader from "../../UI/table/TableHeader";
+import RequestTableRow from "../../main/requests/request-table-row/requestTableRow";
 
 const HandleRequests = () => {
     const { user } = useContext(CurrentUserContext);
@@ -79,105 +81,73 @@ const HandleRequests = () => {
     return (
         <div className={SCSS.requestTable}>
             <table>
-                <thead>
-                    <tr>
-                        <th colSpan={2}>
-                            <FormControl
-                                sx={{
-                                    m: 1,
-                                    width: 400,
-                                    backgroundColor: "white",
-                                    borderRadius: "4px",
-                                }}
-                            >
-                                <InputLabel>
-                                    <FilterListIcon /> Filters
-                                </InputLabel>
-                                <Select
-                                    multiple
-                                    value={currentFilters}
-                                    onChange={handleChange}
-                                    input={<OutlinedInput label="Filter" />}
-                                    renderValue={selected =>
-                                        selected.join(", ")
-                                    }
-                                >
-                                    {filters.map(filter => (
-                                        <MenuItem key={filter} value={filter}>
-                                            <Checkbox
-                                                checked={
-                                                    currentFilters.indexOf(
-                                                        filter
-                                                    ) > -1
-                                                }
-                                            />
-                                            <ListItemText primary={filter} />
-                                        </MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </th>
-                        <th colSpan={5} className={SCSS.requestTable__title}>
-                            Handle Requests
-                        </th>
-                    </tr>
-
-                    <tr className={SCSS.requestTable__header}>
-                        <th colSpan={1}>Requested by</th>
-                        <th colSpan={1}>Status</th>
-                        <th colSpan={1}>Date Start</th>
-                        <th colSpan={1}>Date End</th>
-                        <th colSpan={1}>Total days</th>
-                        <th colSpan={1}>Type</th>
-                        <th colSpan={1}></th>
-                    </tr>
-                </thead>
+                <TableHeader
+                    title={"Handle Requests"}
+                    columnNames={[
+                        "Request by",
+                        "Status",
+                        "Date Start",
+                        "Date End",
+                        "Total Days",
+                        "Type",
+                        "",
+                    ]}
+                    showFilter={true}
+                    filterOptions={["Approved", "Awaiting approval"]}
+                    handleChange={handleChange}
+                    currentFilters={currentFilters}
+                />{" "}
                 <tbody>
                     {loadedRequests.map((req, index) => {
                         return (
-                            <tr key={index}>
-                                <td>{req.requestedByEmail}</td>
-                                {requests.includes(req) ? (
-                                    <td
-                                        className={
-                                            SCSS.requestTable__tdWaitApproval
-                                        }
-                                    >
-                                        Waiting
-                                    </td>
-                                ) : (
-                                    <td
-                                        className={
-                                            SCSS.requestTable__tdApproved
-                                        }
-                                    >
-                                        Approved
-                                    </td>
-                                )}
+                            // <tr key={index}>
+                            //     <td>{req.requestedByEmail}</td>
+                            //     {requests.includes(req) ? (
+                            //         <td
+                            //             className={
+                            //                 SCSS.requestTable__tdWaitApproval
+                            //             }
+                            //         >
+                            //             Waiting
+                            //         </td>
+                            //     ) : (
+                            //         <td
+                            //             className={
+                            //                 SCSS.requestTable__tdApproved
+                            //             }
+                            //         >
+                            //             Approved
+                            //         </td>
+                            //     )}
 
-                                <td>
-                                    {dateConvert(
-                                        req.dateStart.seconds,
-                                        req.dateStart.nanoseconds
-                                    ).toDateString()}
-                                </td>
-                                <td>
-                                    {dateConvert(
-                                        req.dateEnd.seconds,
-                                        req.dateEnd.nanoseconds
-                                    ).toDateString()}
-                                </td>
-                                <td>{req.totalDays}</td>
-                                <td>{req.typeOfLeave}</td>
+                            //     <td>
+                            //         {dateConvert(
+                            //             req.dateStart.seconds,
+                            //             req.dateStart.nanoseconds
+                            //         ).toDateString()}
+                            //     </td>
+                            //     <td>
+                            //         {dateConvert(
+                            //             req.dateEnd.seconds,
+                            //             req.dateEnd.nanoseconds
+                            //         ).toDateString()}
+                            //     </td>
+                            //     <td>{req.totalDays}</td>
+                            //     <td>{req.typeOfLeave}</td>
 
-                                {requests.includes(req) ? (
-                                    <td className={SCSS.requestTable__td__edit}>
-                                        <EditPopUp request={req} />
-                                    </td>
-                                ) : (
-                                    <td></td>
-                                )}
-                            </tr>
+                            //     {requests.includes(req) ? (
+                            //         <td className={SCSS.requestTable__td__edit}>
+                            //             <EditPopUp request={req} />
+                            //         </td>
+                            //     ) : (
+                            //         <td></td>
+                            //     )}
+                            // </tr>
+                            <RequestTableRow
+                                index={index}
+                                awaitingRequests={requests}
+                                req={req}
+                            />
                         );
                     })}
                 </tbody>

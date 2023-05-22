@@ -1,42 +1,48 @@
 .calendar {
     display: flex;
     flex-direction: column;
-    align-items: center;
-
+    height: 100vh;
     width: 100%;
-
     overflow-y: auto;
+    overflow-x: hidden;
 
-    table {
+    .calendar__table {
         display: table;
         border-collapse: collapse;
-        table-layout: fixed;
+        table-layout: auto;
         width: 100%;
         height: 100%;
 
+        td {
+            padding: 0;
+        }
+
         thead {
+            width: 100%;
             th {
                 padding-left: 0.3rem;
                 text-align: left;
-                font-size: 1.3rem;
+                font-size: 1rem;
                 background-color: white;
             }
         }
 
-        tbody {
-            tr {
+        .calendar__body {
+            width: 100%;
+            .calendar__row {
                 height: 5rem;
+                width: auto;
                 background-color: white;
             }
         }
     }
 
-    td {
-        width: 5rem;
+    .calendar__day {
+        width: auto;
         border-bottom: 1px solid black;
     }
 
-    table tbody td:hover {
+    .calendar__table .calendar__body td:hover {
         cursor: pointer;
         background-color: #f2f2f2;
     }
@@ -44,7 +50,14 @@
 td {
     font-size: 1.3rem;
 }
-
+.calendar__prevMonth,
+.calendar__nextMonth,
+.calendar__weekend,
+.calendar__weekendDiffMonth,
+.calendar__today {
+    padding: 0;
+    width: auto;
+}
 .calendar__prevMonth {
     color: rgb(212, 212, 212);
 }
@@ -69,6 +82,58 @@ td:hover.calendar__today:hover {
 }
 @media only screen and (min-width: 768px) {
     .calendar {
+        display: flex;
+        flex-direction: column;
         height: 100%;
+        width: 100%;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        .calendar__table {
+            display: table;
+            border-collapse: collapse;
+            table-layout: fixed;
+            width: 100%;
+            height: 100%;
+
+            thead {
+                th {
+                    padding-left: 0.3rem;
+                    text-align: left;
+                    font-size: 1.3rem;
+                    background-color: white;
+                }
+            }
+
+            .calendar__body {
+                width: 100%;
+                .calendar__row {
+                    height: 5rem;
+                    background-color: white;
+                }
+            }
+        }
+
+        .calendar__day {
+            width: auto;
+            border-bottom: 1px solid black;
+        }
+
+        .calendar__table .calendar__body td:hover {
+            cursor: pointer;
+            background-color: #f2f2f2;
+        }
+    }
+    td {
+        font-size: 1.3rem;
+    }
+
+    .calendar__prevMonth
+        .calendar__nextMonth
+        .calendar__weekend
+        .calendar__weekendDiffMonth
+        .calendar__today {
+        padding: 1;
+        width: auto;
     }
 }
