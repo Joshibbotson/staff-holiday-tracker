@@ -7,8 +7,6 @@ type Props = {
     updateMonth: (arg0: number) => void;
 };
 export const MonthBtns = ({ month, updateMonth }: Props) => {
-    console.log(month);
-
     const monthsArr = [
         "Jan",
         "Feb",

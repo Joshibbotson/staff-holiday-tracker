@@ -5,7 +5,6 @@ type Props = {
     updateYear: (arg0: number) => void;
 };
 export const YearBtns = ({ year, updateYear }: Props) => {
-    console.log(year);
     const pastCurrFutureYear = [
         (new Date().getFullYear() - 1).toString(),
         new Date().getFullYear().toString(),

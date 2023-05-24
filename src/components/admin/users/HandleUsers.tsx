@@ -10,22 +10,8 @@ import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { AppDispatch, RootState } from "../../../store/store";
 import RadialProgress from "../../UI/radial-progress/RadialProgress";
-
-interface FetchedUserType {
-    uid: string;
-    name: string;
-    email: string;
-    admin: boolean;
-    superAdmin: boolean;
-    totalHolidays: number;
-    nationalHolidays: string;
-    remainingHolidays: number;
-    takenHolidays: number;
-    flexTime: number;
-    profilePic: string;
-    profilePicDownloadURL: string;
-    managersEmail: string;
-}
+import FetchedUserType from "../../../types/FetchedUserType.type";
+import UserTab from "./user-tab/userTab";
 
 export const HandleUsers = () => {
     const { user } = useContext(CurrentUserContext);
@@ -72,6 +58,10 @@ export const HandleUsers = () => {
         );
     }
 
+    function updateSelectedUser(user: FetchedUserType) {
+        setSelectedUser(user);
+    }
+
     return (
         <>
             <div className={SCSS.header}>
@@ -98,34 +88,12 @@ export const HandleUsers = () => {
                     {users
                         ? filteredUsers?.map(user => {
                               return (
-                                  <div
-                                      className={
-                                          user === selectedUser
-                                              ? SCSS.mainGrid__selectedUserTab
-                                              : SCSS.mainGrid__userTab
-                                      }
-                                      key={user.uid}
-                                      onClick={() => {
-                                          setSelectedUser(user);
-                                      }}
-                                  >
-                                      {getProfilePic(
-                                          user,
-                                          SCSS.userTab__profilePic
-                                      )}
-
-                                      <div
-                                          className={
-                                              SCSS.userTab__textContainer
-                                          }
-                                      >
-                                          <h4>{user.name}</h4>
-                                          <p>{user.email}</p>
-                                      </div>
-                                      <ChevronRightIcon
-                                          className={SCSS.userTab__chevronRight}
-                                      />
-                                  </div>
+                                  <UserTab
+                                      user={user}
+                                      selectedUser={selectedUser}
+                                      updateSelectedUser={updateSelectedUser}
+                                      getProfilePic={getProfilePic}
+                                  />
                               );
                           })
                         : ""}

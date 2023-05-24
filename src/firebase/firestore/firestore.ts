@@ -48,6 +48,8 @@ export const updateUserDocID = async (
     superAdmin: boolean = false,
     holidayTabColour: string = randomColour()
 ) => {
+    console.log(name);
+
     try {
         const docRef = await addDoc(collection(db, "users"), {
             uid: userUID,

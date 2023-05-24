@@ -6,12 +6,9 @@ export async function listApprovedRequests(
     month: number,
     year: number
 ): Promise<ApprovedRequestsType[]> {
-    console.log("called");
     try {
         const startDate = new Date(year, month - 1, 1);
-        console.log(startDate);
         const endDate = new Date(year, month + 2, 0);
-        console.log(endDate);
         const queryDb = query(
             collection(db, "approvedRequests"),
             and(

@@ -1,0 +1,257 @@
+.mainGrid__selectedUserTab {
+    display: flex;
+    align-items: center;
+    background-color: rgb(0, 150, 136);
+    color: white;
+    width: 100%;
+    overflow-y: hidden;
+    border-bottom: 1px solid rgb(1, 115, 104);
+    padding: 0.3rem;
+    height: 4rem;
+    flex-shrink: 0;
+    flex-grow: 0;
+    align-content: center;
+    gap: 1rem;
+    cursor: pointer;
+    border-radius: 10px;
+
+    .userTab__profilePic {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        font-size: 4.3rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        flex-shrink: 0;
+
+        .userImage {
+            width: 2.5rem;
+            height: 2.5rem;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            flex-shrink: 1;
+        }
+    }
+    .userTab__textContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        p {
+            color: rgb(239, 237, 237);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    }
+    .userTab__chevronRight {
+        margin-left: auto;
+        margin-right: 1rem;
+    }
+}
+
+.mainGrid__userTab {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding: 0.3rem;
+    height: 4rem;
+    align-content: center;
+    gap: 1rem;
+    cursor: pointer;
+    border-radius: 10px;
+    border-bottom: 1px solid rgb(209, 209, 209);
+    flex-shrink: 0;
+
+    .userTab__profilePic {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+        font-size: 4.3rem;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        flex-shrink: 0;
+
+        .userImage {
+            width: 2.5rem;
+            height: 2.5rem;
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center;
+            flex-shrink: 1;
+        }
+    }
+    .userTab__textContainer {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        p {
+            color: grey;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    }
+    .userTab__chevronRight {
+        opacity: 0;
+        margin-left: auto;
+        margin-right: 1rem;
+    }
+}
+.mainGrid__userTab:hover {
+    background-color: rgb(239, 237, 237);
+
+    .userTab__chevronRight {
+        opacity: 1;
+        margin-left: auto;
+        margin-right: 1rem;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .mainGrid__userList {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        border-radius: 20px;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        margin: 1rem;
+        overflow: hidden;
+        overflow-y: auto;
+        box-shadow: 0px 0px 10px rgb(217, 217, 217);
+        background-color: rgb(244, 244, 244);
+        height: 88svh;
+
+        .mainGrid__header {
+            padding: 1rem;
+            border-bottom: 1px solid rgb(197, 197, 197);
+            margin-bottom: 0.5rem;
+        }
+
+        .mainGrid__selectedUserTab {
+            display: flex;
+            align-items: center;
+            background-color: rgb(0, 150, 136);
+            color: white;
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            border-bottom: 1px solid rgb(1, 115, 104);
+            padding: 0.3rem;
+            height: 6rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            flex-grow: 0;
+            align-content: center;
+            gap: 1rem;
+            cursor: pointer;
+            border-radius: 10px;
+
+            .userTab__profilePic {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                font-size: 4.3rem;
+                width: 4rem;
+                height: 4rem;
+                border-radius: 50%;
+                flex-shrink: 0;
+
+                .userImage {
+                    width: 4rem;
+                    height: 4rem;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    flex-shrink: 1;
+                }
+            }
+            .userTab__textContainer {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+
+                p {
+                    color: rgb(239, 237, 237);
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                }
+            }
+            .userTab__chevronRight {
+                margin-left: auto;
+                margin-right: 1rem;
+            }
+        }
+
+        .mainGrid__userTab {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0.3rem;
+            height: 6rem;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            align-content: center;
+            gap: 1rem;
+            cursor: pointer;
+            border-radius: 10px;
+            border-bottom: 1px solid rgb(209, 209, 209);
+
+            .userTab__profilePic {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                overflow: hidden;
+                font-size: 4.3rem;
+                width: 4rem;
+                height: 4rem;
+                border-radius: 50%;
+                flex-shrink: 0;
+
+                .userImage {
+                    width: 4rem;
+                    height: 4rem;
+                    background-size: cover;
+                    background-repeat: no-repeat;
+                    background-position: center;
+                    flex-shrink: 0;
+                }
+            }
+            .userTab__textContainer {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+
+                p {
+                    color: grey;
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                }
+            }
+            .userTab__chevronRight {
+                opacity: 0;
+                margin-left: auto;
+                margin-right: 1rem;
+            }
+        }
+        .mainGrid__userTab:hover {
+            background-color: rgb(239, 237, 237);
+
+            .userTab__chevronRight {
+                opacity: 1;
+                margin-left: auto;
+                margin-right: 1rem;
+            }
+        }
+    }
+}

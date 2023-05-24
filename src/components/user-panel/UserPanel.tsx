@@ -1,4 +1,4 @@
-import { logout } from "../../firebase/auth/auth";
+import { auth, logout } from "../../firebase/auth/auth";
 import SCSS from "./userPanel.module.scss";
 import { useContext, useState, useEffect } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -19,8 +19,17 @@ import { uploadImage } from "../../firebase/firestorage/firestorage";
 import AdminNavLinks from "./admin-nav-links/AdminNavLinks";
 import NavLinks from "./nav-links/NavLinks";
 import ProfilePhoto from "./profile-photo/ProfilePhoto";
+import { onAuthStateChanged } from "firebase/auth";
 
 const UserPanel = () => {
+    // onAuthStateChanged(auth, user => {
+    //     if (!user) {
+    //         setImageUpload(null);
+    //         setUserImage(null);
+    //     }
+    // });
+
+    console.log("rendered into existence");
     const { user } = useContext(CurrentUserContext);
     const { requests } = useContext(AwaitApprovalReqContext);
     const [admin, setAdmin] = useState(false);
@@ -40,6 +49,9 @@ const UserPanel = () => {
         if (user[0]) {
             user[0].admin ? setAdmin(true) : setAdmin(false);
             if (user[0].profilePicDownloadURL) {
+                console.log(user[0]);
+
+                console.log("hello");
                 return setUserImage(user[0].profilePicDownloadURL);
             }
             if (user[0].profilePic.length > 0) {

@@ -3,6 +3,7 @@ import { getUserData } from "../firebase/firestore/firestore";
 import { UserType } from "../types";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/auth/auth";
+import { onAuthStateChanged } from "firebase/auth";
 type CurrentUserContextType = {
     user: UserType[];
     loading: boolean;
