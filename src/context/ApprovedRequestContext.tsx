@@ -34,28 +34,6 @@ export const ApprovedReqsProvider: React.FC<any> = ({ children }) => {
     );
     const year = useSelector((state: RootState) => state.currentDateSlice.year);
 
-    //Ensure approvedUserRequests is updated if requests collection changes//
-    //this works but is useless for calendar as calls are made to the database
-    // each time a month is changed anyway, it needs to be more specific for
-    //handle/my requests page
-    // useEffect(() => {
-    //     if (user) {
-    //         const q = query(collection(db, "approvedRequests"));
-
-    //         const unsubscribe = onSnapshot(q, snapshot => {
-    //             const requests: IncomingRequestsType[] = [];
-    //             snapshot.forEach(doc => {
-    //                 const data = doc.data() as IncomingRequestsType;
-    //                 data.uid = doc.id;
-    //                 requests.push(data);
-    //             });
-    //             setApprovedReqs(requests);
-    //         });
-
-    //         return () => unsubscribe();
-    //     }
-    // }, [user]);
-
     useEffect(() => {
         if (user) {
             const fetchRequests = async () => {

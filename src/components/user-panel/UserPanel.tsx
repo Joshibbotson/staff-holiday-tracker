@@ -44,8 +44,7 @@ const UserPanel = () => {
 
                 console.log("hello");
                 return setUserImage(user[0].profilePicDownloadURL);
-            }
-            if (user[0].profilePic.length > 0) {
+            } else if (user[0].profilePic) {
                 const imageRef: StorageReference = ref(
                     storage,
                     "profilePictures/"

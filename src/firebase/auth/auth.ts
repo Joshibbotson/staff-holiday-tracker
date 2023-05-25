@@ -18,6 +18,7 @@ import {
     sendPasswordResetEmail,
     signOut,
     Auth,
+    sendEmailVerification,
 } from "firebase/auth";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -103,12 +104,21 @@ export async function registerWithEmailAndPassword(
 export async function sendPasswordReset(email: string) {
     try {
         await sendPasswordResetEmail(auth, email);
-        alert("Passowrd reset link sent!");
+        alert("Password reset link sent!");
     } catch (error) {
         console.log(error);
         toast.error(getErrorMessage(error));
 
         throw error;
+    }
+}
+
+export function sendVerificationEmail() {
+    if (auth.currentUser) {
+        sendEmailVerification(auth.currentUser);
+        console.log("sent!");
+    } else {
+        console.log("no user");
     }
 }
 

@@ -30,7 +30,7 @@ export const ProfilePhoto = ({ userImage, updateImageUpload }: Props) => {
                     }}
                 ></div>
             ) : (
-                <AccountCircleIcon />
+                <AccountCircleIcon className={SCSS.accountCircleIcon} />
             )}
         </div>
     );
