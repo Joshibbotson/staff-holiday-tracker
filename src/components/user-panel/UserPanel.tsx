@@ -19,17 +19,8 @@ import { uploadImage } from "../../firebase/firestorage/firestorage";
 import AdminNavLinks from "./admin-nav-links/AdminNavLinks";
 import NavLinks from "./nav-links/NavLinks";
 import ProfilePhoto from "./profile-photo/ProfilePhoto";
-import { onAuthStateChanged } from "firebase/auth";
 
 const UserPanel = () => {
-    // onAuthStateChanged(auth, user => {
-    //     if (!user) {
-    //         setImageUpload(null);
-    //         setUserImage(null);
-    //     }
-    // });
-
-    console.log("rendered into existence");
     const { user } = useContext(CurrentUserContext);
     const { requests } = useContext(AwaitApprovalReqContext);
     const [admin, setAdmin] = useState(false);
@@ -53,8 +44,7 @@ const UserPanel = () => {
 
                 console.log("hello");
                 return setUserImage(user[0].profilePicDownloadURL);
-            }
-            if (user[0].profilePic.length > 0) {
+            } else if (user[0].profilePic) {
                 const imageRef: StorageReference = ref(
                     storage,
                     "profilePictures/"
