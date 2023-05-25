@@ -1,6 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { getUserData } from "../firebase/firestore/firestore";
-import { IncomingRequestsType, UserType } from "../types";
+import { UserType } from "../types";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth, db } from "../firebase/auth/auth";
 import { query, collection, where, onSnapshot } from "firebase/firestore";
