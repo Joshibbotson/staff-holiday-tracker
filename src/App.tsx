@@ -12,7 +12,6 @@ import SCSS from "./app.module.scss";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase/auth/auth";
 import CurrentUserProvider from "./context/CurrentUserContext";
-import UserTab from "./components/admin/users/user-tab/userTab";
 
 function App() {
     const [user, loading, error] = useAuthState(auth);

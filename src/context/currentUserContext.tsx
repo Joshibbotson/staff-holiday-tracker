@@ -3,7 +3,6 @@ import { getUserData } from "../firebase/firestore/firestore";
 import { UserType } from "../types";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/auth/auth";
-import { onAuthStateChanged } from "firebase/auth";
 type CurrentUserContextType = {
     user: UserType[];
     loading: boolean;
@@ -25,6 +24,8 @@ export const CurrentUserProvider: React.FC<any> = ({ children }) => {
 
     useEffect(() => {
         if (user) {
+            console.log(user);
+
             const fetchCurrentUser = async () => {
                 setLoading(true);
                 try {
@@ -38,6 +39,9 @@ export const CurrentUserProvider: React.FC<any> = ({ children }) => {
                 }
             };
             fetchCurrentUser();
+        }
+        if (!user) {
+            setCurrentUser([]);
         }
     }, [user]);
 

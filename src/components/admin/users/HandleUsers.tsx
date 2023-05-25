@@ -11,7 +11,7 @@ import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { AppDispatch, RootState } from "../../../store/store";
 import RadialProgress from "../../UI/radial-progress/RadialProgress";
 import FetchedUserType from "../../../types/FetchedUserType.type";
-import UserTab from "./user-tab/userTab";
+import UserTab from "./user-tab/UserTab";
 
 export const HandleUsers = () => {
     const { user } = useContext(CurrentUserContext);

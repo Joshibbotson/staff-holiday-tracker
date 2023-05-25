@@ -2,13 +2,9 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/auth/auth";
 import { useNavigate } from "react-router-dom";
-import Main from "../../components/main/Main";
-
 import SCSS from "./home.module.scss";
-
 import { ApprovedReqsProvider } from "../../context/ApprovedRequestContext";
 import RequestsProvider from "../../context/RequestContext";
-
 import AwaitApprovReqProvider from "../../context/AwaitApprovalReqContext";
 import Calendar from "../../components/main/calendar/Calendar";
 import RequestModal from "../../components/UI/request-modal/RequestModal";
@@ -49,15 +45,6 @@ const HomePage = () => {
             holidayTabColour: req.holidayTabColour,
         };
     });
-
-    // return (
-    //     <>
-    //         <main className={SCSS.mainContainer}>
-    //             <Calendar holidays={holidays} handleClick={handleClick} />
-    //         </main>
-    //         {showModal ? <RequestModal handleClick={handleClick} /> : ""}
-    //     </>
-    // );
 
     return (
         <div className={SCSS.homeContainer}>
