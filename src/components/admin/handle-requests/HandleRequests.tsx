@@ -1,20 +1,12 @@
 import SCSS from "./handleRequests.module.scss";
 import { useContext, useEffect, useState } from "react";
-import dateConvert from "../../../util-functions/dateConvert";
-import {
-    Checkbox,
-    FormControl,
-    InputLabel,
-    ListItemText,
-    OutlinedInput,
-} from "@mui/material";
-import EditPopUp from "../../UI/simple-dialog/EditPopUp";
 import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import { AwaitApprovalReqContext } from "../../../context/AwaitApprovalReqContext";
 import TableHeader from "../../UI/table/TableHeader";
 import RequestTableRow from "../../main/requests/request-table-row/requestTableRow";
+import { nanoid } from "nanoid";
 
 const HandleRequests = () => {
     const { user } = useContext(CurrentUserContext);
@@ -42,7 +34,10 @@ const HandleRequests = () => {
                 return req.approverEmail === user[0].email;
             })
         );
-        setLoadedRequests([...requests, ...userApprovedRequests]);
+        const newApprovedRequests = approvedRequests.filter(req => {
+            return req.approverEmail === user[0].email;
+        });
+        setLoadedRequests([...requests, ...newApprovedRequests]);
     }, [requests, approvedRequests]);
 
     useEffect(() => {
@@ -94,14 +89,17 @@ const HandleRequests = () => {
                     filterOptions={["Approved", "Awaiting approval"]}
                     handleChange={handleChange}
                     currentFilters={currentFilters}
-                />{" "}
+                    key={nanoid()}
+                />
                 <tbody>
                     {loadedRequests.map((req, index) => {
                         return (
                             <RequestTableRow
+                                variant="requestedBy"
                                 index={index}
                                 awaitingRequests={requests}
                                 req={req}
+                                key={nanoid()}
                             />
                         );
                     })}

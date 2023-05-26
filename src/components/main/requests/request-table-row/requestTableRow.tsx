@@ -4,15 +4,20 @@ import EditPopUp from "../../../UI/simple-dialog/EditPopUp";
 import SCSS from "./requestTableRow.module.scss";
 
 interface Props {
+    variant: "approvedBy" | "requestedBy";
     index: number;
     awaitingRequests: IncomingRequestsType[];
     req: IncomingRequestsType;
 }
 
-const RequestTableRow = ({ index, awaitingRequests, req }: Props) => {
+const RequestTableRow = ({ variant, index, awaitingRequests, req }: Props) => {
     return (
         <tr key={index}>
-            <td>{req.approverEmail}</td>
+            {variant === "approvedBy" ? (
+                <td>{req.approverEmail}</td>
+            ) : (
+                <td>{req.requestedByEmail}</td>
+            )}
             {awaitingRequests.includes(req) ? (
                 <td className={SCSS.requestTable__tdWaitApproval}>Waiting</td>
             ) : (

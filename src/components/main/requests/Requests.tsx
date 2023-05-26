@@ -91,6 +91,7 @@ const Requests = () => {
                         {loadedRequests.map((req, index) => {
                             return (
                                 <RequestTableRow
+                                    variant="approvedBy"
                                     index={index}
                                     awaitingRequests={requests}
                                     req={req}

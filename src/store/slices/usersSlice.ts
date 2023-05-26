@@ -26,10 +26,14 @@ export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
 export const fetchUsersUnderManager = createAsyncThunk(
     "usersUnderManager/fetchUsersUnderManager",
     async () => {
-        const currentUserEmail = auth.currentUser?.email;
-        if (currentUserEmail) {
-            const data = await listUsersUnderManager(currentUserEmail);
-            return data;
+        try {
+            const currentUserEmail = auth.currentUser?.email;
+            if (currentUserEmail) {
+                const data = await listUsersUnderManager(currentUserEmail);
+                return data;
+            }
+        } catch (error) {
+            console.log(error);
         }
     }
 );

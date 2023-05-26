@@ -141,6 +141,11 @@ export const RequestModal = ({ handleClick }: Props) => {
                 onClick={() => {
                     handleClick();
                 }}
+                onKeyDown={e => {
+                    if (e.key === "Escape") {
+                        handleClick();
+                    }
+                }}
             >
                 {submitScreen ? (
                     <PostSubmitModal
@@ -274,7 +279,7 @@ export const RequestModal = ({ handleClick }: Props) => {
                                     <TextField
                                         {...params}
                                         label="Type:"
-                                        autoFocus={true}
+                                        autoFocus={false}
                                     />
                                 )}
                             />

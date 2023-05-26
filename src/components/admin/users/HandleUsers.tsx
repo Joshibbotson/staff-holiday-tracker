@@ -4,7 +4,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchUsersUnderManager } from "../../../store/slices/usersSlice";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { UserType } from "../../../types";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
