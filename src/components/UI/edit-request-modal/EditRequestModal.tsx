@@ -25,7 +25,9 @@ const EditRequestModal = ({
     const [newTotalDays, setNewTotalDays] = useState<string>(
         request.totalDays.toString()
     );
-    const [type, setType] = useState<string>(request.typeOfLeave.toString());
+    const [newType, setNewType] = useState<string>(
+        request.typeOfLeave.toString()
+    );
     const typeOptions = [
         { value: "Annual leave", label: "Annual Leave" },
         { value: "Sick leave", label: "Sick leave" },
@@ -63,6 +65,7 @@ const EditRequestModal = ({
             newDateStart: new Date(newDateStart),
             newDateEnd: new Date(newDateEnd),
             newTotalDays: Number(newTotalDays),
+            newTypeOfLeave: newType,
         };
         handleEditRequest(updatedRequest);
         setSubmitScreen(true);
@@ -157,18 +160,20 @@ const EditRequestModal = ({
                                 isOptionEqualToValue={(option, value) =>
                                     option.value === value.value
                                 }
+                                value={{ value: newType, label: newType }}
                                 onChange={(
                                     event: any,
                                     newValue: {
                                         value: string;
                                         label: string;
                                     } | null
-                                ) => setType(newValue ? newValue.value : "")}
+                                ) => setNewType(newValue ? newValue.value : "")}
                                 renderInput={params => (
                                     <TextField
                                         {...params}
                                         label="Type:"
                                         autoFocus={true}
+                                        value={newType}
                                     />
                                 )}
                             />
