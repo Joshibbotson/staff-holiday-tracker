@@ -25,7 +25,6 @@ export const RequestModal = ({ handleClick }: Props) => {
         { value: string; label: string }[]
     >([]);
     const [approver, setApprover] = useState<string>("");
-    const [requestedBy, setRequestedBy] = useState<string>(user[0]?.email);
     const [dateStart, setDateStart] = useState<string>("");
     const [dateEnd, setDateEnd] = useState<string>("");
     const [totalDays, setTotalDays] = useState<string>("");
@@ -112,7 +111,7 @@ export const RequestModal = ({ handleClick }: Props) => {
 
         const newRequest = {
             approverEmail: approver,
-            requestedByEmail: requestedBy,
+            requestedByEmail: user[0]?.email,
             dateStart: new Date(dateStart),
             dateEnd: new Date(dateEnd),
             totalDays: Number(totalDays),
@@ -140,6 +139,11 @@ export const RequestModal = ({ handleClick }: Props) => {
                 className={SCSS.backDrop}
                 onClick={() => {
                     handleClick();
+                }}
+                onKeyDown={e => {
+                    if (e.key === "Escape") {
+                        handleClick();
+                    }
                 }}
             >
                 {submitScreen ? (
@@ -274,7 +278,7 @@ export const RequestModal = ({ handleClick }: Props) => {
                                     <TextField
                                         {...params}
                                         label="Type:"
-                                        autoFocus={true}
+                                        autoFocus={false}
                                     />
                                 )}
                             />

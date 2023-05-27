@@ -301,12 +301,14 @@ export async function addRequest(request: OutgoingRequestData): Promise<void> {
 export async function editRequest(
     updatedRequest: EditRequestType
 ): Promise<void> {
+    console.log(updatedRequest);
     try {
         const reqRef = doc(db, "requests", updatedRequest.uid);
         await updateDoc(reqRef, {
             dateStart: updatedRequest.newDateStart,
             dateEnd: updatedRequest.newDateEnd,
             totalDays: updatedRequest.newTotalDays,
+            typeOfLeave: updatedRequest.newTypeOfLeave,
         });
     } catch (error) {
         console.log(error);

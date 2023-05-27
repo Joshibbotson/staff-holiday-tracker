@@ -8,7 +8,8 @@
     font-size: 1rem;
     margin-bottom: auto;
     overflow-y: visible;
-    overflow-x: hidden;
+    overflow-x: auto;
+    height: 100dvh;
 
     .requestTable__title {
         font-size: 2rem;
@@ -125,5 +126,11 @@
             cursor: pointer;
             background-color: #f2f2f2;
         }
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .requestTable {
+        overflow-x: hidden;
     }
 }

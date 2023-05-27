@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { YearBtns } from "./years-btns/YearBtns";
 import { MonthBtns } from "./month-btns/MonthBtns";
 import CreateCalendar from "./create-calendar/CreateCalendar";
@@ -9,6 +9,7 @@ import {
     updateYear,
 } from "../../../store/slices/currentDateSlice";
 import { RootState } from "../../../store/store";
+import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext";
 
 type Holiday = {
     name: string;
@@ -19,10 +20,21 @@ type Holiday = {
 };
 
 type Props = {
-    holidays: Holiday[] | undefined;
+    // holidays: Holiday[] | undefined;
     handleClick: () => void;
 };
-const Calendar = ({ holidays, handleClick }: Props) => {
+const Calendar = ({ handleClick }: Props) => {
+    const { approvedRequests } = useContext(ApprovedRequestContext);
+
+    const holidays: Holiday[] = approvedRequests!.map(req => {
+        return {
+            name: req.requestedByEmail,
+            start: new Date(req.dateStart.toDate().toDateString()),
+            end: new Date(req.dateEnd.toDate().toDateString()),
+            typeOfLeave: req.typeOfLeave,
+            holidayTabColour: req.holidayTabColour,
+        };
+    });
     const month = useSelector(
         (state: RootState) => state.currentDateSlice.month
     );

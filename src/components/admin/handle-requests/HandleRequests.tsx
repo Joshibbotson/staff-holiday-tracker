@@ -1,34 +1,26 @@
 import SCSS from "./handleRequests.module.scss";
 import { useContext, useEffect, useState } from "react";
-import dateConvert from "../../../util-functions/dateConvert";
-import {
-    Checkbox,
-    FormControl,
-    InputLabel,
-    ListItemText,
-    OutlinedInput,
-} from "@mui/material";
-import EditPopUp from "../../UI/simple-dialog/EditPopUp";
 import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import { AwaitApprovalReqContext } from "../../../context/AwaitApprovalReqContext";
 import TableHeader from "../../UI/table/TableHeader";
 import RequestTableRow from "../../main/requests/request-table-row/requestTableRow";
+import { nanoid } from "nanoid";
 
 const HandleRequests = () => {
     const { user } = useContext(CurrentUserContext);
     const { requests } = useContext(AwaitApprovalReqContext);
     const { approvedRequests } = useContext(ApprovedRequestContext);
     const [userApprovedRequests, setUserApprovedRequests] = useState(
-        approvedRequests.filter(req => {
+        approvedRequests?.filter(req => {
             return req.approverEmail === user[0].email;
         })
     );
 
     const [loadedRequests, setLoadedRequests] = useState([
         ...requests,
-        ...userApprovedRequests,
+        ...userApprovedRequests!,
     ]);
     const [currentFilters, setCurrentFilters] = useState<string[]>([]);
 
@@ -38,11 +30,14 @@ const HandleRequests = () => {
     useEffect(() => {
         console.log(userApprovedRequests);
         setUserApprovedRequests(
-            approvedRequests.filter(req => {
+            approvedRequests!.filter(req => {
                 return req.approverEmail === user[0].email;
             })
         );
-        setLoadedRequests([...requests, ...userApprovedRequests]);
+        const newApprovedRequests = approvedRequests!.filter(req => {
+            return req.approverEmail === user[0].email;
+        });
+        setLoadedRequests([...requests, ...newApprovedRequests]);
     }, [requests, approvedRequests]);
 
     useEffect(() => {
@@ -50,19 +45,19 @@ const HandleRequests = () => {
             currentFilters.includes("Approved") &&
             !currentFilters.includes("Awaiting approval")
         ) {
-            setLoadedRequests([...userApprovedRequests]);
+            setLoadedRequests([...userApprovedRequests!]);
         } else if (
             currentFilters.includes("Approved") &&
             currentFilters.includes("Awaiting approval")
         ) {
-            setLoadedRequests([...requests, ...userApprovedRequests]);
+            setLoadedRequests([...requests, ...userApprovedRequests!]);
         } else if (
             currentFilters.includes("Awaiting approval") &&
             !currentFilters.includes("Approved")
         ) {
             setLoadedRequests([...requests]);
         } else {
-            setLoadedRequests([...requests, ...userApprovedRequests]);
+            setLoadedRequests([...requests, ...userApprovedRequests!]);
         }
     }, [currentFilters]);
 
@@ -94,14 +89,17 @@ const HandleRequests = () => {
                     filterOptions={["Approved", "Awaiting approval"]}
                     handleChange={handleChange}
                     currentFilters={currentFilters}
-                />{" "}
+                    key={nanoid()}
+                />
                 <tbody>
                     {loadedRequests.map((req, index) => {
                         return (
                             <RequestTableRow
+                                variant="requestedBy"
                                 index={index}
                                 awaitingRequests={requests}
                                 req={req}
+                                key={nanoid()}
                             />
                         );
                     })}

@@ -9,6 +9,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import SCSS from "./tableHeader.module.scss";
+import { nanoid } from "nanoid";
 
 interface Props {
     title: string | null;
@@ -74,7 +75,11 @@ const TableHeader = ({
             </tr>
             <tr className={SCSS.requestTable__header}>
                 {columnNames.map((column: string) => {
-                    return <th colSpan={1}>{column}</th>;
+                    return (
+                        <th colSpan={1} key={nanoid()}>
+                            {column}
+                        </th>
+                    );
                 })}
             </tr>
         </thead>

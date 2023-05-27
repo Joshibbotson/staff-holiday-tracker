@@ -3,4 +3,5 @@ export interface EditRequestType {
     newDateStart: Date;
     newDateEnd: Date;
     newTotalDays: number;
+    newTypeOfLeave: string;
 }
