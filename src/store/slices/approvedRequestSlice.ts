@@ -20,6 +20,7 @@ export const fetchApprovedRequests = createAsyncThunk(
     async (_, { getState }) => {
         const { month, year } = (getState() as RootState).currentDateSlice;
         const data = await listApprovedRequests(month, year);
+        console.log(data);
         return data;
     }
 );

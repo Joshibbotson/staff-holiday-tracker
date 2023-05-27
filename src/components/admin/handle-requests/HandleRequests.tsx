@@ -13,14 +13,14 @@ const HandleRequests = () => {
     const { requests } = useContext(AwaitApprovalReqContext);
     const { approvedRequests } = useContext(ApprovedRequestContext);
     const [userApprovedRequests, setUserApprovedRequests] = useState(
-        approvedRequests.filter(req => {
+        approvedRequests?.filter(req => {
             return req.approverEmail === user[0].email;
         })
     );
 
     const [loadedRequests, setLoadedRequests] = useState([
         ...requests,
-        ...userApprovedRequests,
+        ...userApprovedRequests!,
     ]);
     const [currentFilters, setCurrentFilters] = useState<string[]>([]);
 
@@ -30,11 +30,11 @@ const HandleRequests = () => {
     useEffect(() => {
         console.log(userApprovedRequests);
         setUserApprovedRequests(
-            approvedRequests.filter(req => {
+            approvedRequests!.filter(req => {
                 return req.approverEmail === user[0].email;
             })
         );
-        const newApprovedRequests = approvedRequests.filter(req => {
+        const newApprovedRequests = approvedRequests!.filter(req => {
             return req.approverEmail === user[0].email;
         });
         setLoadedRequests([...requests, ...newApprovedRequests]);
@@ -45,19 +45,19 @@ const HandleRequests = () => {
             currentFilters.includes("Approved") &&
             !currentFilters.includes("Awaiting approval")
         ) {
-            setLoadedRequests([...userApprovedRequests]);
+            setLoadedRequests([...userApprovedRequests!]);
         } else if (
             currentFilters.includes("Approved") &&
             currentFilters.includes("Awaiting approval")
         ) {
-            setLoadedRequests([...requests, ...userApprovedRequests]);
+            setLoadedRequests([...requests, ...userApprovedRequests!]);
         } else if (
             currentFilters.includes("Awaiting approval") &&
             !currentFilters.includes("Approved")
         ) {
             setLoadedRequests([...requests]);
         } else {
-            setLoadedRequests([...requests, ...userApprovedRequests]);
+            setLoadedRequests([...requests, ...userApprovedRequests!]);
         }
     }, [currentFilters]);
 

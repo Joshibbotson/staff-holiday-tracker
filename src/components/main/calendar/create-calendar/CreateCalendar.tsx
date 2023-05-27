@@ -21,6 +21,7 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
     const [days, setDays] = useState<Date[]>([]);
     const [prevMonthDays, setPrevMonthDays] = useState<Date[]>([]);
     const [nextMonthDays, setNextMonthDays] = useState<Date[]>([]);
+    const [targetable, setTargetable] = useState<boolean>(true);
 
     useEffect(() => {
         const date = new Date(year, month, 1);
@@ -143,13 +144,21 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
                                             <td
                                                 key={weekIndex * 7 + dayIndex}
                                                 className={getClassName(date)}
-                                                onClick={() => handleClick()}
+                                                onClick={() => {
+                                                    handleClick(),
+                                                        setTargetable(
+                                                            !targetable
+                                                        );
+                                                }}
                                                 onKeyDown={e => {
                                                     if (e.key === "Enter") {
                                                         handleClick();
+                                                        setTargetable(
+                                                            !targetable
+                                                        );
                                                     }
                                                 }}
-                                                tabIndex={0}
+                                                tabIndex={targetable ? 0 : -1}
                                                 aria-label={`${date.toLocaleDateString()} - ${getHolidayUserInfo(
                                                     date,
                                                     dayIndex
@@ -167,13 +176,21 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
                                             <td
                                                 key={weekIndex * 7 + dayIndex}
                                                 className={getClassName(date)}
-                                                onClick={() => handleClick()}
+                                                onClick={() => {
+                                                    handleClick(),
+                                                        setTargetable(
+                                                            !targetable
+                                                        );
+                                                }}
                                                 onKeyDown={e => {
                                                     if (e.key === "Enter") {
                                                         handleClick();
+                                                        setTargetable(
+                                                            !targetable
+                                                        );
                                                     }
                                                 }}
-                                                tabIndex={0}
+                                                tabIndex={targetable ? 0 : -1}
                                                 aria-label={date.toLocaleDateString()}
                                             >
                                                 <HolidayTab

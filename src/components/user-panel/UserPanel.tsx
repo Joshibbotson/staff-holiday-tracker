@@ -40,9 +40,6 @@ const UserPanel = () => {
         if (user[0]) {
             user[0].admin ? setAdmin(true) : setAdmin(false);
             if (user[0].profilePicDownloadURL) {
-                console.log(user[0]);
-
-                console.log("hello");
                 return setUserImage(user[0].profilePicDownloadURL);
             } else if (user[0].profilePic) {
                 const imageRef: StorageReference = ref(

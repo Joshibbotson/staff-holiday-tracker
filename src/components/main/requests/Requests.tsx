@@ -12,7 +12,7 @@ const Requests = () => {
     const { requests } = useContext(RequestContext);
     const { approvedRequests } = useContext(ApprovedRequestContext);
     const [userApprovedRequests, setUserApprovedRequests] = useState(
-        approvedRequests.filter(req => {
+        approvedRequests!.filter(req => {
             return req.requestedByEmail === user[0].email;
         })
     );
@@ -28,7 +28,7 @@ const Requests = () => {
     //Ensure Requests is re-rendered when requests change//
     useEffect(() => {
         setUserApprovedRequests(
-            approvedRequests.filter(req => {
+            approvedRequests!.filter(req => {
                 return req.requestedByEmail === user[0].email;
             })
         );
