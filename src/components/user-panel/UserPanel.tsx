@@ -128,7 +128,11 @@ const UserPanel = () => {
                     </Button>
                 </div>
             </div>
-            {showModal ? <RequestModal handleClick={handleClick} /> : ""}
+            {showModal ? (
+                <RequestModal clickedDate={null} handleClick={handleClick} />
+            ) : (
+                ""
+            )}
         </>
     );
 };
