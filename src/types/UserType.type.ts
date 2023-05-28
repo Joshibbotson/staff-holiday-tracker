@@ -10,7 +10,7 @@ export interface UserType {
     takenHolidays: number;
     flexTime: number;
     profilePic: string;
-    profilePicDownloadURL: string;
+    profilePicDownloadURL?: string;
     managersEmail: string;
     holidayTabColour: string;
 }
