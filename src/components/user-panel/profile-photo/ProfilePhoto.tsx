@@ -12,7 +12,9 @@ export const ProfilePhoto = ({ userImage, updateImageUpload }: Props) => {
         <div className={SCSS.profileImg}>
             <div className={SCSS.profileImg__photoIconWrapper}>
                 <input
+                    name="profilePhotoUpload"
                     type="file"
+                    aria-label="profile photo upload button"
                     onChange={e => {
                         updateImageUpload(e.target.files);
                     }}

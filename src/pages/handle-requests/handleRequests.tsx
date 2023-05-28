@@ -21,11 +21,11 @@ const HandleRequestsPage = () => {
     return (
         <AwaitApprovReqProvider>
             <ApprovedReqsProvider>
-                <RequestsProvider>
-                    <main className={SCSS.mainContainer}>
-                        <HandleRequests />
-                    </main>
-                </RequestsProvider>
+                {/* <RequestsProvider> */}
+                <main className={SCSS.mainContainer}>
+                    <HandleRequests />
+                </main>
+                {/* </RequestsProvider> */}
             </ApprovedReqsProvider>
         </AwaitApprovReqProvider>
     );

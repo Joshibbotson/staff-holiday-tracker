@@ -153,9 +153,7 @@ const CreateCalendar = ({
                                                 className={getClassName(date)}
                                                 onClick={() => {
                                                     handleClick(),
-                                                        setTargetable(
-                                                            !targetable
-                                                        ),
+                                                        setTargetable(false),
                                                         date >= new Date()
                                                             ? updateClickedDate(
                                                                   date
@@ -167,9 +165,7 @@ const CreateCalendar = ({
                                                 onKeyDown={e => {
                                                     if (e.key === "Enter") {
                                                         handleClick();
-                                                        setTargetable(
-                                                            !targetable
-                                                        ),
+                                                        setTargetable(false),
                                                             date >= new Date()
                                                                 ? updateClickedDate(
                                                                       date
@@ -199,9 +195,7 @@ const CreateCalendar = ({
                                                 className={getClassName(date)}
                                                 onClick={() => {
                                                     handleClick(),
-                                                        setTargetable(
-                                                            !targetable
-                                                        ),
+                                                        setTargetable(false),
                                                         date >= new Date()
                                                             ? updateClickedDate(
                                                                   date
@@ -213,9 +207,7 @@ const CreateCalendar = ({
                                                 onKeyDown={e => {
                                                     if (e.key === "Enter") {
                                                         handleClick();
-                                                        setTargetable(
-                                                            !targetable
-                                                        ),
+                                                        setTargetable(false),
                                                             date >= new Date()
                                                                 ? updateClickedDate(
                                                                       date
