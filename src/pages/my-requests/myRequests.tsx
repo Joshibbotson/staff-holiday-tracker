@@ -20,15 +20,15 @@ const MyRequestsPage = () => {
 
     return (
         <>
-            <AwaitApprovReqProvider>
-                <ApprovedReqsProvider>
-                    <RequestsProvider>
-                        <main className={SCSS.mainContainer}>
-                            <Requests />
-                        </main>
-                    </RequestsProvider>
-                </ApprovedReqsProvider>
-            </AwaitApprovReqProvider>
+            {/* <AwaitApprovReqProvider> */}
+            <ApprovedReqsProvider>
+                <RequestsProvider>
+                    <main className={SCSS.mainContainer}>
+                        <Requests />
+                    </main>
+                </RequestsProvider>
+            </ApprovedReqsProvider>
+            {/* </AwaitApprovReqProvider> */}
         </>
     );
 };
