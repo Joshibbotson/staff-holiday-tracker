@@ -5,6 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/auth/auth";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase/auth/auth";
+import { requestCache } from "../caching/requestCache";
 
 type RequestContextType = {
     requests: IncomingRequestsType[];
@@ -47,21 +48,27 @@ export const RequestsProvider: React.FC<any> = ({ children }) => {
         }
     }, [user]);
 
+    let cacheKey: string = `requests ${user?.email}`;
     useEffect(() => {
         if (user) {
-            const fetchRequests = async () => {
-                setLoading(true);
-                try {
-                    const data = await listRequests(user.email!);
-                    setUserRequests(data);
-                    setLoading(false);
-                } catch (error) {
-                    const anyError: any = error;
-                    setError(anyError.message);
-                    setLoading(false);
-                }
-            };
-            fetchRequests();
+            if (requestCache[cacheKey]) {
+                setUserRequests(requestCache[cacheKey]!);
+            } else {
+                const fetchRequests = async () => {
+                    setLoading(true);
+                    try {
+                        const data = await listRequests(user.email!);
+                        setUserRequests(data);
+                        requestCache[cacheKey] = data;
+                        setLoading(false);
+                    } catch (error) {
+                        const anyError: any = error;
+                        setError(anyError.message);
+                        setLoading(false);
+                    }
+                };
+                fetchRequests();
+            }
         }
     }, [user]);
 

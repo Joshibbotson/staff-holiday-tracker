@@ -9,7 +9,6 @@ interface EditPopUpProps {
 
 export default function EditPopUp({ request }: EditPopUpProps) {
     const [open, setOpen] = useState(false);
-    console.log(request);
 
     const handleClickOpen = () => {
         setOpen(true);

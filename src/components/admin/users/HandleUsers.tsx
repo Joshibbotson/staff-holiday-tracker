@@ -11,6 +11,7 @@ import { AppDispatch, RootState } from "../../../store/store";
 import RadialProgress from "../../UI/radial-progress/RadialProgress";
 import FetchedUserType from "../../../types/FetchedUserType.type";
 import UserTab from "./user-tab/UserTab";
+import { nanoid } from "nanoid";
 
 export const HandleUsers = () => {
     const { user } = useContext(CurrentUserContext);
@@ -92,6 +93,7 @@ export const HandleUsers = () => {
                                       selectedUser={selectedUser}
                                       updateSelectedUser={updateSelectedUser}
                                       getProfilePic={getProfilePic}
+                                      key={nanoid()}
                                   />
                               );
                           })
