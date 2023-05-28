@@ -14,10 +14,17 @@ type Props = {
     month: number;
     year: number;
     holidays: Holiday[] | undefined;
+    updateClickedDate: (date: Date) => void;
     handleClick: () => void;
 };
 
-const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
+const CreateCalendar = ({
+    month,
+    year,
+    holidays,
+    updateClickedDate,
+    handleClick,
+}: Props) => {
     const [days, setDays] = useState<Date[]>([]);
     const [prevMonthDays, setPrevMonthDays] = useState<Date[]>([]);
     const [nextMonthDays, setNextMonthDays] = useState<Date[]>([]);
@@ -148,14 +155,18 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
                                                     handleClick(),
                                                         setTargetable(
                                                             !targetable
-                                                        );
+                                                        ),
+                                                        updateClickedDate(date);
                                                 }}
                                                 onKeyDown={e => {
                                                     if (e.key === "Enter") {
                                                         handleClick();
                                                         setTargetable(
                                                             !targetable
-                                                        );
+                                                        ),
+                                                            updateClickedDate(
+                                                                date
+                                                            );
                                                     }
                                                 }}
                                                 tabIndex={targetable ? 0 : -1}
@@ -180,14 +191,18 @@ const CreateCalendar = ({ month, year, holidays, handleClick }: Props) => {
                                                     handleClick(),
                                                         setTargetable(
                                                             !targetable
-                                                        );
+                                                        ),
+                                                        updateClickedDate(date);
                                                 }}
                                                 onKeyDown={e => {
                                                     if (e.key === "Enter") {
                                                         handleClick();
                                                         setTargetable(
                                                             !targetable
-                                                        );
+                                                        ),
+                                                            updateClickedDate(
+                                                                date
+                                                            );
                                                     }
                                                 }}
                                                 tabIndex={targetable ? 0 : -1}

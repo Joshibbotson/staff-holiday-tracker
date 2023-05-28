@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase/auth/auth";
 import { useNavigate } from "react-router-dom";
@@ -8,10 +8,10 @@ import RequestsProvider from "../../context/RequestContext";
 import AwaitApprovReqProvider from "../../context/AwaitApprovalReqContext";
 import Calendar from "../../components/main/calendar/Calendar";
 import RequestModal from "../../components/UI/request-modal/RequestModal";
-export let cache = {};
 
 const HomePage = () => {
     const [user, loading] = useAuthState(auth);
+    const clickedDateRef = useRef<Date | null>(null);
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -24,6 +24,10 @@ const HomePage = () => {
     function handleClick() {
         setShowModal(!showModal);
     }
+    function updateClickedDate(date: Date) {
+        console.log(date);
+        clickedDateRef.current = date;
+    }
 
     return (
         <div className={SCSS.homeContainer}>
@@ -32,12 +36,15 @@ const HomePage = () => {
                     <RequestsProvider>
                         <main className={SCSS.mainContainer}>
                             <Calendar
-                                // holidays={holidays}
+                                updateClickedDate={updateClickedDate}
                                 handleClick={handleClick}
                             />
                         </main>
                         {showModal ? (
-                            <RequestModal handleClick={handleClick} />
+                            <RequestModal
+                                clickedDate={clickedDateRef.current}
+                                handleClick={handleClick}
+                            />
                         ) : (
                             ""
                         )}

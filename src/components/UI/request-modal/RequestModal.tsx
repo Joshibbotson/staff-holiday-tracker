@@ -12,12 +12,14 @@ import { PostSubmitModal } from "../successful-submit/PostSubmitModal";
 import { AppDispatch } from "../../../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUsers } from "../../../store/slices/usersSlice";
+import { dateFormat } from "../../../util-functions/dateFormat";
 
 interface Props {
+    clickedDate: Date | null;
     handleClick: () => void;
 }
 
-export const RequestModal = ({ handleClick }: Props) => {
+export const RequestModal = ({ clickedDate, handleClick }: Props) => {
     const { user } = useContext(CurrentUserContext);
     const { users } = useSelector((state: any) => state.users);
     const dispatch = useDispatch<AppDispatch>();
@@ -25,8 +27,8 @@ export const RequestModal = ({ handleClick }: Props) => {
         { value: string; label: string }[]
     >([]);
     const [approver, setApprover] = useState<string>("");
-    const [dateStart, setDateStart] = useState<string>("");
-    const [dateEnd, setDateEnd] = useState<string>("");
+    const [dateStart, setDateStart] = useState<string | undefined>("");
+    const [dateEnd, setDateEnd] = useState<string | undefined>("");
     const [totalDays, setTotalDays] = useState<string>("");
     const [type, setType] = useState<string>("");
     const typeOptions = [
@@ -38,6 +40,9 @@ export const RequestModal = ({ handleClick }: Props) => {
         { value: "Bereavement leave", label: "Bereavement Leave" },
     ];
     const [submitScreen, setSubmitScreen] = useState<boolean>(false);
+    useEffect(() => {
+        if (clickedDate) setDateStart(dateFormat(clickedDate?.toDateString()));
+    }, [clickedDate]);
 
     useEffect(() => {
         dispatch(fetchUsers());
@@ -73,47 +78,18 @@ export const RequestModal = ({ handleClick }: Props) => {
         event.stopPropagation();
     };
 
-    const checkDate = (form: HTMLFormElement) => {
-        const startDate = new Date(dateStart);
-        const endDate = new Date(dateEnd);
-
-        if (endDate <= startDate) {
-            const dateEndInput = form.elements.namedItem(
-                "dateEnd"
-            ) as HTMLInputElement;
-            dateEndInput.setCustomValidity(
-                "End date should come after start date"
-            );
-            form.reportValidity();
-        }
-        if (startDate >= endDate) {
-            console.log("larger");
-            const dateStartInput = form.elements.namedItem(
-                "dateStart"
-            ) as HTMLInputElement;
-            dateStartInput.setCustomValidity(
-                "Start date should come before end date"
-            );
-            form.reportValidity();
-        } else {
-            const dateEndInput = form.elements.namedItem(
-                "dateEnd"
-            ) as HTMLInputElement;
-            dateEndInput.setCustomValidity("");
-        }
-    };
-
     const handleSubmit = (
         e: React.FormEvent<HTMLFormElement>,
         form: HTMLFormElement
     ) => {
+        form.reset();
         e.preventDefault();
 
         const newRequest = {
             approverEmail: approver,
             requestedByEmail: user[0]?.email,
-            dateStart: new Date(dateStart),
-            dateEnd: new Date(dateEnd),
+            dateStart: new Date(dateStart!),
+            dateEnd: new Date(dateEnd!),
             totalDays: Number(totalDays),
             typeOfLeave: type,
             holidayTabColour: user[0].holidayTabColour,
@@ -167,7 +143,7 @@ export const RequestModal = ({ handleClick }: Props) => {
                         <h3>New Request</h3>
                         <form
                             onSubmit={e => {
-                                handleSubmit(e, e.currentTarget.form!);
+                                handleSubmit(e, e.currentTarget);
                             }}
                         >
                             <Autocomplete
@@ -216,12 +192,15 @@ export const RequestModal = ({ handleClick }: Props) => {
                                     required
                                     name="dateStart"
                                     type="date"
-                                    value={dateStart}
+                                    value={
+                                        dateStart
+                                            ? dateStart
+                                            : dateEnd
+                                            ? dateEnd
+                                            : dateStart
+                                    }
                                     onChange={e => {
-                                        return (
-                                            setDateStart(e.target.value),
-                                            checkDate(e.currentTarget.form!)
-                                        );
+                                        return setDateStart(e.target.value);
                                     }}
                                 />
                             </div>
@@ -236,12 +215,15 @@ export const RequestModal = ({ handleClick }: Props) => {
                                 <input
                                     required
                                     type="date"
-                                    value={dateEnd}
+                                    value={
+                                        dateEnd
+                                            ? dateEnd
+                                            : dateStart
+                                            ? dateStart
+                                            : dateEnd
+                                    }
                                     onChange={e => {
-                                        return (
-                                            setDateEnd(e.target.value),
-                                            checkDate(e.currentTarget.form!)
-                                        );
+                                        return setDateEnd(e.target.value);
                                     }}
                                     name="dateEnd"
                                 />
@@ -250,6 +232,7 @@ export const RequestModal = ({ handleClick }: Props) => {
                                 label="Total days:"
                                 variant="outlined"
                                 type="number"
+                                required={true}
                                 aria-readonly={true}
                                 value={totalDays}
                                 onChange={e => setTotalDays(e.target.value)}
@@ -259,6 +242,7 @@ export const RequestModal = ({ handleClick }: Props) => {
                                 }}
                             />
                             <Autocomplete
+                                aria-required={true}
                                 disablePortal
                                 options={typeOptions}
                                 sx={{ width: "100%" }}
@@ -276,6 +260,7 @@ export const RequestModal = ({ handleClick }: Props) => {
                                 ) => setType(newValue ? newValue.value : "")}
                                 renderInput={params => (
                                     <TextField
+                                        required={true}
                                         {...params}
                                         label="Type:"
                                         autoFocus={false}

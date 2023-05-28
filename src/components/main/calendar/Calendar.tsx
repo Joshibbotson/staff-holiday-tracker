@@ -20,10 +20,10 @@ type Holiday = {
 };
 
 type Props = {
-    // holidays: Holiday[] | undefined;
+    updateClickedDate: (date: Date) => void;
     handleClick: () => void;
 };
-const Calendar = ({ handleClick }: Props) => {
+const Calendar = ({ updateClickedDate, handleClick }: Props) => {
     const { approvedRequests } = useContext(ApprovedRequestContext);
 
     const holidays: Holiday[] = approvedRequests!.map(req => {
@@ -60,6 +60,7 @@ const Calendar = ({ handleClick }: Props) => {
                     month={month}
                     year={year}
                     holidays={holidays}
+                    updateClickedDate={updateClickedDate}
                     handleClick={handleClick}
                 />
             </section>
