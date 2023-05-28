@@ -1,9 +1,9 @@
 import { createContext, useState, useEffect } from "react";
 import { listApprovedRequests } from "../firebase/firestore/requests/listApprovedRequests";
-import { ApprovedRequestsType, IncomingRequestsType } from "../types";
+import { ApprovedRequestsType } from "../types";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/auth/auth";
-import { onSnapshot, collection, query } from "firebase/firestore";
+
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { approvedReqCache } from "../caching/approveReqCache";
