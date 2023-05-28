@@ -156,7 +156,13 @@ const CreateCalendar = ({
                                                         setTargetable(
                                                             !targetable
                                                         ),
-                                                        updateClickedDate(date);
+                                                        date >= new Date()
+                                                            ? updateClickedDate(
+                                                                  date
+                                                              )
+                                                            : updateClickedDate(
+                                                                  new Date()
+                                                              );
                                                 }}
                                                 onKeyDown={e => {
                                                     if (e.key === "Enter") {
@@ -164,9 +170,13 @@ const CreateCalendar = ({
                                                         setTargetable(
                                                             !targetable
                                                         ),
-                                                            updateClickedDate(
-                                                                date
-                                                            );
+                                                            date >= new Date()
+                                                                ? updateClickedDate(
+                                                                      date
+                                                                  )
+                                                                : updateClickedDate(
+                                                                      new Date()
+                                                                  );
                                                     }
                                                 }}
                                                 tabIndex={targetable ? 0 : -1}
@@ -192,7 +202,13 @@ const CreateCalendar = ({
                                                         setTargetable(
                                                             !targetable
                                                         ),
-                                                        updateClickedDate(date);
+                                                        date >= new Date()
+                                                            ? updateClickedDate(
+                                                                  date
+                                                              )
+                                                            : updateClickedDate(
+                                                                  new Date()
+                                                              );
                                                 }}
                                                 onKeyDown={e => {
                                                     if (e.key === "Enter") {
@@ -200,9 +216,13 @@ const CreateCalendar = ({
                                                         setTargetable(
                                                             !targetable
                                                         ),
-                                                            updateClickedDate(
-                                                                date
-                                                            );
+                                                            date >= new Date()
+                                                                ? updateClickedDate(
+                                                                      date
+                                                                  )
+                                                                : updateClickedDate(
+                                                                      new Date()
+                                                                  );
                                                     }
                                                 }}
                                                 tabIndex={targetable ? 0 : -1}
