@@ -27,7 +27,9 @@ export const RequestModal = ({ clickedDate, handleClick }: Props) => {
         { value: string; label: string }[]
     >([]);
     const [approver, setApprover] = useState<string>("");
-    const [dateStart, setDateStart] = useState<string | undefined>("");
+    const [dateStart, setDateStart] = useState<string | undefined>(
+        clickedDate ? dateFormat(clickedDate?.toDateString()) : ""
+    );
     const [dateEnd, setDateEnd] = useState<string | undefined>("");
     const [totalDays, setTotalDays] = useState<string>("");
     const [type, setType] = useState<string>("");
@@ -40,9 +42,6 @@ export const RequestModal = ({ clickedDate, handleClick }: Props) => {
         { value: "Bereavement leave", label: "Bereavement Leave" },
     ];
     const [submitScreen, setSubmitScreen] = useState<boolean>(false);
-    useEffect(() => {
-        if (clickedDate) setDateStart(dateFormat(clickedDate?.toDateString()));
-    }, [clickedDate]);
 
     useEffect(() => {
         dispatch(fetchUsers());
@@ -166,6 +165,7 @@ export const RequestModal = ({ clickedDate, handleClick }: Props) => {
                                 }
                                 renderInput={params => (
                                     <TextField
+                                        required={true}
                                         {...params}
                                         label="Approver:"
                                         autoFocus={true}
@@ -178,6 +178,7 @@ export const RequestModal = ({ clickedDate, handleClick }: Props) => {
                                     variant="outlined"
                                     aria-readonly={true}
                                     value={user[0].name}
+                                    className={SCSS.requestedBy}
                                 />
                             </div>
                             <div className={SCSS.wrapper}>
@@ -185,20 +186,16 @@ export const RequestModal = ({ clickedDate, handleClick }: Props) => {
                                     className={SCSS.dateLabel}
                                     htmlFor="dateStart"
                                 >
-                                    Date start:{" "}
+                                    Date start: *
                                 </label>
 
                                 <input
                                     required
                                     name="dateStart"
+                                    min={dateFormat(new Date().toDateString())}
+                                    max={dateEnd ? dateEnd : ""}
                                     type="date"
-                                    value={
-                                        dateStart
-                                            ? dateStart
-                                            : dateEnd
-                                            ? dateEnd
-                                            : dateStart
-                                    }
+                                    value={dateStart ? dateStart : ""}
                                     onChange={e => {
                                         return setDateStart(e.target.value);
                                     }}
@@ -209,19 +206,13 @@ export const RequestModal = ({ clickedDate, handleClick }: Props) => {
                                     className={SCSS.dateLabel}
                                     htmlFor="dateEnd"
                                 >
-                                    Date end:
+                                    Date end: *
                                 </label>
 
                                 <input
                                     required
                                     type="date"
-                                    value={
-                                        dateEnd
-                                            ? dateEnd
-                                            : dateStart
-                                            ? dateStart
-                                            : dateEnd
-                                    }
+                                    min={dateStart ? dateStart : ""}
                                     onChange={e => {
                                         return setDateEnd(e.target.value);
                                     }}

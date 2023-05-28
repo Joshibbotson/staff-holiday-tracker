@@ -5,6 +5,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase/auth/auth";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { db } from "../firebase/auth/auth";
+import { awaitApprovReqCache } from "../caching/awaitApprovReqCache";
 
 type AwaitApprovReqContextType = {
     requests: IncomingRequestsType[];
@@ -43,27 +44,35 @@ export const AwaitApprovReqProvider: React.FC<any> = ({ children }) => {
                     data.uid = doc.id;
                     requests.push(data);
                 });
+                awaitApprovReqCache[cacheKey] = requests;
                 setRequestsForApproval(requests);
             });
             return () => unsubscribe();
         }
     }, [user]);
 
+    let cacheKey: string = `requests ${user?.email}`;
     useEffect(() => {
         if (user) {
-            const fetchRequests = async () => {
-                setLoading(true);
-                try {
-                    const data = await listRequestsForApproval(user.email!);
-                    setRequestsForApproval(data);
-                    setLoading(false);
-                } catch (error) {
-                    const anyError: any = error;
-                    setError(anyError.message);
-                    setLoading(false);
-                }
-            };
-            fetchRequests();
+            if (awaitApprovReqCache[cacheKey]) {
+                setRequestsForApproval(awaitApprovReqCache[cacheKey]!);
+            } else {
+                const fetchRequests = async () => {
+                    setLoading(true);
+                    try {
+                        const data = await listRequestsForApproval(user.email!);
+                        setRequestsForApproval(data);
+
+                        awaitApprovReqCache[cacheKey] = data;
+                        setLoading(false);
+                    } catch (error) {
+                        const anyError: any = error;
+                        setError(anyError.message);
+                        setLoading(false);
+                    }
+                };
+                fetchRequests();
+            }
         }
     }, [user]);
 

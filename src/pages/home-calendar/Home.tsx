@@ -25,7 +25,6 @@ const HomePage = () => {
         setShowModal(!showModal);
     }
     function updateClickedDate(date: Date) {
-        console.log(date);
         clickedDateRef.current = date;
     }
 
