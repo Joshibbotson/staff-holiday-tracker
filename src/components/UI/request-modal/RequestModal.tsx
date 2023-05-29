@@ -2,7 +2,7 @@ import SCSS from "./requestModal.module.scss";
 import { addRequest } from "../../../firebase/firestore/firestore";
 import { OutgoingRequestData } from "../../../types/OutgoingRequestData.type";
 import { useEffect, useState } from "react";
-import { CurrentUserContext } from "../../../context/CurrentUserContext";
+// import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import { useContext } from "react";
 import ClearIcon from "@mui/icons-material/Clear";
 import { Button } from "@mui/material";
@@ -13,6 +13,7 @@ import { AppDispatch } from "../../../store/store";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUsers } from "../../../store/slices/usersSlice";
 import { dateFormat } from "../../../util-functions/dateFormat";
+import { fetchCurrentUser } from "../../../store/slices/currentUserSlice";
 
 interface Props {
     clickedDate: Date | null;
@@ -20,9 +21,11 @@ interface Props {
 }
 
 export const RequestModal = ({ clickedDate, handleClick }: Props) => {
-    const { user } = useContext(CurrentUserContext);
+    // const { user } = useContext(CurrentUserContext);
+    const { user } = useSelector((state: any) => state.user);
     const { users } = useSelector((state: any) => state.users);
     const dispatch = useDispatch<AppDispatch>();
+
     const [adminUsers, setAdminUsers] = useState<
         { value: string; label: string }[]
     >([]);
@@ -45,6 +48,7 @@ export const RequestModal = ({ clickedDate, handleClick }: Props) => {
 
     useEffect(() => {
         dispatch(fetchUsers());
+        dispatch(fetchCurrentUser());
     }, [dispatch]);
 
     useEffect(() => {

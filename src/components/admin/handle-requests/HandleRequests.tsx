@@ -2,14 +2,16 @@ import SCSS from "./handleRequests.module.scss";
 import { useContext, useEffect, useState } from "react";
 import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext";
 import { SelectChangeEvent } from "@mui/material/Select";
-import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import { AwaitApprovalReqContext } from "../../../context/AwaitApprovalReqContext";
 import TableHeader from "../../UI/table/TableHeader";
 import RequestTableRow from "../../main/requests/request-table-row/requestTableRow";
 import { nanoid } from "nanoid";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../../store/store";
+import { fetchCurrentUser } from "../../../store/slices/currentUserSlice";
 
 const HandleRequests = () => {
-    const { user } = useContext(CurrentUserContext);
+    const { user } = useSelector((state: any) => state.user);
     const { requests } = useContext(AwaitApprovalReqContext);
     const { approvedRequests } = useContext(ApprovedRequestContext);
     const [userApprovedRequests, setUserApprovedRequests] = useState(
@@ -25,7 +27,11 @@ const HandleRequests = () => {
     const [currentFilters, setCurrentFilters] = useState<string[]>([]);
 
     const filters = ["Approved", "Awaiting approval"];
+    const dispatch = useDispatch<AppDispatch>();
 
+    useEffect(() => {
+        dispatch(fetchCurrentUser());
+    }, [dispatch]);
     //Ensure Requests is re-rendered when requests change//
     useEffect(() => {
         console.log(userApprovedRequests);

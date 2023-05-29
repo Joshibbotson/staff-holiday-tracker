@@ -16,9 +16,12 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DoneIcon from "@mui/icons-material/Done";
 import { IncomingRequestsType } from "../../../types";
-import { useContext, useState } from "react";
-import { CurrentUserContext } from "../../../context/CurrentUserContext";
+import { useContext, useEffect, useState } from "react";
+// import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import EditRequestModal from "../edit-request-modal/EditRequestModal";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "../../../store/store";
+import { fetchCurrentUser } from "../../../store/slices/currentUserSlice";
 
 export interface DialogModalProps {
     open: boolean;
@@ -28,7 +31,14 @@ export interface DialogModalProps {
 
 export default function DialogModal(props: DialogModalProps) {
     const { onClose, open, request } = props;
-    const { user } = useContext(CurrentUserContext);
+    // const { user } = useContext(CurrentUserContext);
+    const { user } = useSelector((state: any) => state.user);
+    const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        dispatch(fetchCurrentUser());
+    }, [dispatch]);
+
     const [showEditModal, setShowEditModal] = useState(false);
 
     const handleClose = (name: string) => {

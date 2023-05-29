@@ -10,6 +10,6 @@ export default interface FetchedUserType {
     takenHolidays: number;
     flexTime: number;
     profilePic: string;
-    profilePicDownloadURL: string;
+    profilePicDownloadURL?: string;
     managersEmail: string;
 }
