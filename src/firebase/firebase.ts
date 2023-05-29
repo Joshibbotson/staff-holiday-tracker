@@ -13,9 +13,8 @@ const firebaseConfig = {
 
 export const app: FirebaseApp = initializeApp(firebaseConfig);
 export const storage: FirebaseStorage = getStorage(app);
+export const appCheckPublicKey = "6Ler-ksmAAAAAOooJWs7SVE0YLBHkcJ4EUID4aJ4";
 const appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider(
-        "6Ler-ksmAAAAAOooJWs7SVE0YLBHkcJ4EUID4aJ4"
-    ),
+    provider: new ReCaptchaV3Provider(appCheckPublicKey),
     isTokenAutoRefreshEnabled: true,
 });

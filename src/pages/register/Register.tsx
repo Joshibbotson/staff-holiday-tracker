@@ -11,6 +11,8 @@ import { updateUserDocID } from "../../firebase/firestore/firestore";
 import registerSCSS from "./register.module.scss";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ReCAPTCHA from "react-google-recaptcha";
+import { appCheckPublicKey } from "../../firebase/firebase";
 
 function Register() {
     const [email, setEmail] = useState("");
@@ -31,6 +33,7 @@ function Register() {
         }
     }, [user, loading]);
 
+    function onChange() {}
     //TODO add validation for email and password"
 
     return (
@@ -84,6 +87,8 @@ function Register() {
                 >
                     Register
                 </button>
+                <ReCAPTCHA sitekey={appCheckPublicKey} onChange={onChange} />
+
                 <button
                     className={`${registerSCSS.register__btn} ${registerSCSS.register__google}`}
                     onClick={signInWithGoogle}
