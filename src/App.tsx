@@ -11,7 +11,7 @@ import AwaitApprovReqProvider from "./context/AwaitApprovalReqContext";
 import SCSS from "./app.module.scss";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase/auth/auth";
-import CurrentUserProvider from "./context/CurrentUserContext";
+// import CurrentUserProvider from "./context/CurrentUserContext";
 
 function App() {
     const [user, loading, error] = useAuthState(auth);
@@ -19,34 +19,28 @@ function App() {
         <>
             <BrowserRouter>
                 <div className={user ? SCSS.appContainer : SCSS.loginContainer}>
-                    <CurrentUserProvider>
-                        {user ? (
-                            <AwaitApprovReqProvider>
-                                <UserPanel />
-                            </AwaitApprovReqProvider>
-                        ) : null}
-                        <Routes>
-                            <Route index element={<HomePage />} />
-                            <Route
-                                path="/handleRequests"
-                                element={<HandleRequestsPage />}
-                            ></Route>
-                            <Route
-                                path="/myrequests"
-                                element={<MyRequestsPage />}
-                            ></Route>
-                            <Route
-                                path="/users"
-                                element={<UsersPage />}
-                            ></Route>
-                            <Route path="/login" element={<Login />}></Route>
-                            <Route
-                                path="/register"
-                                element={<Register />}
-                            ></Route>
-                            <Route path="/reset" element={<Reset />}></Route>
-                        </Routes>
-                    </CurrentUserProvider>
+                    {/* <CurrentUserProvider> */}
+                    {user ? (
+                        <AwaitApprovReqProvider>
+                            <UserPanel />
+                        </AwaitApprovReqProvider>
+                    ) : null}
+                    <Routes>
+                        <Route index element={<HomePage />} />
+                        <Route
+                            path="/handleRequests"
+                            element={<HandleRequestsPage />}
+                        ></Route>
+                        <Route
+                            path="/myrequests"
+                            element={<MyRequestsPage />}
+                        ></Route>
+                        <Route path="/users" element={<UsersPage />}></Route>
+                        <Route path="/login" element={<Login />}></Route>
+                        <Route path="/register" element={<Register />}></Route>
+                        <Route path="/reset" element={<Reset />}></Route>
+                    </Routes>
+                    {/* </CurrentUserProvider> */}
                 </div>
             </BrowserRouter>
         </>

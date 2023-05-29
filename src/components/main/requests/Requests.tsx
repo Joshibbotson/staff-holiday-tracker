@@ -3,12 +3,14 @@ import { RequestContext } from "../../../context/RequestContext";
 import { useContext, useEffect, useState } from "react";
 import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext";
 import { SelectChangeEvent } from "@mui/material/Select";
-import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import RequestTableRow from "./request-table-row/requestTableRow";
 import TableHeader from "../../UI/table/TableHeader";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchCurrentUser } from "../../../store/slices/currentUserSlice";
+import { AppDispatch } from "../../../store/store";
 
 const Requests = () => {
-    const { user } = useContext(CurrentUserContext);
+    const { user } = useSelector((state: any) => state.user);
     const { requests } = useContext(RequestContext);
     const { approvedRequests } = useContext(ApprovedRequestContext);
     const [userApprovedRequests, setUserApprovedRequests] = useState(
@@ -24,6 +26,11 @@ const Requests = () => {
     const [currentFilters, setCurrentFilters] = useState<string[]>([]);
 
     const filters = ["Approved", "Awaiting approval"];
+    const dispatch = useDispatch<AppDispatch>();
+
+    useEffect(() => {
+        dispatch(fetchCurrentUser());
+    }, [dispatch]);
 
     //Ensure Requests is re-rendered when requests change//
     useEffect(() => {

@@ -1,20 +1,20 @@
 import SCSS from "./handleusers.module.scss";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchUsersUnderManager } from "../../../store/slices/usersSlice";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import SearchIcon from "@mui/icons-material/Search";
 import { UserType } from "../../../types";
-import { CurrentUserContext } from "../../../context/CurrentUserContext";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import { AppDispatch, RootState } from "../../../store/store";
 import RadialProgress from "../../UI/radial-progress/RadialProgress";
 import FetchedUserType from "../../../types/FetchedUserType.type";
 import UserTab from "./user-tab/UserTab";
 import { nanoid } from "nanoid";
+import { fetchCurrentUser } from "../../../store/slices/currentUserSlice";
 
 export const HandleUsers = () => {
-    const { user } = useContext(CurrentUserContext);
+    const { user } = useSelector((state: RootState) => state.user);
     const { users } = useSelector((state: RootState) => state.users);
     const dispatch = useDispatch<AppDispatch>();
     const [searchValue, setSearchValue] = useState<string>("");
@@ -25,14 +25,15 @@ export const HandleUsers = () => {
 
     useEffect(() => {
         dispatch(fetchUsersUnderManager());
+        dispatch(fetchCurrentUser());
     }, [dispatch]);
 
     useEffect(() => {
-        if (users && user[0]) {
+        if (users && user) {
             setFilteredUsers(
                 users
                     .filter(u => {
-                        return u.email !== user[0].email;
+                        return u.email !== user![0].email;
                     })
                     .filter(u => {
                         return u.name.toLowerCase().includes(searchValue);

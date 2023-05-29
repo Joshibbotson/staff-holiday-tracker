@@ -1,4 +1,5 @@
-import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
+import currentUserReducer from "./slices/currentUserSlice";
 import usersReducer from "./slices/usersSlice";
 import currentDateSliceReducer from "./slices/currentDateSlice";
 import requestsReducer from "./slices/RequestSlice";
@@ -6,6 +7,7 @@ import approvedRequestsReducer from "./slices/approvedRequestSlice";
 
 const store = configureStore({
     reducer: {
+        user: currentUserReducer,
         users: usersReducer,
         currentDateSlice: currentDateSliceReducer,
         requests: requestsReducer,

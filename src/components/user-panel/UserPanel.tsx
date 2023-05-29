@@ -5,7 +5,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import RequestModal from "../UI/request-modal/RequestModal";
-import { CurrentUserContext } from "../../context/CurrentUserContext";
+// import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { CircularProgress } from "@mui/material";
 import { AwaitApprovalReqContext } from "../../context/AwaitApprovalReqContext";
 import { storage } from "../../firebase/firebase";
@@ -19,15 +19,23 @@ import { uploadImage } from "../../firebase/firestorage/firestorage";
 import AdminNavLinks from "./admin-nav-links/AdminNavLinks";
 import NavLinks from "./nav-links/NavLinks";
 import ProfilePhoto from "./profile-photo/ProfilePhoto";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCurrentUser } from "../../store/slices/currentUserSlice";
+import { AppDispatch } from "../../store/store";
 
 const UserPanel = () => {
-    const { user } = useContext(CurrentUserContext);
+    // const { user } = useContext(CurrentUserContext);
+    const { user } = useSelector((state: any) => state.user);
     const { requests } = useContext(AwaitApprovalReqContext);
     const [admin, setAdmin] = useState(false);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [imageUpload, setImageUpload] = useState<FileList | null>(null);
     const [userImage, setUserImage] = useState<string | null>(null);
 
+    const dispatch = useDispatch<AppDispatch>();
+    useEffect(() => {
+        dispatch(fetchCurrentUser());
+    }, [dispatch]);
     function handleClick() {
         setShowModal(!showModal);
     }
@@ -37,11 +45,11 @@ const UserPanel = () => {
     }
 
     useEffect(() => {
-        if (user[0]) {
-            user[0].admin ? setAdmin(true) : setAdmin(false);
-            if (user[0].profilePicDownloadURL) {
+        if (user) {
+            user[0]?.admin ? setAdmin(true) : setAdmin(false);
+            if (user[0]?.profilePicDownloadURL) {
                 return setUserImage(user[0].profilePicDownloadURL);
-            } else if (user[0].profilePic) {
+            } else if (user[0]?.profilePic) {
                 const imageRef: StorageReference = ref(
                     storage,
                     "profilePictures/"
@@ -80,22 +88,20 @@ const UserPanel = () => {
                             userImage={userImage}
                             updateImageUpload={UpdateImageUpload}
                         />
-                        <h2>{user[0] ? user[0].name : <CircularProgress />}</h2>
+                        <h2>{user ? user[0]?.name : <CircularProgress />}</h2>
                     </div>
                     <div className={SCSS.dashboard}>
-                        {user[0]
-                            ? `Remaining Holidays: ${user[0].remainingHolidays}`
+                        {user
+                            ? `Remaining Holidays: ${user[0]?.remainingHolidays}`
                             : ""}
                     </div>
                     <div className={SCSS.calendar}>
-                        {user[0]
-                            ? `Taken Holidays: ${user[0].takenHolidays}`
+                        {user
+                            ? `Taken Holidays: ${user[0]?.takenHolidays}`
                             : ""}
                     </div>
                     <div className={SCSS.calendar}>
-                        {user[0]
-                            ? `Accrued Flexi Time: ${user[0].flexTime}`
-                            : ""}
+                        {user ? `Accrued Flexi Time: ${user[0]?.flexTime}` : ""}
                     </div>
 
                     <Button
