@@ -76,6 +76,7 @@ function Register() {
                         }
                     }}
                 />
+                {/* <ReCAPTCHA sitekey={appCheckPublicKey} onChange={onChange} /> */}
                 <button
                     className={registerSCSS.register__btn}
                     onClick={register}
@@ -87,7 +88,6 @@ function Register() {
                 >
                     Register
                 </button>
-                <ReCAPTCHA sitekey={appCheckPublicKey} onChange={onChange} />
 
                 <button
                     className={`${registerSCSS.register__btn} ${registerSCSS.register__google}`}
