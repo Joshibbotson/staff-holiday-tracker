@@ -9,6 +9,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import loginSCSS from "./login.module.scss";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { updateUserDocID } from "../../firebase/firestore/firestore";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -21,6 +22,20 @@ function Login() {
             return;
         }
         if (user) {
+            if (user.emailVerified) {
+                //large flaw it doesn't check if user already exists!!!//
+                updateUserDocID(
+                    user?.uid,
+                    user.displayName!,
+                    email,
+                    25,
+                    25,
+                    0,
+                    0,
+                    "",
+                    "UK"
+                );
+            }
             navigate("/");
         }
     }, [user, loading]);

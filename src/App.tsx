@@ -11,6 +11,7 @@ import AwaitApprovReqProvider from "./context/AwaitApprovalReqContext";
 import SCSS from "./app.module.scss";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase/auth/auth";
+import VerifyEmailPage from "./pages/verify-email-page/VerifyEmailPage";
 // import CurrentUserProvider from "./context/CurrentUserContext";
 
 function App() {
@@ -19,8 +20,7 @@ function App() {
         <>
             <BrowserRouter>
                 <div className={user ? SCSS.appContainer : SCSS.loginContainer}>
-                    {/* <CurrentUserProvider> */}
-                    {user ? (
+                    {user?.emailVerified ? (
                         <AwaitApprovReqProvider>
                             <UserPanel />
                         </AwaitApprovReqProvider>
@@ -39,8 +39,11 @@ function App() {
                         <Route path="/login" element={<Login />}></Route>
                         <Route path="/register" element={<Register />}></Route>
                         <Route path="/reset" element={<Reset />}></Route>
+                        <Route
+                            path="/verifyemailsent"
+                            element={<VerifyEmailPage />}
+                        ></Route>
                     </Routes>
-                    {/* </CurrentUserProvider> */}
                 </div>
             </BrowserRouter>
         </>

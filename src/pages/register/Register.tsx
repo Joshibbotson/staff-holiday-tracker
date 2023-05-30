@@ -11,8 +11,9 @@ import { updateUserDocID } from "../../firebase/firestore/firestore";
 import registerSCSS from "./register.module.scss";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import ReCAPTCHA from "react-google-recaptcha";
-import { appCheckPublicKey } from "../../firebase/firebase";
+import { updateProfile } from "firebase/auth";
+// import ReCAPTCHA from "react-google-recaptcha";
+// import { appCheckPublicKey } from "../../firebase/firebase";
 
 function Register() {
     const [email, setEmail] = useState("");
@@ -27,9 +28,18 @@ function Register() {
     };
     useEffect(() => {
         if (user) {
-            updateUserDocID(user?.uid, name, email, 25, 25, 0, 0, "", "UK");
+            // updateUserDocID(user?.uid, name, email, 25, 25, 0, 0, "", "UK");
             sendVerificationEmail();
-            navigate("/");
+            const updateName = async () => {
+                try {
+                    await updateProfile(user, { displayName: name });
+                    navigate("/verifyemailsent");
+                } catch (err) {
+                    console.log(err);
+                }
+            };
+            updateName();
+            navigate("/verifyemailsent");
         }
     }, [user, loading]);
 

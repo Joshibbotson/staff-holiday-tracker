@@ -48,9 +48,16 @@ export const updateUserDocID = async (
     superAdmin: boolean = false,
     holidayTabColour: string = randomColour()
 ) => {
-    console.log(name);
-
     try {
+        const querySnapshot = await getDocs(
+            query(collection(db, "users"), where("uid", "==", userUID))
+        );
+
+        if (!querySnapshot.empty) {
+            // User already exists, do not add them again
+            return;
+        }
+
         const docRef = await addDoc(collection(db, "users"), {
             uid: userUID,
             name,
