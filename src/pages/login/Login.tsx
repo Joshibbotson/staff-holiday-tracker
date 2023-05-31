@@ -35,6 +35,7 @@ function Login() {
                     "",
                     "UK"
                 );
+                console.log(user.displayName);
             }
             navigate("/");
         }
@@ -91,14 +92,14 @@ function Login() {
                 >
                     Login
                 </button>
-                <button
+                {/* <button
                     className={`${loginSCSS.login__btn} ${loginSCSS.login__google}`}
                     onClick={() => {
                         signInWithGoogle();
                     }}
                 >
                     Login with Google
-                </button>
+                </button> */}
 
                 <Link to={"/reset"}>Forgot Password?</Link>
                 <div>

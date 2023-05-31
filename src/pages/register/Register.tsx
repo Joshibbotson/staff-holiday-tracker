@@ -18,17 +18,33 @@ import { updateProfile } from "firebase/auth";
 function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [name, setName] = useState("");
     const [user, loading, error] = useAuthState(auth);
     const navigate = useNavigate();
 
     const register = () => {
         if (!name) alert("Please enter a name");
-        registerWithEmailAndPassword(email, password);
+        if (!validatePassword(password)) {
+            alert(
+                "password should have at least 8 characters, an uppcase letter, number and special character"
+            );
+        }
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
+        } else {
+            registerWithEmailAndPassword(email, password);
+        }
     };
+
+    function validatePassword(password: string): boolean {
+        const passwordRegex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+        return passwordRegex.test(password);
+    }
+
     useEffect(() => {
         if (user) {
-            // updateUserDocID(user?.uid, name, email, 25, 25, 0, 0, "", "UK");
             sendVerificationEmail();
             const updateName = async () => {
                 try {
@@ -86,6 +102,18 @@ function Register() {
                         }
                     }}
                 />
+                <input
+                    type="password"
+                    className={registerSCSS.register__textBox}
+                    value={confirmPassword}
+                    onChange={e => setConfirmPassword(e.target.value)}
+                    placeholder="Confirm Pasword"
+                    onKeyDown={e => {
+                        if (e.key === "Enter") {
+                            return register();
+                        }
+                    }}
+                />
                 {/* <ReCAPTCHA sitekey={appCheckPublicKey} onChange={onChange} /> */}
                 <button
                     className={registerSCSS.register__btn}
@@ -99,12 +127,12 @@ function Register() {
                     Register
                 </button>
 
-                <button
+                {/* <button
                     className={`${registerSCSS.register__btn} ${registerSCSS.register__google}`}
                     onClick={signInWithGoogle}
                 >
                     Register with Google
-                </button>
+                </button> */}
                 <div>
                     Already have an account? <Link to="/">Login</Link> now.
                 </div>

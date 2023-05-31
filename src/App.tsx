@@ -19,7 +19,13 @@ function App() {
     return (
         <>
             <BrowserRouter>
-                <div className={user ? SCSS.appContainer : SCSS.loginContainer}>
+                <div
+                    className={
+                        user?.emailVerified
+                            ? SCSS.appContainer
+                            : SCSS.loginContainer
+                    }
+                >
                     {user?.emailVerified ? (
                         <AwaitApprovReqProvider>
                             <UserPanel />

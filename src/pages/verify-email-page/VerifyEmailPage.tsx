@@ -1,7 +1,6 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import SCSS from "./verifyEmailPage.module.scss";
 import { auth, sendVerificationEmail } from "../../firebase/auth/auth";
-import { onAuthStateChanged } from "firebase/auth";
 import { Button } from "@mui/material";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -15,18 +14,18 @@ const VerifyEmailPage = () => {
             user.reload();
             navigate("/");
         }
-    }, [user?.emailVerified]);
+    }, [user]);
 
     return (
         <main className={SCSS.mainBackground}>
-            <section className={SCSS.container}>
-                <div className={SCSS.graphic}></div>
+            <section className={SCSS.mainBackground__container}>
+                <div className={SCSS.container__graphic}></div>
                 <h2>Verify your email address</h2>
                 <p>
                     We've emailed {user?.email} with a verification link, please
                     make sure to check your spam/junk folder.
                 </p>
-                <Button onClick={sendVerificationEmail}>
+                <Button onClick={sendVerificationEmail} variant="contained">
                     Resend Verification Link
                 </Button>
             </section>

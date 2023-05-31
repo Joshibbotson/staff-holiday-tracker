@@ -43,7 +43,7 @@ export const updateUserDocID = async (
     flexTime: number,
     profilePic: string,
     nationalHolidays: string = "UK",
-    managersEmail: string = "josh.ibbotson@hotmail.com",
+    managersEmail: string = "joshibbotson8@gmail.com",
     admin: boolean = false,
     superAdmin: boolean = false,
     holidayTabColour: string = randomColour()
