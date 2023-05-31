@@ -19,6 +19,7 @@ import {
     signOut,
     Auth,
     sendEmailVerification,
+    updateProfile,
 } from "firebase/auth";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";

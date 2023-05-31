@@ -13,8 +13,8 @@ const firebaseConfig = {
 
 export const app: FirebaseApp = initializeApp(firebaseConfig);
 export const storage: FirebaseStorage = getStorage(app);
-export const appCheckPublicKey = "6Ler-ksmAAAAAOooJWs7SVE0YLBHkcJ4EUID4aJ4";
-const appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider(appCheckPublicKey),
-    isTokenAutoRefreshEnabled: true,
-});
+// export const appCheckPublicKey = "6Lf82kwmAAAAACwdJExtx-229F8W2f3Wv4RRYFLz";
+// const appCheck = initializeAppCheck(app, {
+//     provider: new ReCaptchaV3Provider(appCheckPublicKey),
+//     isTokenAutoRefreshEnabled: true,
+// });
