@@ -1,5 +1,5 @@
 import { app } from "../firebase";
-import * as admin from "firebase-admin";
+
 import {
     query,
     getDocs,
@@ -19,7 +19,6 @@ import {
     signOut,
     Auth,
     sendEmailVerification,
-    updateProfile,
 } from "firebase/auth";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
