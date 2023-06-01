@@ -31,7 +31,6 @@ export interface DialogModalProps {
 
 export default function DialogModal(props: DialogModalProps) {
     const { onClose, open, request } = props;
-    // const { user } = useContext(CurrentUserContext);
     const { user } = useSelector((state: any) => state.user);
     const dispatch = useDispatch<AppDispatch>();
 

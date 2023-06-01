@@ -1,12 +1,13 @@
 import { createContext, useState, useEffect } from "react";
 import { listApprovedRequests } from "../firebase/firestore/requests/listApprovedRequests";
-import { ApprovedRequestsType } from "../types";
+import { ApprovedRequestsType, IncomingRequestsType } from "../types";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase/auth/auth";
+import { auth, db } from "../firebase/auth/auth";
 
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { approvedReqCache } from "../caching/approveReqCache";
+import { query, collection, where, onSnapshot } from "firebase/firestore";
 
 type ApprovedRequestContextType = {
     approvedRequests: ApprovedRequestsType[] | undefined;
@@ -36,6 +37,26 @@ export const ApprovedReqsProvider: React.FC<any> = ({ children }) => {
     const year = useSelector((state: RootState) => state.currentDateSlice.year);
 
     let cacheKey: string = `approvedRequestContext - ${month} - ${year}`;
+
+    useEffect(() => {
+        if (user) {
+            const q = query(
+                collection(db, "requests"),
+                where("approverEmail", "==", user?.email)
+            );
+            const unsubscribe = onSnapshot(q, querySnapshot => {
+                const requests: IncomingRequestsType[] = [];
+                querySnapshot.forEach(doc => {
+                    const data = doc.data() as IncomingRequestsType;
+                    data.uid = doc.id;
+                    requests.push(data);
+                });
+                setApprovedReqs([...approvedReqs, ...requests]);
+            });
+            return () => unsubscribe();
+        }
+    }, [user]);
+
     useEffect(() => {
         if (user) {
             if (approvedReqCache[cacheKey]) {

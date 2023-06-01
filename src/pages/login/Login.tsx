@@ -22,6 +22,9 @@ function Login() {
             return;
         }
         if (user) {
+            if (!user?.emailVerified) {
+                navigate("/verifyemailsent");
+            }
             if (user.emailVerified) {
                 //large flaw it doesn't check if user already exists!!!//
                 updateUserDocID(
@@ -35,9 +38,8 @@ function Login() {
                     "",
                     "UK"
                 );
-                console.log(user.displayName);
+                navigate("/");
             }
-            navigate("/");
         }
     }, [user, loading]);
 

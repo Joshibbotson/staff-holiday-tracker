@@ -20,11 +20,14 @@ import AdminNavLinks from "./admin-nav-links/AdminNavLinks";
 import NavLinks from "./nav-links/NavLinks";
 import ProfilePhoto from "./profile-photo/ProfilePhoto";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCurrentUser } from "../../store/slices/currentUserSlice";
+import {
+    fetchCurrentUser,
+    resetUser,
+} from "../../store/slices/currentUserSlice";
 import { AppDispatch } from "../../store/store";
+import { useNavigate } from "react-router-dom";
 
 const UserPanel = () => {
-    // const { user } = useContext(CurrentUserContext);
     const { user } = useSelector((state: any) => state.user);
     const { requests } = useContext(AwaitApprovalReqContext);
     const [admin, setAdmin] = useState(false);
@@ -33,9 +36,18 @@ const UserPanel = () => {
     const [userImage, setUserImage] = useState<string | null>(null);
 
     const dispatch = useDispatch<AppDispatch>();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+            navigate("/login");
+        }
+    }, [user]);
+
     useEffect(() => {
         dispatch(fetchCurrentUser());
     }, [dispatch]);
+
     function handleClick() {
         setShowModal(!showModal);
     }
@@ -127,7 +139,13 @@ const UserPanel = () => {
                         variant="contained"
                         color="error"
                         size="small"
-                        onClick={logout}
+                        onClick={() => {
+                            return (
+                                dispatch(resetUser()),
+                                logout(),
+                                navigate("/login")
+                            );
+                        }}
                         startIcon={<LogoutIcon />}
                     >
                         Log out

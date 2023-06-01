@@ -9,20 +9,24 @@ import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../store/store";
 import { fetchCurrentUser } from "../../../store/slices/currentUserSlice";
+import { IncomingRequestsType } from "../../../types";
 
 const HandleRequests = () => {
+    console.log("render");
     const { user } = useSelector((state: any) => state.user);
     const { requests } = useContext(AwaitApprovalReqContext);
     const { approvedRequests } = useContext(ApprovedRequestContext);
     const [userApprovedRequests, setUserApprovedRequests] = useState(
-        approvedRequests?.filter(req => {
+        approvedRequests!.filter(req => {
             return req.approverEmail === user[0].email;
         })
     );
 
     const [loadedRequests, setLoadedRequests] = useState([
         ...requests,
-        ...userApprovedRequests!,
+        ...approvedRequests!.filter(req => {
+            return req.approverEmail === user[0].email;
+        }),
     ]);
     const [currentFilters, setCurrentFilters] = useState<string[]>([]);
 
@@ -32,18 +36,17 @@ const HandleRequests = () => {
     useEffect(() => {
         dispatch(fetchCurrentUser());
     }, [dispatch]);
+
     //Ensure Requests is re-rendered when requests change//
     useEffect(() => {
-        console.log(userApprovedRequests);
         setUserApprovedRequests(
             approvedRequests!.filter(req => {
                 return req.approverEmail === user[0].email;
             })
         );
-        const newApprovedRequests = approvedRequests!.filter(req => {
-            return req.approverEmail === user[0].email;
-        });
-        setLoadedRequests([...requests, ...newApprovedRequests]);
+        setLoadedRequests([...requests, ...userApprovedRequests]);
+        console.log(requests);
+        console.log(approvedRequests);
     }, [requests, approvedRequests]);
 
     useEffect(() => {
@@ -51,19 +54,29 @@ const HandleRequests = () => {
             currentFilters.includes("Approved") &&
             !currentFilters.includes("Awaiting approval")
         ) {
-            setLoadedRequests([...userApprovedRequests!]);
+            setLoadedRequests([...userApprovedRequests]);
         } else if (
             currentFilters.includes("Approved") &&
             currentFilters.includes("Awaiting approval")
         ) {
-            setLoadedRequests([...requests, ...userApprovedRequests!]);
+            setLoadedRequests([
+                ...requests,
+                ...approvedRequests!.filter(req => {
+                    return req.approverEmail === user[0].email;
+                }),
+            ]);
         } else if (
             currentFilters.includes("Awaiting approval") &&
             !currentFilters.includes("Approved")
         ) {
             setLoadedRequests([...requests]);
         } else {
-            setLoadedRequests([...requests, ...userApprovedRequests!]);
+            setLoadedRequests([
+                ...requests,
+                ...approvedRequests!.filter(req => {
+                    return req.approverEmail === user[0].email;
+                }),
+            ]);
         }
     }, [currentFilters]);
 
@@ -78,40 +91,41 @@ const HandleRequests = () => {
     };
 
     return (
-        <div className={SCSS.requestTable}>
-            <table>
-                <TableHeader
-                    title={"Handle Requests"}
-                    columnNames={[
-                        "Request by",
-                        "Status",
-                        "Date Start",
-                        "Date End",
-                        "Total Days",
-                        "Type",
-                        "",
-                    ]}
-                    showFilter={true}
-                    filterOptions={["Approved", "Awaiting approval"]}
-                    handleChange={handleChange}
-                    currentFilters={currentFilters}
-                    key={nanoid()}
-                />
-                <tbody>
-                    {loadedRequests.map((req, index) => {
-                        return (
-                            <RequestTableRow
-                                variant="requestedBy"
-                                index={index}
-                                awaitingRequests={requests}
-                                req={req}
-                                key={nanoid()}
-                            />
-                        );
-                    })}
-                </tbody>
-            </table>
-        </div>
+        <>
+            <div className={SCSS.requestTable}>
+                <table>
+                    <TableHeader
+                        title={"Requests"}
+                        columnNames={[
+                            "Requested By",
+                            "Status",
+                            "Date Start",
+                            "Date End",
+                            "Total Days",
+                            "Type",
+                            "",
+                        ]}
+                        showFilter={true}
+                        filterOptions={["Approved", "Awaiting approval"]}
+                        handleChange={handleChange}
+                        currentFilters={currentFilters}
+                    />
+
+                    <tbody>
+                        {loadedRequests.map((req, index) => {
+                            return (
+                                <RequestTableRow
+                                    variant="requestedBy"
+                                    index={index}
+                                    awaitingRequests={requests}
+                                    req={req}
+                                />
+                            );
+                        })}
+                    </tbody>
+                </table>
+            </div>
+        </>
     );
 };
 

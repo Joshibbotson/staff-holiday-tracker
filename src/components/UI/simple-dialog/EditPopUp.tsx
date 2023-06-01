@@ -12,10 +12,12 @@ export default function EditPopUp({ request }: EditPopUpProps) {
 
     const handleClickOpen = () => {
         setOpen(true);
+        console.log("open");
     };
 
     const handleClose = (value: string) => {
         setOpen(false);
+        console.log("close");
     };
 
     return (
