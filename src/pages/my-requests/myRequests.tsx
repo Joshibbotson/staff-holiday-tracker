@@ -15,21 +15,21 @@ const MyRequestsPage = () => {
     useEffect(() => {
         if (!user) {
             navigate("/login");
+        } else if (user) {
+            if (!user?.emailVerified) {
+                navigate("/verifyemailsent");
+            }
         }
     }, [user, loading]);
 
     return (
-        <>
-            {/* <AwaitApprovReqProvider> */}
-            <ApprovedReqsProvider>
-                <RequestsProvider>
-                    <main className={SCSS.mainContainer}>
-                        <Requests />
-                    </main>
-                </RequestsProvider>
-            </ApprovedReqsProvider>
-            {/* </AwaitApprovReqProvider> */}
-        </>
+        <ApprovedReqsProvider>
+            <RequestsProvider>
+                <main className={SCSS.mainContainer}>
+                    <Requests />
+                </main>
+            </RequestsProvider>
+        </ApprovedReqsProvider>
     );
 };
 

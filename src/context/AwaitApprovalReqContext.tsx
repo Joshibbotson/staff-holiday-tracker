@@ -44,7 +44,6 @@ export const AwaitApprovReqProvider: React.FC<any> = ({ children }) => {
                     data.uid = doc.id;
                     requests.push(data);
                 });
-                awaitApprovReqCache[cacheKey] = requests;
                 setRequestsForApproval(requests);
             });
             return () => unsubscribe();

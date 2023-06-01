@@ -11,7 +11,7 @@ const AdminNavLinks = ({ requestsLength }: any) => {
     const [showNotifications, setShowNotifications] = useState<boolean>(false);
 
     useEffect(() => {
-        requestsLength > 0
+        requestsLength > 0 && window.location.pathname !== "/handlerequests"
             ? setShowNotifications(true)
             : setShowNotifications(false);
     }, [requestsLength]);

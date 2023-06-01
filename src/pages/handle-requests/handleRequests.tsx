@@ -14,17 +14,19 @@ const HandleRequestsPage = () => {
     useEffect(() => {
         if (!user) {
             navigate("/login");
+        } else if (user) {
+            if (!user?.emailVerified) {
+                navigate("/verifyemailsent");
+            }
         }
     }, [user, loading]);
 
     return (
         <AwaitApprovReqProvider>
             <ApprovedReqsProvider>
-                {/* <RequestsProvider> */}
                 <main className={SCSS.mainContainer}>
                     <HandleRequests />
                 </main>
-                {/* </RequestsProvider> */}
             </ApprovedReqsProvider>
         </AwaitApprovReqProvider>
     );

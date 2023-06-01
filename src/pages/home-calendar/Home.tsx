@@ -17,6 +17,10 @@ const HomePage = () => {
     useEffect(() => {
         if (!user) {
             navigate("/login");
+        } else if (user) {
+            if (!user?.emailVerified) {
+                navigate("/verifyemailsent");
+            }
         }
     }, [user, loading]);
 

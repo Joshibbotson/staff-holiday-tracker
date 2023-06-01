@@ -30,7 +30,11 @@ export const fetchCurrentUser = createAsyncThunk(
 const currentUserSlice = createSlice({
     name: "user",
     initialState,
-    reducers: {},
+    reducers: {
+        resetUser: state => {
+            state.user = [];
+        },
+    },
     extraReducers(builder) {
         builder
             .addCase(fetchCurrentUser.pending, state => {
@@ -47,4 +51,5 @@ const currentUserSlice = createSlice({
     },
 });
 
+export const { resetUser } = currentUserSlice.actions;
 export default currentUserSlice.reducer;

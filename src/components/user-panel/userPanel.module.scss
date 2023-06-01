@@ -9,7 +9,8 @@
     padding-bottom: 5rem;
     margin-left: 0;
     color: white;
-    height: 100svh;
+    min-height: 100%;
+    height: max-content;
 
     transition: all 1s;
 
@@ -42,7 +43,8 @@
 
 @media only screen and (min-width: 768px) {
     .userPanelContainer {
-        max-height: 100svh;
-        overflow-y: auto;
+        // max-height: 100svh;
+        overflow-y: hidden;
+        //might need to change
     }
 }
