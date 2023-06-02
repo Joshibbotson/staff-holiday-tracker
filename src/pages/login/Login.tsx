@@ -40,10 +40,9 @@ function Login() {
                 );
                 navigate("/");
             }
+            navigate("/");
         }
     }, [user, loading]);
-
-    useEffect;
 
     async function handleLogin(email: string, password: string) {
         try {

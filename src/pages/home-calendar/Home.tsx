@@ -20,6 +20,8 @@ const HomePage = () => {
         } else if (user) {
             if (!user?.emailVerified) {
                 navigate("/verifyemailsent");
+            } else if (user?.emailVerified) {
+                navigate("/");
             }
         }
     }, [user, loading]);
@@ -43,6 +45,7 @@ const HomePage = () => {
                                 handleClick={handleClick}
                             />
                         </main>
+
                         {showModal ? (
                             <RequestModal
                                 clickedDate={clickedDateRef.current}

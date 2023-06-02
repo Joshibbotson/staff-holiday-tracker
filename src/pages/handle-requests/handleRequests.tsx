@@ -17,6 +17,8 @@ const HandleRequestsPage = () => {
         } else if (user) {
             if (!user?.emailVerified) {
                 navigate("/verifyemailsent");
+            } else if (user?.emailVerified) {
+                navigate("/handlerequests");
             }
         }
     }, [user, loading]);
