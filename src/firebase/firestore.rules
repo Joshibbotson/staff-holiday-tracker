@@ -1,9 +1,25 @@
+rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if request.auth != null && request.auth.token.email_verified == true;
+    match /requests/{requestId} {
+      allow read: if request.auth != null && request.auth.token.email_verified == true;
+      allow write, update: if request.auth != null && request.auth.token.email_verified == true &&
+                             isUserAdmin() ||
+                             isUserOwner(requestId);
+    }
+
+    match /requests/{requestId} {
+      allow create: if request.auth != null && request.auth.token.email_verified == true;
     }
   }
-}
+  
+  function isUserAdmin() {
+    let adminDoc = get(/databases/$(database)/documents/users/$(request.auth.uid)).data;
+    return adminDoc != null && adminDoc.admin == true;
+  }
 
-​
+  function isUserOwner(requestId) {
+    let requestDoc = get(/databases/$(database)/documents/requests/$(requestId)).data;
+    return requestDoc != null && requestDoc.userId == request.auth.uid;
+  }
+}

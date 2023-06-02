@@ -15,6 +15,8 @@ const UsersPage = () => {
         } else if (user) {
             if (!user?.emailVerified) {
                 navigate("/verifyemailsent");
+            } else if (user?.emailVerified) {
+                navigate("/users");
             }
         }
     }, [user, loading]);

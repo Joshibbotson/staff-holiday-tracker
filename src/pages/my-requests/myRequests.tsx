@@ -18,6 +18,8 @@ const MyRequestsPage = () => {
         } else if (user) {
             if (!user?.emailVerified) {
                 navigate("/verifyemailsent");
+            } else if (user?.emailVerified) {
+                navigate("/myrequests");
             }
         }
     }, [user, loading]);
