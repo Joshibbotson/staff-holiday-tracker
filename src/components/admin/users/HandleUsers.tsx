@@ -31,13 +31,9 @@ export const HandleUsers = () => {
     useEffect(() => {
         if (users && user) {
             setFilteredUsers(
-                users
-                    .filter(u => {
-                        return u.email !== user![0].email;
-                    })
-                    .filter(u => {
-                        return u.name.toLowerCase().includes(searchValue);
-                    })
+                users.filter(u => {
+                    return u.name.toLowerCase().includes(searchValue);
+                })
             );
         }
     }, [searchValue, users]);
