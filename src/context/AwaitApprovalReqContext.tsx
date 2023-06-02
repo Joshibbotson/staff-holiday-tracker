@@ -30,26 +30,6 @@ export const AwaitApprovReqProvider: React.FC<any> = ({ children }) => {
     const [error, setError] = useState<string | null>(null);
     const [user, loadingUser, errorUser] = useAuthState(auth);
 
-    //Ensure userRequests is updated if requests collection changes//
-    useEffect(() => {
-        if (user) {
-            const q = query(
-                collection(db, "requests"),
-                where("approverEmail", "==", user?.email)
-            );
-            const unsubscribe = onSnapshot(q, querySnapshot => {
-                const requests: IncomingRequestsType[] = [];
-                querySnapshot.forEach(doc => {
-                    const data = doc.data() as IncomingRequestsType;
-                    data.uid = doc.id;
-                    requests.push(data);
-                });
-                setRequestsForApproval(requests);
-            });
-            return () => unsubscribe();
-        }
-    }, [user]);
-
     let cacheKey: string = `requests ${user?.email}`;
     useEffect(() => {
         if (user) {
@@ -72,6 +52,22 @@ export const AwaitApprovReqProvider: React.FC<any> = ({ children }) => {
                 };
                 fetchRequests();
             }
+            //Ensure userRequests is updated if requests collection changes//
+
+            const q = query(
+                collection(db, "requests"),
+                where("approverEmail", "==", user?.email)
+            );
+            const unsubscribe = onSnapshot(q, querySnapshot => {
+                const requests: IncomingRequestsType[] = [];
+                querySnapshot.forEach(doc => {
+                    const data = doc.data() as IncomingRequestsType;
+                    data.uid = doc.id;
+                    requests.push(data);
+                });
+                setRequestsForApproval(requests);
+            });
+            return () => unsubscribe();
         }
     }, [user]);
 

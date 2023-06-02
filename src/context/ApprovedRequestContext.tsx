@@ -40,25 +40,6 @@ export const ApprovedReqsProvider: React.FC<any> = ({ children }) => {
 
     useEffect(() => {
         if (user) {
-            const q = query(
-                collection(db, "requests"),
-                where("approverEmail", "==", user?.email)
-            );
-            const unsubscribe = onSnapshot(q, querySnapshot => {
-                const requests: IncomingRequestsType[] = [];
-                querySnapshot.forEach(doc => {
-                    const data = doc.data() as IncomingRequestsType;
-                    data.uid = doc.id;
-                    requests.push(data);
-                });
-                setApprovedReqs([...approvedReqs, ...requests]);
-            });
-            return () => unsubscribe();
-        }
-    }, [user]);
-
-    useEffect(() => {
-        if (user) {
             if (approvedReqCache[cacheKey]) {
                 setApprovedReqs(approvedReqCache[cacheKey]!);
                 setLoading(false);
@@ -78,6 +59,23 @@ export const ApprovedReqsProvider: React.FC<any> = ({ children }) => {
                 };
                 fetchRequests();
             }
+            // listen for new requests and update requests if new request added
+            const q = query(collection(db, "approvedRequests"));
+            const unsubscribe = onSnapshot(q, querySnapshot => {
+                const requests: ApprovedRequestsType[] = [];
+                querySnapshot.forEach(doc => {
+                    const data = doc.data() as ApprovedRequestsType;
+                    data.uid = doc.id;
+                    requests.push(data);
+                });
+                if (approvedReqCache[cacheKey]) {
+                    approvedReqCache[cacheKey] = requests;
+                    setApprovedReqs(approvedReqCache[cacheKey]!);
+                } else {
+                    setApprovedReqs(requests);
+                }
+            });
+            return () => unsubscribe();
         }
     }, [user, month, year]);
 
