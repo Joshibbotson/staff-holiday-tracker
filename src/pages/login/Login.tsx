@@ -104,7 +104,7 @@ function Login() {
                 <Button
                     variant="outlined"
                     onClick={() => {
-                        handleLogin(email, password);
+                        handleLogin("jitester6@gmail.com", "Password12345!");
                     }}
                 >
                     Test Account
@@ -113,7 +113,7 @@ function Login() {
                     variant="outlined"
                     color="primary"
                     onClick={() => {
-                        handleLogin(email, password);
+                        handleLogin("jitester20@gmail.com", "Password12345!");
                     }}
                 >
                     Test Admin Account
