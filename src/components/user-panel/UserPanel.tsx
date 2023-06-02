@@ -26,6 +26,7 @@ import {
 } from "../../store/slices/currentUserSlice";
 import { AppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
+import { resetUsers } from "../../store/slices/usersSlice";
 
 const UserPanel = () => {
     const { user } = useSelector((state: any) => state.user);
@@ -103,17 +104,25 @@ const UserPanel = () => {
                         <h2>{user ? user[0]?.name : <CircularProgress />}</h2>
                     </div>
                     <div className={SCSS.dashboard}>
-                        {user
-                            ? `Remaining Holidays: ${user[0]?.remainingHolidays}`
-                            : ""}
+                        {user ? (
+                            `Remaining Holidays: ${user[0]?.remainingHolidays}`
+                        ) : (
+                            <CircularProgress />
+                        )}
                     </div>
                     <div className={SCSS.calendar}>
-                        {user
-                            ? `Taken Holidays: ${user[0]?.takenHolidays}`
-                            : ""}
+                        {user ? (
+                            `Taken Holidays: ${user[0]?.takenHolidays}`
+                        ) : (
+                            <CircularProgress />
+                        )}
                     </div>
                     <div className={SCSS.calendar}>
-                        {user ? `Accrued Flexi Time: ${user[0]?.flexTime}` : ""}
+                        {user ? (
+                            `Accrued Flexi Time: ${user[0]?.flexTime}`
+                        ) : (
+                            <CircularProgress />
+                        )}
                     </div>
 
                     <Button
@@ -142,6 +151,7 @@ const UserPanel = () => {
                         onClick={() => {
                             return (
                                 dispatch(resetUser()),
+                                dispatch(resetUsers()),
                                 logout(),
                                 navigate("/login")
                             );

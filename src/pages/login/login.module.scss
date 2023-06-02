@@ -28,6 +28,11 @@
         border-radius: 1rem;
         border: 3px solid rgb(227, 227, 227);
         z-index: 2;
+        gap: 0.3rem;
+
+        .login__loading {
+            padding-bottom: 2rem;
+        }
     }
 
     .login__textBox {

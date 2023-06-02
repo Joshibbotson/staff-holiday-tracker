@@ -10,23 +10,21 @@ import loginSCSS from "./login.module.scss";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { updateUserDocID } from "../../firebase/firestore/firestore";
+import { Button, CircularProgress } from "@mui/material";
 
 function Login() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [user, loading, error] = useAuthState(auth);
+    const [email, setEmail] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
+    const [user] = useAuthState(auth);
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (loading) {
-            return;
-        }
         if (user) {
             if (!user?.emailVerified) {
                 navigate("/verifyemailsent");
             }
             if (user.emailVerified) {
-                //large flaw it doesn't check if user already exists!!!//
                 updateUserDocID(
                     user?.uid,
                     user.displayName!,
@@ -40,13 +38,14 @@ function Login() {
                 );
                 navigate("/");
             }
-            navigate("/");
         }
-    }, [user, loading]);
+    }, [user]);
 
     async function handleLogin(email: string, password: string) {
         try {
+            setLoading(true);
             await logInWithEmailAndPassword(email, password);
+            setLoading(false);
         } catch (err) {
             throw err;
         }
@@ -55,7 +54,16 @@ function Login() {
     return (
         <div className={loginSCSS.login}>
             <div className={loginSCSS.graphic}></div>
+
             <div className={loginSCSS.login__container}>
+                {loading ? (
+                    <div className={loginSCSS.login__loading}>
+                        <CircularProgress />
+                    </div>
+                ) : (
+                    ""
+                )}
+
                 <input
                     type="text"
                     name="email"
@@ -85,14 +93,31 @@ function Login() {
                         }
                     }}
                 />
-                <button
-                    className={loginSCSS.login__btn}
+                <Button
+                    variant="contained"
                     onClick={() => {
                         handleLogin(email, password);
                     }}
                 >
                     Login
-                </button>
+                </Button>
+                <Button
+                    variant="outlined"
+                    onClick={() => {
+                        handleLogin(email, password);
+                    }}
+                >
+                    Test Account
+                </Button>
+                <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => {
+                        handleLogin(email, password);
+                    }}
+                >
+                    Test Admin Account
+                </Button>
                 {/* <button
                     className={`${loginSCSS.login__btn} ${loginSCSS.login__google}`}
                     onClick={() => {
@@ -108,6 +133,7 @@ function Login() {
                     <Link to={"/register"}>Register here</Link>
                 </div>
             </div>
+
             <a href="http://www.freepik.com">
                 Graphic Designed by slidesgo / Freepik
             </a>

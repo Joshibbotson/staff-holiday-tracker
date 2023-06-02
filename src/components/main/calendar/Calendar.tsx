@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { YearBtns } from "./years-btns/YearBtns";
 import { MonthBtns } from "./month-btns/MonthBtns";
 import CreateCalendar from "./create-calendar/CreateCalendar";
@@ -35,6 +35,7 @@ const Calendar = ({ updateClickedDate, handleClick }: Props) => {
             holidayTabColour: req.holidayTabColour,
         };
     });
+
     const month = useSelector(
         (state: RootState) => state.currentDateSlice.month
     );

@@ -14,9 +14,11 @@ const RequestTableRow = ({ variant, index, awaitingRequests, req }: Props) => {
     return (
         <tr key={index}>
             {variant === "approvedBy" ? (
-                <td>{req.approverEmail}</td>
+                <td className={SCSS.requestTable__td}>{req.approverEmail}</td>
             ) : (
-                <td>{req.requestedByEmail}</td>
+                <td className={SCSS.requestTable__td}>
+                    {req.requestedByEmail}
+                </td>
             )}
             {awaitingRequests.includes(req) ? (
                 <td className={SCSS.requestTable__tdWaitApproval}>Waiting</td>
@@ -24,20 +26,20 @@ const RequestTableRow = ({ variant, index, awaitingRequests, req }: Props) => {
                 <td className={SCSS.requestTable__tdApproved}>Approved</td>
             )}
 
-            <td>
+            <td className={SCSS.requestTable__td}>
                 {dateConvert(
                     req.dateStart.seconds,
                     req.dateStart.nanoseconds
                 ).toDateString()}
             </td>
-            <td>
+            <td className={SCSS.requestTable__td}>
                 {dateConvert(
                     req.dateEnd.seconds,
                     req.dateEnd.nanoseconds
                 ).toDateString()}
             </td>
-            <td>{req.totalDays}</td>
-            <td>{req.typeOfLeave}</td>
+            <td className={SCSS.requestTable__td}>{req.totalDays}</td>
+            <td className={SCSS.requestTable__td}>{req.typeOfLeave}</td>
             {awaitingRequests.includes(req) ? (
                 <td className={SCSS.requestTable__td__edit}>
                     <EditPopUp request={req} />
