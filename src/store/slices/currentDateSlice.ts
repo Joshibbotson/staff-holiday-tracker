@@ -15,9 +15,16 @@ const currentDateSlice = createSlice({
         updateYear: (state, action) => {
             state.year = action.payload;
         },
+        resetMonth: state => {
+            state.month = new Date().getMonth();
+        },
+        resetYear: state => {
+            state.year = new Date().getFullYear();
+        },
     },
 });
 
-export const { updateMonth, updateYear } = currentDateSlice.actions;
+export const { updateMonth, updateYear, resetMonth, resetYear } =
+    currentDateSlice.actions;
 
 export default currentDateSlice.reducer;

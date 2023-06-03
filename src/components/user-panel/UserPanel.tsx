@@ -27,6 +27,7 @@ import {
 import { AppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { resetUsers } from "../../store/slices/usersSlice";
+import { resetMonth, resetYear } from "../../store/slices/currentDateSlice";
 
 const UserPanel = () => {
     const { user } = useSelector((state: any) => state.user);
@@ -152,6 +153,8 @@ const UserPanel = () => {
                             return (
                                 dispatch(resetUser()),
                                 dispatch(resetUsers()),
+                                dispatch(resetMonth()),
+                                dispatch(resetYear()),
                                 logout(),
                                 navigate("/login")
                             );
