@@ -13,10 +13,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase/auth/auth";
 import VerifyEmailPage from "./pages/verify-email-page/VerifyEmailPage";
 import Custom404Page from "./pages/404-page/Custom404Page";
-// import CurrentUserProvider from "./context/CurrentUserContext";
 
 function App() {
     const [user, loading, error] = useAuthState(auth);
+    const validPaths = ["/", "", "/myrequests", "/handlerequests", "/users"];
+    const PathsToNotRenderUserPanel = [
+        "/verifyemailsent",
+        "/login",
+        "/reset",
+        "/register",
+    ];
     return (
         <>
             <BrowserRouter>
@@ -24,7 +30,7 @@ function App() {
                     className={
                         user?.emailVerified
                             ? SCSS.appContainer
-                            : SCSS.loginContainer
+                            : SCSS.fullScreenContainer
                     }
                 >
                     {user?.emailVerified ? (
