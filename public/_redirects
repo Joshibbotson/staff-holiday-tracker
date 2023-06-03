@@ -1,8 +1,1 @@
-/ /index.html 200
-/myrequests /myrequests 200
-/handlerequests /handlerequests 200
-/users /users 200
-/verifyemailsent /verifyemailsent 200
-/login /login 200
-/reset /reset 200
-/register /register 200
+/* /index.html 200
