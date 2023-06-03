@@ -15,8 +15,12 @@ const VerifyEmailPage = () => {
     };
 
     useEffect(() => {
-        if (user?.emailVerified) {
-            user.reload();
+        if (user) {
+            if (user?.emailVerified) {
+                user.reload();
+                navigate("/");
+            }
+        } else if (!user) {
             navigate("/");
         }
     }, [user]);
