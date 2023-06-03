@@ -12,6 +12,7 @@ import SCSS from "./app.module.scss";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase/auth/auth";
 import VerifyEmailPage from "./pages/verify-email-page/VerifyEmailPage";
+import Custom404Page from "./pages/404-page/Custom404Page";
 // import CurrentUserProvider from "./context/CurrentUserContext";
 
 function App() {
@@ -34,7 +35,7 @@ function App() {
                     <Routes>
                         <Route index element={<HomePage />} />
                         <Route
-                            path="/handleRequests"
+                            path="/handlerequests"
                             element={<HandleRequestsPage />}
                         ></Route>
                         <Route
@@ -49,6 +50,7 @@ function App() {
                             path="/verifyemailsent"
                             element={<VerifyEmailPage />}
                         ></Route>
+                        <Route path="/*" element={<Custom404Page />} />
                     </Routes>
                 </div>
             </BrowserRouter>
