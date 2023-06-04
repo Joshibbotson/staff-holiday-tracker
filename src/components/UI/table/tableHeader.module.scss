@@ -24,6 +24,14 @@
             width: 10rem;
         }
     }
+    label {
+        background-color: white;
+        padding-right: 0.5rem;
+        padding-left: 0.3rem;
+
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
 }
 @media only screen and (min-width: 768px) {
     .tableHead {

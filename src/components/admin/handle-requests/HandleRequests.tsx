@@ -5,11 +5,10 @@ import { SelectChangeEvent } from "@mui/material/Select";
 import { AwaitApprovalReqContext } from "../../../context/AwaitApprovalReqContext";
 import TableHeader from "../../UI/table/TableHeader";
 import RequestTableRow from "../../main/requests/request-table-row/requestTableRow";
-import { nanoid } from "nanoid";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../store/store";
 import { fetchCurrentUser } from "../../../store/slices/currentUserSlice";
-import { IncomingRequestsType } from "../../../types";
+import { ToastContainer } from "react-toastify";
 
 const HandleRequests = () => {
     console.log("render");
@@ -126,6 +125,7 @@ const HandleRequests = () => {
                     </tbody>
                 </table>
             </div>
+            <ToastContainer />
         </>
     );
 };

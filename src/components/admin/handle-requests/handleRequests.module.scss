@@ -73,7 +73,7 @@
                 background-color: white;
             }
             .autoTr {
-                height: auto;
+                height: 100%;
             }
         }
 
@@ -84,11 +84,11 @@
 
         td {
             width: 5rem;
+            height: 8rem;
             font-size: 1rem;
             position: relative;
             font-weight: 500;
             text-align: left;
-            // word-wrap: break-word;
             padding: 1rem;
         }
         .requestTable__tdWaitApproval {
@@ -115,7 +115,6 @@
             flex-wrap: wrap;
             align-items: center;
             justify-content: center;
-            height: 100%;
         }
         .requestTable__tdApproved::before {
             content: "";

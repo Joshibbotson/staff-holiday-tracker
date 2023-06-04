@@ -16,12 +16,12 @@ import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DoneIcon from "@mui/icons-material/Done";
 import { IncomingRequestsType } from "../../../types";
-import { useContext, useEffect, useState } from "react";
-// import { CurrentUserContext } from "../../../context/CurrentUserContext";
+import { useEffect, useState } from "react";
 import EditRequestModal from "../edit-request-modal/EditRequestModal";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "../../../store/store";
 import { fetchCurrentUser } from "../../../store/slices/currentUserSlice";
+import { toast } from "react-toastify";
 
 export interface DialogModalProps {
     open: boolean;
@@ -47,10 +47,10 @@ export default function DialogModal(props: DialogModalProps) {
     const handleApproval = async (request: IncomingRequestsType) => {
         try {
             await approveRequest(request);
-
-            console.log("succesful approval");
+            toast.success("Succesful approvl");
         } catch (error) {
             console.log(error);
+            toast.error("Something went wrong");
         }
     };
 
