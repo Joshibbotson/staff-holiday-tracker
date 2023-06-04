@@ -28,7 +28,7 @@ const Calendar = ({ updateClickedDate, handleClick }: Props) => {
 
     const holidays: Holiday[] = approvedRequests!.map(req => {
         return {
-            name: req.requestedByEmail,
+            name: req.name,
             start: new Date(req.dateStart.toDate().toDateString()),
             end: new Date(req.dateEnd.toDate().toDateString()),
             typeOfLeave: req.typeOfLeave,

@@ -254,6 +254,7 @@ export async function listRequests(
         const querySnapShot = await getDocs(queryDb);
         const reqData = querySnapShot.docs.map(doc => ({
             uid: doc.data().uid,
+            name: doc.data().name,
             approverEmail: doc.data().approverEmail,
             dateStart: doc.data().dateStart,
             dateEnd: doc.data().dateEnd,
@@ -280,6 +281,8 @@ export async function listRequestsForApproval(
         const querySnapShot = await getDocs(queryDb);
         const reqData = querySnapShot.docs.map(doc => ({
             uid: doc.data().uid,
+            name: doc.data().name,
+
             approverEmail: doc.data().approverEmail,
             dateStart: doc.data().dateStart,
             dateEnd: doc.data().dateEnd,
@@ -343,6 +346,7 @@ export async function approveRequest(
         //add request to approved requests
         await addDoc(collection(db, "approvedRequests"), {
             uid: request.uid,
+            name: request.name,
             approverEmail: request.approverEmail,
             dateStart: request.dateStart,
             dateEnd: request.dateEnd,

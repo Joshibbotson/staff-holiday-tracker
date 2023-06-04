@@ -2,6 +2,7 @@ import { Timestamp } from "firebase-admin/firestore";
 
 export interface IncomingRequestsType {
     uid: string;
+    name: string;
     approverEmail: string;
     dateEnd: Timestamp;
     dateStart: Timestamp;

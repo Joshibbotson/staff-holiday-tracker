@@ -16,7 +16,7 @@ import Custom404Page from "./pages/404-page/Custom404Page";
 import { ToastContainer } from "react-toastify";
 
 function App() {
-    const [user, loading, error] = useAuthState(auth);
+    const [user] = useAuthState(auth);
 
     return (
         <>
@@ -57,7 +57,6 @@ function App() {
             </BrowserRouter>
             <ToastContainer />
         </>
-        //TODO add default page to go to when incorrect path inputted
     );
 }
 
