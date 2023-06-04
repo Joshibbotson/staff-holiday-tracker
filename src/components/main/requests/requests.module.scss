@@ -47,7 +47,6 @@
                 top: 0;
                 color: rgb(139, 139, 139);
                 th {
-                    word-wrap: break-word;
                     padding: 1rem;
                 }
             }
@@ -79,15 +78,6 @@
             text-align: center;
         }
 
-        td {
-            width: 5rem;
-            font-size: 1rem;
-            position: relative;
-            font-weight: 500;
-            text-align: left;
-            word-wrap: break-word;
-            padding: 1rem;
-        }
         .requestTable__tdWaitApproval {
             display: flex;
             flex-wrap: wrap;

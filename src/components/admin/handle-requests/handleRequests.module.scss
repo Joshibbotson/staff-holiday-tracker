@@ -47,7 +47,7 @@
                 top: 0;
                 color: rgb(139, 139, 139);
                 th {
-                    word-wrap: break-word;
+                    // word-wrap: break-word;
                     padding: 1rem;
                 }
             }
@@ -57,7 +57,7 @@
             width: 10rem;
             border-bottom: 2px solid rgb(170, 170, 170);
             text-align: left;
-            word-wrap: break-word;
+            // word-wrap: break-word;
         }
 
         tr {
@@ -88,7 +88,7 @@
             position: relative;
             font-weight: 500;
             text-align: left;
-            word-wrap: break-word;
+            // word-wrap: break-word;
             padding: 1rem;
         }
         .requestTable__tdWaitApproval {
