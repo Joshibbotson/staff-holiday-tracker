@@ -5,7 +5,6 @@ import LogoutIcon from "@mui/icons-material/Logout";
 import AddIcon from "@mui/icons-material/Add";
 import Button from "@mui/material/Button";
 import RequestModal from "../UI/request-modal/RequestModal";
-// import { CurrentUserContext } from "../../context/CurrentUserContext";
 import { CircularProgress } from "@mui/material";
 import { AwaitApprovalReqContext } from "../../context/AwaitApprovalReqContext";
 import { storage } from "../../firebase/firebase";
@@ -102,24 +101,26 @@ const UserPanel = () => {
                             userImage={userImage}
                             updateImageUpload={UpdateImageUpload}
                         />
-                        <h2>{user ? user[0]?.name : <CircularProgress />}</h2>
+                        <h2>
+                            {user[0] ? user[0]?.name : <CircularProgress />}
+                        </h2>
                     </div>
                     <div className={SCSS.dashboard}>
-                        {user ? (
+                        {user[0] ? (
                             `Remaining Holidays: ${user[0]?.remainingHolidays}`
                         ) : (
                             <CircularProgress />
                         )}
                     </div>
                     <div className={SCSS.calendar}>
-                        {user ? (
+                        {user[0] ? (
                             `Taken Holidays: ${user[0]?.takenHolidays}`
                         ) : (
                             <CircularProgress />
                         )}
                     </div>
                     <div className={SCSS.calendar}>
-                        {user ? (
+                        {user[0] ? (
                             `Accrued Flexi Time: ${user[0]?.flexTime}`
                         ) : (
                             <CircularProgress />
