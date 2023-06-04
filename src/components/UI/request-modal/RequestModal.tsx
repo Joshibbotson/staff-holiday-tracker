@@ -89,6 +89,7 @@ export const RequestModal = ({ clickedDate, handleClick }: Props) => {
         e.preventDefault();
 
         const newRequest = {
+            name: user[0]?.name,
             approverEmail: approver,
             requestedByEmail: user[0]?.email,
             dateStart: new Date(dateStart!),

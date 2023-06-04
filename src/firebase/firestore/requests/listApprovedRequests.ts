@@ -22,6 +22,7 @@ export async function listApprovedRequests(
 
         const approvedReqData = querySnapShot.docs.map(doc => ({
             uid: doc.data().uid,
+            name: doc.data().name,
             approverEmail: doc.data().approverEmail,
             dateStart: doc.data().dateStart,
             dateEnd: doc.data().dateEnd,

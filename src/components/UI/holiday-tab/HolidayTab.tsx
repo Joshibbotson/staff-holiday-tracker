@@ -97,7 +97,7 @@ const HolidayTab = ({ day, info }: HolidayTabProps) => {
                                 className={SCSS.nameContainer__tab}
                                 style={{ backgroundColor: n.holidayTabColour }}
                             >
-                                {n.name ? getName(n.name) : ""}
+                                {n.name ? n.name : ""}
                                 {getSymbol(n.typeOfLeave)}
                             </div>
                         );

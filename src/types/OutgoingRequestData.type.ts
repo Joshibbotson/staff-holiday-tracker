@@ -1,4 +1,5 @@
 export interface OutgoingRequestData {
+    name: string;
     approverEmail: string;
     requestedByEmail: string;
     dateStart: Date;
