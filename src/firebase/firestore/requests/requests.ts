@@ -19,6 +19,7 @@ export function subscribeToRequests(
     const unsubscribe = onSnapshot(queryDb, snapshot => {
         const reqData = snapshot.docs.map(doc => ({
             uid: doc.data().uid,
+            name: doc.data().name,
             approverEmail: doc.data().approverEmail,
             dateStart: doc.data().dateStart,
             dateEnd: doc.data().dateEnd,
