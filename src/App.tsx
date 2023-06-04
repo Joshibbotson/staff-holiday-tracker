@@ -13,16 +13,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./firebase/auth/auth";
 import VerifyEmailPage from "./pages/verify-email-page/VerifyEmailPage";
 import Custom404Page from "./pages/404-page/Custom404Page";
+import { ToastContainer } from "react-toastify";
 
 function App() {
     const [user, loading, error] = useAuthState(auth);
-    const validPaths = ["/", "", "/myrequests", "/handlerequests", "/users"];
-    const PathsToNotRenderUserPanel = [
-        "/verifyemailsent",
-        "/login",
-        "/reset",
-        "/register",
-    ];
+
     return (
         <>
             <BrowserRouter>
@@ -60,6 +55,7 @@ function App() {
                     </Routes>
                 </div>
             </BrowserRouter>
+            <ToastContainer />
         </>
         //TODO add default page to go to when incorrect path inputted
     );

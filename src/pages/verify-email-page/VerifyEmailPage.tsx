@@ -4,9 +4,10 @@ import { auth, logout, sendVerificationEmail } from "../../firebase/auth/auth";
 import { Button } from "@mui/material";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const VerifyEmailPage = () => {
-    const [user, loading, error] = useAuthState(auth);
+    const [user] = useAuthState(auth);
     const navigate = useNavigate();
 
     const handleLogout = () => {
@@ -45,6 +46,7 @@ const VerifyEmailPage = () => {
                     Logout
                 </Button>
             </section>
+            <ToastContainer />
         </main>
     );
 };

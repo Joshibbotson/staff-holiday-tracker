@@ -6,6 +6,7 @@ import { auth, sendPasswordReset } from "../../firebase/auth/auth";
 import resetSCSS from "./reset.module.scss";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Button } from "@mui/material";
 
 function Reset() {
     const [email, setEmail] = useState("");
@@ -26,16 +27,17 @@ function Reset() {
                     onChange={e => setEmail(e.target.value)}
                     placeholder="E-mail Address"
                 />
-                <button
-                    className={resetSCSS.reset__btn}
+                <Button
+                    variant="contained"
                     onClick={() => sendPasswordReset(email)}
                 >
                     Send password reset email
-                </button>
+                </Button>
                 <div>
                     Don't have an account? <Link to="/register">Register</Link>{" "}
                     now.
                 </div>
+                <Link to={"/login"}>Back to Login</Link>
             </div>
             <ToastContainer />
         </div>

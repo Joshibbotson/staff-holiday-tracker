@@ -12,6 +12,7 @@ import registerSCSS from "./register.module.scss";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { updateProfile } from "firebase/auth";
+import { Button } from "@mui/material";
 // import ReCAPTCHA from "react-google-recaptcha";
 // import { appCheckPublicKey } from "../../firebase/firebase";
 
@@ -20,7 +21,7 @@ function Register() {
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     const [name, setName] = useState("");
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
 
     const register = () => {
@@ -115,8 +116,8 @@ function Register() {
                     }}
                 />
                 {/* <ReCAPTCHA sitekey={appCheckPublicKey} onChange={onChange} /> */}
-                <button
-                    className={registerSCSS.register__btn}
+                <Button
+                    variant="contained"
                     onClick={register}
                     onKeyDown={e => {
                         if (e.key === "Enter") {
@@ -125,7 +126,7 @@ function Register() {
                     }}
                 >
                     Register
-                </button>
+                </Button>
 
                 {/* <button
                     className={`${registerSCSS.register__btn} ${registerSCSS.register__google}`}

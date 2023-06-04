@@ -25,6 +25,7 @@ import { EditRequestType } from "../../types/EditRequest.type";
 import { randomColour } from "../../util-functions/randomColour";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { error } from "firebase-functions/logger";
 
 // //firebase emulator//
 // const db = getFirestore();
@@ -93,8 +94,10 @@ export const updateUserProfilePic = async (
             profilePicDownloadURL: profilePicDownloadURL,
             profilePic: profilePicLocation,
         });
+        toast.success("Picture uploaded!");
     } catch (err) {
         console.log(err);
+        toast.error("Something went wrong.");
     }
 };
 

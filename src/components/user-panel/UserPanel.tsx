@@ -1,4 +1,4 @@
-import { auth, logout } from "../../firebase/auth/auth";
+import { logout } from "../../firebase/auth/auth";
 import SCSS from "./userPanel.module.scss";
 import { useContext, useState, useEffect } from "react";
 import LogoutIcon from "@mui/icons-material/Logout";
@@ -27,6 +27,7 @@ import { AppDispatch } from "../../store/store";
 import { useNavigate } from "react-router-dom";
 import { resetUsers } from "../../store/slices/usersSlice";
 import { resetMonth, resetYear } from "../../store/slices/currentDateSlice";
+import { toast } from "react-toastify";
 
 const UserPanel = () => {
     const { user } = useSelector((state: any) => state.user);
@@ -84,7 +85,7 @@ const UserPanel = () => {
         const maxSizeInBytes = 1000 * 1024; // 1000kb (1MB)
         if (imageUpload) {
             if (imageUpload![0].size > maxSizeInBytes) {
-                alert("Image size exceeds the maximum limit of 1MB.");
+                toast.error("Image size exceeds the maximum limit of 1MB.");
                 return;
             }
         }
@@ -102,28 +103,60 @@ const UserPanel = () => {
                             updateImageUpload={UpdateImageUpload}
                         />
                         <h2>
-                            {user[0] ? user[0]?.name : <CircularProgress />}
+                            {user ? (
+                                user[0] ? (
+                                    user[0]?.name
+                                ) : (
+                                    <CircularProgress />
+                                )
+                            ) : (
+                                ""
+                            )}
                         </h2>
                     </div>
                     <div className={SCSS.dashboard}>
-                        {user[0] ? (
-                            `Remaining Holidays: ${user[0]?.remainingHolidays}`
+                        {user ? (
+                            user[0] ? (
+                                `Remaining Holidays: ${
+                                    user[0]?.remainingHolidays > 99
+                                        ? 99
+                                        : user[0]?.remainingHolidays
+                                }`
+                            ) : (
+                                <CircularProgress />
+                            )
                         ) : (
-                            <CircularProgress />
+                            ""
                         )}
                     </div>
                     <div className={SCSS.calendar}>
-                        {user[0] ? (
-                            `Taken Holidays: ${user[0]?.takenHolidays}`
+                        {user ? (
+                            user[0] ? (
+                                `Taken Holidays: ${
+                                    user[0]?.takenHolidays > 99
+                                        ? 99
+                                        : user[0]?.takenHolidays
+                                }`
+                            ) : (
+                                <CircularProgress />
+                            )
                         ) : (
-                            <CircularProgress />
+                            ""
                         )}
                     </div>
                     <div className={SCSS.calendar}>
-                        {user[0] ? (
-                            `Accrued Flexi Time: ${user[0]?.flexTime}`
+                        {user ? (
+                            user[0] ? (
+                                `Accrued Flexi Time: ${
+                                    user[0]?.flexTime > 99
+                                        ? 99
+                                        : user[0]?.flexTime
+                                }`
+                            ) : (
+                                <CircularProgress />
+                            )
                         ) : (
-                            <CircularProgress />
+                            ""
                         )}
                     </div>
 
@@ -166,6 +199,7 @@ const UserPanel = () => {
                     </Button>
                 </div>
             </div>
+
             {showModal ? (
                 <RequestModal clickedDate={null} handleClick={handleClick} />
             ) : (
