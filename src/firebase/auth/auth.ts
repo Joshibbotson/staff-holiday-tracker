@@ -104,20 +104,21 @@ export async function registerWithEmailAndPassword(
 export async function sendPasswordReset(email: string) {
     try {
         await sendPasswordResetEmail(auth, email);
-        alert("Password reset link sent!");
+        toast.success("Password reset link sent!");
     } catch (error) {
-        console.log(error);
         toast.error(getErrorMessage(error));
-
-        throw error;
     }
 }
 
-export function sendVerificationEmail() {
-    if (auth.currentUser) {
-        sendEmailVerification(auth.currentUser);
-        console.log("sent!");
-    } else {
+export async function sendVerificationEmail() {
+    try {
+        if (auth.currentUser) {
+            await sendEmailVerification(auth.currentUser);
+            console.log("sent!");
+            toast.success("sent!");
+        }
+    } catch (error) {
+        toast.error(getErrorMessage(error));
         console.log("no user");
     }
 }

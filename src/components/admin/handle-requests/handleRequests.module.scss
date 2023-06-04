@@ -24,7 +24,9 @@
         height: 100%;
         width: 100%;
         overflow-y: scroll;
+        table-layout: fixed;
         scroll-behavior: smooth;
+        margin-bottom: auto;
 
         label {
             display: flex;
@@ -62,11 +64,16 @@
             height: 3rem;
             border-bottom: 1px solid rgb(170, 170, 170);
         }
+
         tbody {
             overflow-y: scroll;
+
             tr {
                 height: 6rem;
                 background-color: white;
+            }
+            .autoTr {
+                height: auto;
             }
         }
 

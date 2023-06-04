@@ -105,6 +105,7 @@ const Requests = () => {
                                 />
                             );
                         })}
+                        <tr className={SCSS.autoTr}></tr>
                     </tbody>
                 </table>
             </div>
