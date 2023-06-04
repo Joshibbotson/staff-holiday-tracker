@@ -70,12 +70,21 @@
                 background-color: white;
             }
             .autoTr {
-                height: auto;
+                height: 100%;
             }
         }
 
         .requestTable__td__edit {
             text-align: center;
+        }
+        td {
+            width: 5rem;
+            height: 8rem;
+            font-size: 1rem;
+            position: relative;
+            font-weight: 500;
+            text-align: left;
+            padding: 1rem;
         }
 
         .requestTable__tdWaitApproval {

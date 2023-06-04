@@ -12,11 +12,13 @@
     .currentYear {
         text-underline-offset: 6px;
         text-decoration: rgba(255, 255, 255, 0.594) underline;
+        text-decoration-line: underline;
         text-decoration-thickness: 2px;
     }
 
     .selectedYear.currentYear {
         text-decoration: white underline;
+        text-decoration-line: white underline;
         text-underline-offset: 6px;
         text-decoration-thickness: 2px;
     }

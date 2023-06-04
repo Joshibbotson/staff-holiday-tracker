@@ -16,9 +16,7 @@ const RequestTableRow = ({ variant, index, awaitingRequests, req }: Props) => {
             {variant === "approvedBy" ? (
                 <td className={SCSS.requestTable__td}>{req.approverEmail}</td>
             ) : (
-                <td className={SCSS.requestTable__td}>
-                    {req.requestedByEmail}
-                </td>
+                <td className={SCSS.requestTable__td}>{req.name}</td>
             )}
             {awaitingRequests.includes(req) ? (
                 <td className={SCSS.requestTable__tdWaitApproval}>Waiting</td>
