@@ -1,6 +1,7 @@
 .tableHead {
     background-color: rgb(0, 150, 136);
     height: 10rem;
+    overflow-x: auto;
 
     .requestTable__title {
         font-size: 1.4rem;
@@ -19,8 +20,8 @@
         top: 0;
         color: rgb(139, 139, 139);
         th {
-            word-wrap: break-word;
             padding: 1rem;
+            width: 10rem;
         }
     }
 }
