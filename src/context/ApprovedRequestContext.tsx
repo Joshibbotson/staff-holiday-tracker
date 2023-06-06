@@ -7,7 +7,7 @@ import { auth, db } from "../firebase/auth/auth";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
 import { approvedReqCache } from "../caching/approveReqCache";
-import { query, collection, where, onSnapshot } from "firebase/firestore";
+import { query, collection, onSnapshot } from "firebase/firestore";
 
 type ApprovedRequestContextType = {
     approvedRequests: ApprovedRequestsType[] | undefined;

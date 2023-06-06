@@ -8,10 +8,11 @@ import TableHeader from "../../UI/table/TableHeader";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchCurrentUser } from "../../../store/slices/currentUserSlice";
 import { AppDispatch } from "../../../store/store";
+import { LinearProgress } from "@mui/material";
 
 const Requests = () => {
     const { user } = useSelector((state: any) => state.user);
-    const { requests } = useContext(RequestContext);
+    const { requests, loading } = useContext(RequestContext);
     const { approvedRequests } = useContext(ApprovedRequestContext);
     const [userApprovedRequests, setUserApprovedRequests] = useState(
         approvedRequests!.filter(req => {
@@ -95,16 +96,20 @@ const Requests = () => {
                     />
 
                     <tbody>
-                        {loadedRequests.map((req, index) => {
-                            return (
-                                <RequestTableRow
-                                    variant="approvedBy"
-                                    index={index}
-                                    awaitingRequests={requests}
-                                    req={req}
-                                />
-                            );
-                        })}
+                        {loading ? (
+                            <LinearProgress />
+                        ) : (
+                            loadedRequests.map((req, index) => {
+                                return (
+                                    <RequestTableRow
+                                        variant="approvedBy"
+                                        index={index}
+                                        awaitingRequests={requests}
+                                        req={req}
+                                    />
+                                );
+                            })
+                        )}
                         <tr className={SCSS.autoTr}></tr>
                     </tbody>
                 </table>

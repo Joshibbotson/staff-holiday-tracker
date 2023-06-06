@@ -28,7 +28,6 @@ export const uploadImage = async (
         const existingImageRef = ref(storage, user[0].profilePic);
         try {
             await deleteObject(existingImageRef);
-            console.log("Existing image deleted!");
         } catch (err) {
             console.log("Error deleting existing image:", err);
         }
@@ -38,12 +37,11 @@ export const uploadImage = async (
 
     try {
         await uploadBytes(imageRef, imageUpload[0]);
-        updateUserProfilePic(
+        await updateUserProfilePic(
             user[0],
             userProfilePicLocation,
             await getUrl(userProfilePicLocation)
         );
-        alert("Image uploaded!");
     } catch (err) {
         console.log(err);
     }
