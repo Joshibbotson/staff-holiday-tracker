@@ -44,7 +44,7 @@ export const updateUserDocID = async (
     flexTime: number,
     profilePic: string,
     nationalHolidays: string = "UK",
-    managersEmail: string = "joshibbotson8@gmail.com",
+    managersEmail: string = "jitester20@gmail.com",
     admin: boolean = false,
     superAdmin: boolean = false,
     holidayTabColour: string = randomColour()
@@ -282,7 +282,6 @@ export async function listRequestsForApproval(
         const reqData = querySnapShot.docs.map(doc => ({
             uid: doc.data().uid,
             name: doc.data().name,
-
             approverEmail: doc.data().approverEmail,
             dateStart: doc.data().dateStart,
             dateEnd: doc.data().dateEnd,

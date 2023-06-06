@@ -18,13 +18,14 @@
         }
 
         input[type="text"] {
-            height: 1.75rem;
+            height: 3rem;
             padding-left: 1.75rem;
             border: none;
             width: 8rem;
             position: absolute;
             transition: width 250ms;
             border-radius: 7.5px;
+            font-size: 1rem;
         }
         input[type="text"]:focus {
             width: 10rem;
@@ -69,27 +70,6 @@
             top: 0;
             background-color: rgb(244, 244, 244);
             z-index: 2;
-        }
-
-        .userTab__profilePic {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            font-size: 4.3rem;
-            width: 2.5rem;
-            height: 2.5rem;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
-
-        .userImage {
-            width: 2.5rem;
-            height: 2.5rem;
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-position: center;
-            flex-shrink: 1;
         }
     }
 
@@ -242,10 +222,10 @@
     .header {
         .header__searchContainer {
             input[type="text"] {
-                width: 15rem;
+                width: 10rem;
             }
             input[type="text"]:focus {
-                width: 20rem;
+                width: 15rem;
             }
         }
 
@@ -259,6 +239,34 @@
         height: 91svh;
         display: grid;
         grid-template-columns: 40% 60%;
+
+        //USER LIST//
+        .mainGrid__userList {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            border-radius: 20px;
+            padding-left: 1rem;
+            padding-right: 1rem;
+            margin: 1rem;
+            overflow-x: hidden;
+            overflow-y: auto;
+            box-shadow: 0px 0px 10px rgb(217, 217, 217);
+            background-color: rgb(244, 244, 244);
+            min-height: 47vh;
+            flex-shrink: 0;
+            position: relative;
+
+            .mainGrid__header {
+                padding: 1rem;
+                border-bottom: 1px solid rgb(197, 197, 197);
+                margin-bottom: 0.5rem;
+                position: sticky;
+                top: 0;
+                background-color: rgb(244, 244, 244);
+                z-index: 2;
+            }
+        }
 
         //PROFILE//
         .mainGrid__userProfile {
@@ -298,6 +306,28 @@
                     background-color: rgb(239, 237, 237);
                 }
             }
+        }
+    }
+}
+
+@media only screen and (min-width: 1252px) {
+    .header {
+        h1 {
+            padding-right: 0rem;
+        }
+        .header__searchContainer {
+            input[type="text"] {
+                width: 25rem;
+            }
+            input[type="text"]:focus {
+                width: 35rem;
+            }
+        }
+
+        h1 {
+            color: white;
+            margin-left: auto;
+            padding-right: 20rem;
         }
     }
 }
