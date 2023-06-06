@@ -8,15 +8,9 @@ interface Props {
     user: UserType;
     selectedUser: FetchedUserType | undefined;
     updateSelectedUser: (user: FetchedUserType) => void;
-    // getProfilePic: (user: FetchedUserType, SCSSClass: string) => ReactNode;
 }
 
-const UserTab = ({
-    user,
-    selectedUser,
-    updateSelectedUser,
-}: // getProfilePic,
-Props) => {
+const UserTab = ({ user, selectedUser, updateSelectedUser }: Props) => {
     function getProfilePic(user: FetchedUserType, SCSSClass: string) {
         return user.profilePicDownloadURL ? (
             <div className={SCSSClass}>
@@ -35,12 +29,18 @@ Props) => {
     }
     return (
         <div
+            tabIndex={0}
             className={
                 user === selectedUser
                     ? SCSS.mainGrid__selectedUserTab
                     : SCSS.mainGrid__userTab
             }
             key={user.uid}
+            onKeyDown={e => {
+                if (e.key === "Enter") {
+                    updateSelectedUser(user);
+                }
+            }}
             onClick={() => {
                 updateSelectedUser(user);
             }}
