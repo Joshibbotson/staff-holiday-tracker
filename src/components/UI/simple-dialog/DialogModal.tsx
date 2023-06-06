@@ -47,7 +47,7 @@ export default function DialogModal(props: DialogModalProps) {
     const handleApproval = async (request: IncomingRequestsType) => {
         try {
             await approveRequest(request);
-            toast.success("Succesful approvl");
+            toast.success("Successful approval");
         } catch (error) {
             console.log(error);
             toast.error("Something went wrong");
@@ -62,9 +62,10 @@ export default function DialogModal(props: DialogModalProps) {
     const handleDelete = async (uid: string) => {
         try {
             await deleteRequest(uid);
-            console.log("succesful delete");
+            toast.info("succesful delete");
         } catch (error) {
             console.log(error);
+            toast.error("Something went wrong");
         }
     };
 

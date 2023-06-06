@@ -10,6 +10,7 @@ import {
 } from "../../../store/slices/currentDateSlice";
 import { RootState } from "../../../store/store";
 import { ApprovedRequestContext } from "../../../context/ApprovedRequestContext";
+import LinearProgress from "@mui/material/LinearProgress";
 
 type Holiday = {
     name: string;
@@ -24,8 +25,7 @@ type Props = {
     handleClick: () => void;
 };
 const Calendar = ({ updateClickedDate, handleClick }: Props) => {
-    const { approvedRequests } = useContext(ApprovedRequestContext);
-
+    const { approvedRequests, loading } = useContext(ApprovedRequestContext);
     const holidays: Holiday[] = approvedRequests!.map(req => {
         return {
             name: req.name,
@@ -57,13 +57,17 @@ const Calendar = ({ updateClickedDate, handleClick }: Props) => {
                 <MonthBtns month={month} updateMonth={handleUpdateMonth} />
             </header>
             <section className={SCSS.container}>
-                <CreateCalendar
-                    month={month}
-                    year={year}
-                    holidays={holidays}
-                    updateClickedDate={updateClickedDate}
-                    handleClick={handleClick}
-                />
+                {loading ? (
+                    <LinearProgress />
+                ) : (
+                    <CreateCalendar
+                        month={month}
+                        year={year}
+                        holidays={holidays}
+                        updateClickedDate={updateClickedDate}
+                        handleClick={handleClick}
+                    />
+                )}
             </section>
         </>
     );
