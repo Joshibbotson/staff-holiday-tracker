@@ -89,7 +89,6 @@ export const HandleUsers = () => {
                                       user={user}
                                       selectedUser={selectedUser}
                                       updateSelectedUser={updateSelectedUser}
-                                      //   getProfilePic={getProfilePic}
                                       key={nanoid()}
                                   />
                               );

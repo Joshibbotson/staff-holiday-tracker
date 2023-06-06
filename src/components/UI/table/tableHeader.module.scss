@@ -3,6 +3,13 @@
     height: 10rem;
     overflow-x: auto;
 
+    .tableHead__filterMenu {
+        margin: 1rem;
+        width: 10rem;
+        border-radius: 4px;
+        background-color: white;
+    }
+
     .requestTable__title {
         font-size: 1.4rem;
         text-align: center;
@@ -19,6 +26,7 @@
         position: sticky;
         top: 0;
         color: rgb(139, 139, 139);
+        width: 100%;
         th {
             padding: 1rem;
             width: 10rem;
@@ -28,7 +36,7 @@
         background-color: white;
         padding-right: 0.5rem;
         padding-left: 0.3rem;
-
+        margin-left: -0.3rem;
         border-top-left-radius: 10px;
         border-top-right-radius: 10px;
     }
@@ -37,6 +45,13 @@
     .tableHead {
         background-color: rgb(0, 150, 136);
         height: 10rem;
+
+        .tableHead__filterMenu {
+            margin: 1rem;
+            width: 20rem;
+            border-radius: 4px;
+            background-color: white;
+        }
 
         .requestTable__title {
             font-size: 2rem;

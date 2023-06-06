@@ -34,6 +34,7 @@ const TableHeader = ({
                 {showFilter ? (
                     <th colSpan={2}>
                         <FormControl
+                            className={SCSS.tableHead__filterMenu}
                             sx={{
                                 m: 1,
                                 width: 400,
