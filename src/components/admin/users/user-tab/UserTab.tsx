@@ -2,21 +2,37 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { UserType } from "../../../../types";
 import FetchedUserType from "../../../../types/FetchedUserType.type";
 import SCSS from "./userTab.module.scss";
-import { ReactNode } from "react";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 interface Props {
     user: UserType;
     selectedUser: FetchedUserType | undefined;
     updateSelectedUser: (user: FetchedUserType) => void;
-    getProfilePic: (user: FetchedUserType, SCSSClass: string) => ReactNode;
+    // getProfilePic: (user: FetchedUserType, SCSSClass: string) => ReactNode;
 }
 
 const UserTab = ({
     user,
     selectedUser,
     updateSelectedUser,
-    getProfilePic,
-}: Props) => {
+}: // getProfilePic,
+Props) => {
+    function getProfilePic(user: FetchedUserType, SCSSClass: string) {
+        return user.profilePicDownloadURL ? (
+            <div className={SCSSClass}>
+                <div
+                    className={SCSS.userImage}
+                    style={{
+                        backgroundImage: `url(${user.profilePicDownloadURL})`,
+                    }}
+                ></div>
+            </div>
+        ) : (
+            <div className={SCSS.userTab__profilePic}>
+                <AccountCircleIcon fontSize="inherit" />
+            </div>
+        );
+    }
     return (
         <div
             className={

@@ -33,6 +33,7 @@ const UserPanel = () => {
     const { user } = useSelector((state: any) => state.user);
     const { requests } = useContext(AwaitApprovalReqContext);
     const [admin, setAdmin] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [imageUpload, setImageUpload] = useState<FileList | null>(null);
     const [userImage, setUserImage] = useState<string | null>(null);
@@ -45,6 +46,12 @@ const UserPanel = () => {
             navigate("/login");
         }
     }, [user]);
+
+    useEffect(() => {
+        if (user) {
+            setLoading(false);
+        }
+    }, [user, userImage]);
 
     useEffect(() => {
         dispatch(fetchCurrentUser());

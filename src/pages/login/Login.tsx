@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
     auth,
-    signInWithGoogle,
+    // signInWithGoogle,
     logInWithEmailAndPassword,
 } from "../../firebase/auth/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
@@ -107,7 +107,7 @@ function Login() {
                         handleLogin("jitester6@gmail.com", "Password12345!");
                     }}
                 >
-                    Test Account
+                    Login Test Account
                 </Button>
                 <Button
                     variant="outlined"
@@ -116,7 +116,7 @@ function Login() {
                         handleLogin("jitester20@gmail.com", "Password12345!");
                     }}
                 >
-                    Test Admin Account
+                    Login Test Admin Account
                 </Button>
                 {/* <button
                     className={`${loginSCSS.login__btn} ${loginSCSS.login__google}`}

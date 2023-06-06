@@ -2,7 +2,6 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import SCSS from "./verifyEmailPage.module.scss";
 import { auth, logout, sendVerificationEmail } from "../../firebase/auth/auth";
 import { Button } from "@mui/material";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 
@@ -14,17 +13,6 @@ const VerifyEmailPage = () => {
         logout();
         navigate("/login");
     };
-
-    useEffect(() => {
-        if (user) {
-            if (user?.emailVerified) {
-                user.reload();
-                navigate("/");
-            }
-        } else if (!user) {
-            navigate("/");
-        }
-    }, [user]);
 
     return (
         <main className={SCSS.mainBackground}>

@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import SCSS from "./holidayTab.module.scss";
 import { nanoid } from "nanoid";
-import getName from "../../../util-functions/getName";
 
 interface Info {
     name: string;
