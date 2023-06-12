@@ -32,22 +32,24 @@ const CreateCalendar = ({
 
     useEffect(() => {
         const date = new Date(year, month, 1);
-        const firstDayOfWeek = date.getDay();
-        const lastDayOfMonth = new Date(year, month + 1, 0).getDate();
+        const firstDayOfWeek = date.getDay(); // 0,1,2,3,4,5,6 get day of week index e.g: thursday = 4
+        const lastDayOfMonth = new Date(year, month + 1, 0).getDate(); //get last day e.g: 31 or 30 or 28
 
-        // Create an array of Date objects representing the days of the previous month that appear in the current month's calendar
+        // Create an array of Date objects representing the days of
+        //the previous month that appear in the current month's calendar
         const prevMonthDays = Array.from(
             // Create an object with a length property set to firstDayOfWeek
+            //This will be what the next array counts up to e.g: 0, 1, 2, 3, 4
             { length: firstDayOfWeek },
-            // For each element in the array, create a new Date object for the corresponding day of the previous month
-            (_, i) => new Date(year, month, 1 - firstDayOfWeek + i)
+            (_, i) => new Date(year, month, 1 - firstDayOfWeek + i) // e.g: 31 - 4 = 27 + i (note i = 0, 1, 2, 3, 4)
         );
 
         const thisMonthDays = Array.from(
             { length: lastDayOfMonth },
-            (_, i) => new Date(year, month, i + 1)
+            (_, i) => new Date(year, month, i + 1) // sequence from 0 to length(lastDayofMonth) e.g 0-30
         );
         const nextMonthDays = Array.from(
+            //6*7 = 42 this is to determine 6 rows with 7 columns, so 42 spaces in the tables
             { length: 6 * 7 - (prevMonthDays.length + thisMonthDays.length) },
             (_, i) => new Date(year, month + 1, i + 1)
         );
@@ -142,6 +144,8 @@ const CreateCalendar = ({
                     </thead>
                     <tbody className={SCSS.calendar__body}>
                         {/* creates 6 table rows */}
+                        {/* slice days by weekIndex so from start 0*7 = 0, 0*7=0 +7 */}
+                        {/* so days.slice(0,7) which means you have an array of the first 7 dates */}
                         {[0, 1, 2, 3, 4, 5].map(weekIndex => (
                             <tr key={weekIndex} className={SCSS.calendar__row}>
                                 {days

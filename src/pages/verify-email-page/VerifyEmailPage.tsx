@@ -4,6 +4,7 @@ import { auth, logout, sendVerificationEmail } from "../../firebase/auth/auth";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import { onAuthStateChanged } from "firebase/auth";
 
 const VerifyEmailPage = () => {
     const [user] = useAuthState(auth);
@@ -13,6 +14,14 @@ const VerifyEmailPage = () => {
         logout();
         navigate("/login");
     };
+
+    onAuthStateChanged(auth, user => {
+        if (user?.emailVerified) {
+            console.log("Email is verified");
+        } else if (!user?.emailVerified) {
+            console.log("Email is not verified");
+        }
+    });
 
     return (
         <main className={SCSS.mainBackground}>
